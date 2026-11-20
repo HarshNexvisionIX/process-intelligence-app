@@ -1,0 +1,13 @@
+# Optional. Kaggle "eCommerce behavior data from multi category store": a huge web event log. Sampled.
+# Download one monthly CSV here, list the columns and fill in `mapping`. user_session is TRUTH ONLY.
+name: ecommerce_sessions
+source_url: https://www.kaggle.com/datasets/mkechinov/ecommerce-behavior-data-from-multi-category-store
+licence: see the Kaggle page
+dataset_class: public
+optional: true
+files: TODO
+mapping: TODO
+truth: TODO                         # user_session
+sample: {rows: 500000}
+expected:
+  mode: no_case

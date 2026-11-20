@@ -1,0 +1,40 @@
+# Direct dependencies, pinned to the versions this app is tested with.
+# For an exact copy of a working environment (all sub-dependencies too), use
+#     pip install -r requirements.lock.txt
+
+# Core data engine and file formats
+duckdb==2.0.0
+pandas==3.1.0
+pyarrow==26.0.0
+openpyxl==3.1.5      # Excel uploads
+python-docx==1.2.0   # SOP / process-document drafts
+pypdf==6.6.2         # SOP / process-document drafts
+numpy==2.4.6
+
+# User interface
+streamlit==1.66.1
+
+# Configuration
+PyYAML==6.0.3
+python-dotenv==1.2.4
+boto3==1.44.2        # optional AWS S3 backup/restore; uses the SDK credential chain
+
+# Report and AI (Parts 4–5)
+jinja2==3.1.6
+openai==3.45.0
+langfuse==5.1.0      # needs a self-hosted Langfuse server >= v4.59.0
+
+# Web UI back end (python -m app.api; the React front end is pre-built in web/dist)
+fastapi==0.163.1
+uvicorn==0.54.0
+python-multipart==0.0.32
+reportlab==5.1.0   # stakeholder PDF
+httpx==0.28.1       # FastAPI TestClient in the tests
+
+# Testing
+pytest==9.2.0
+
+# Optional: knowledge sources from video / audio and screen OCR (the app runs without them).
+# ffmpeg and Tesseract are system tools: see README "Knowledge sources and combined confidence".
+faster-whisper==1.2.1
+pytesseract==0.3.13

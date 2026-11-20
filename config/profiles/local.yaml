@@ -1,0 +1,3 @@
+# Optional local overlay. It intentionally leaves all current analysis and AI routes unchanged.
+deployment:
+  profile: local

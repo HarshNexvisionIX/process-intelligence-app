@@ -1,0 +1,25 @@
+[server]
+# Only this computer can open the app (not other computers on the office network).
+address = "127.0.0.1"
+# Allow uploads up to 5 GB through the browser (default is 200 MB).
+# For very large files, the app also accepts a local file path, which avoids
+# holding the whole file in browser and server memory.
+maxUploadSize = 5000
+enableXsrfProtection = true
+
+[browser]
+# No anonymous usage statistics are sent to Streamlit.
+gatherUsageStats = false
+serverAddress = "localhost"
+
+[client]
+# A clean toolbar: no "Deploy" button or developer menu for business users.
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+primaryColor = "#0f5f7a"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f3f6f8"
+textColor = "#14323f"
+font = "sans serif"

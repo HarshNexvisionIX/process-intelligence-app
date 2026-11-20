@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<style>
+body{font-family:Helvetica,Arial,sans-serif;margin:24px auto;max-width:1100px;color:#1d2330;padding:0 16px}
+h1{font-size:24px}h2{font-size:18px;border-bottom:1px solid #d8dee8;padding-bottom:4px;margin-top:32px}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}th,td{border:1px solid #d8dee8;padding:4px 6px;text-align:left}
+td.n,th.n{text-align:right}.caption{color:#5a6475;font-size:12px}.draft{color:#b00020}.svg{overflow:auto}
+.na{color:#5a6475;font-style:italic}details{margin:8px 0}
+</style>
+{% if viz_mode == "inline" %}<script>{{ viz_inline | safe }}</script>{% elif viz_mode == "cdn" %}<script src="{{ viz_js_url }}"></script>{% endif %}
+{% macro draw(el_id, dot) %}{% if viz_mode != "off" %}<script>(function(){var dot={{ dot | tojson }};if(!window.Viz||!Viz.instance)return;Viz.instance().then(function(v){var el=document.getElementById("{{ el_id }}");el.innerHTML="";el.appendChild(v.renderSVGElement(dot));}).catch(function(){});})();</script>{% endif %}{% endmacro %}
+</head><body>
+<h1 class="{{ 'draft' if checks.failed else '' }}">{{ title }}</h1>
+<p class="caption">Generated {{ generated }} · time basis: {{ m.basis.time }} · every number recomputed by {{ checks.passed + checks.failed }} self-checks ({{ checks.failed }} failed)</p>
+
+<section id="s1"><h2>1. Key numbers</h2>
+<table><tr><th>What</th><th class="n">Value</th><th>Basis</th></tr>
+{% for f in facts[:8] %}<tr><td>{{ f.label }}</td><td class="n">{{ f.display }}</td><td>{{ f.basis }}</td></tr>{% endfor %}</table></section>
+
+<section id="s2"><h2>2. Where the data comes from</h2>
+<table><tr><th>Rows</th><th class="n">Count</th></tr>
+<tr><td>Rows in the file</td><td class="n">{{ scope.rows_in_file | cnt }}</td></tr>
+<tr><td>Left out by the filter</td><td class="n">{{ scope.left_out_by_filter | cnt }}</td></tr>
+<tr><td>Unreadable time</td><td class="n">{{ scope.unreadable_time | cnt }}</td></tr>
+<tr><td><b>In scope</b></td><td class="n"><b>{{ scope.in_scope | cnt }}</b></td></tr></table>
+<p class="caption">Rows in the file = left out + unreadable + in scope (checked).</p></section>
+
+<section id="s3"><h2>3. What this data can support</h2>
+<table><tr><th>Analysis</th><th>Possible</th><th>Why</th></tr>
+{% for s in supports %}<tr><td>{{ s.what }}</td><td>{{ "yes" if s.possible else "no" }}</td><td>{{ s.why }}</td></tr>{% endfor %}</table>
+<p>{% if mode == "no_case" %}No record ID links the events: the work is measured per person, work episode and step. Details are in the appendix.{% elif mode == "partial" %}Some applications carry linkable record IDs: see section 12.{% else %}A record ID links the events: see section 12.{% endif %}</p></section>
+
+<section id="s4"><h2>4. Executive summary</h2>
+<p>{{ texts.overview }}</p>
+<p class="caption">Written by: {{ story.source }}{% if story.reason %} ({{ story.reason }}){% endif %}. Numbers come from the facts only.</p></section>
+
+<section id="s5"><h2>5. Candidate process map</h2>
+{% if flow %}<div id="map" class="svg">{% if viz_mode == "off" %}<div class="na">Map drawing is switched off; see the step table.</div>{% endif %}</div>{{ draw("map", flow.dot) }}
+<p class="caption">Step order: {{ order_source }}. Dashed arrows: one step followed by another inside a person's work episode (at least {{ flow.min_episodes }} episodes, {{ flow.min_actors }}+ people). Dotted: the documented order, with the share of evidence in that direction.</p>
+<table><tr><th>From</th><th>To</th><th>Status</th><th class="n">Times</th><th class="n">Episodes</th><th class="n">People</th></tr>
+{% for e in drawn %}<tr><td>{{ e.src }}</td><td>{{ e.dst }}</td><td>{{ e.status }}</td><td class="n">{{ e.count | cnt }}</td><td class="n">{{ e.episodes | cnt }}</td><td class="n">{{ e.actors | cnt }}</td></tr>{% endfor %}</table>
+{% else %}<p class="na">No map yet.</p>{% endif %}</section>
+
+<section id="s6"><h2>6. Steps in business order</h2>
+<table><tr><th>Step</th><th class="n">Hours</th><th class="n">Share</th><th class="n">People</th><th class="n">Step runs</th><th class="n">Median run</th><th class="n">Repeated runs</th><th>Top apps</th><th>Hours by source</th><th>Confidence</th></tr>
+{% for s in m.steps %}<tr><td>{{ s.step }}</td><td class="n">{{ s.hours | hrs }}</td><td class="n">{{ s.share_of_hours | pct }}</td><td class="n">{{ s.actors | cnt }}</td><td class="n">{{ s.runs | cnt }}</td><td class="n">{{ s.median_run_s | dur }}</td><td class="n">{{ s.repetition_share | pct }}</td><td>{{ s.top_apps | map(attribute="app") | join(", ") }}</td><td>{% for k, v in s.hours_by_source.items() %}{{ k }} {{ v | hrs }}{{ "; " if not loop.last }}{% endfor %}</td><td>{{ (conf.steps or {}).get(s.step, {}).get("band", "–") }}</td></tr>{% endfor %}</table>
+{% for s in m.steps %}{% if texts.get("step:" ~ s.step) %}<p>{{ texts.get("step:" ~ s.step) }}</p>{% endif %}{% endfor %}</section>
+
+<section id="s7"><h2>7. Hours by stage and by application</h2>
+<table><tr><th>Stage</th><th class="n">Hours</th><th class="n">Share</th></tr>
+{% for s in m.stages %}<tr><td>{{ s.stage }}</td><td class="n">{{ s.hours | hrs }}</td><td class="n">{{ s.share_of_hours | pct }}</td></tr>{% endfor %}</table>
+{% set mx = m.matrix_step_app %}
+<table><tr><th>Step</th>{% for c in mx.columns %}<th class="n">{{ c }}</th>{% endfor %}<th class="n">Total</th></tr>
+{% for r in mx.rows %}<tr><td>{{ r }}</td>{% for v in mx.cells[loop.index0] %}<td class="n">{{ v | hrs }}</td>{% endfor %}<td class="n">{{ mx.row_totals[loop.index0] | hrs }}</td></tr>{% endfor %}
+<tr><td><b>Total</b></td>{% for v in mx.column_totals %}<td class="n"><b>{{ v | hrs }}</b></td>{% endfor %}<td class="n"><b>{{ mx.grand_total | hrs }}</b></td></tr></table></section>
+
+<section id="s8"><h2>8. Inside each step</h2>
+<table><tr><th>Step</th><th>Activity</th><th class="n">Events</th><th class="n">Hours</th><th class="n">People</th><th>Source</th></tr>
+{% for a in activities %}<tr><td>{{ a.step }}</td><td>{{ a.activity }}</td><td class="n">{{ a.events | cnt }}</td><td class="n">{{ a.hours | hrs }}</td><td class="n">{{ a.actors | cnt }}</td><td>{{ a.source }}</td></tr>{% endfor %}</table>
+{% for st in (inside.steps or []) %}<h3>{{ st.step }}</h3>
+{% if not st.enough_runs %}<p class="na">{{ st.message }}</p>{% else %}
+<div id="act{{ loop.index }}" class="svg"></div>{{ draw("act" ~ loop.index, st.dot) }}
+<p class="caption">{{ st.runs | cnt }} step runs. Usually starts with "{{ st.start_activity }}" and ends with "{{ st.end_activity }}"{% if st.end_is_completion %} (a completion action){% endif %}. Status: inferred from step runs, until an SME confirms it.</p>
+<table><tr><th>Usual pattern</th><th class="n">Runs</th><th class="n">Share</th><th class="n">People</th></tr>
+{% for p in st.patterns %}<tr><td>{{ p.pattern }}</td><td class="n">{{ p.runs | cnt }}</td><td class="n">{{ p.share | pct }}</td><td class="n">{{ p.actors | cnt }}</td></tr>{% endfor %}</table>
+<table><tr><th>Activity</th><th class="n">Share of step hours</th><th class="n">Median per run</th><th>Work type</th></tr>
+{% for t in st.time_split %}<tr><td>{{ t.activity }}</td><td class="n">{{ t.share | pct }}</td><td class="n">{{ t.median_per_run_s | dur }}</td><td>{{ t.work_type }}</td></tr>{% endfor %}</table>
+<p class="caption">Work type: {% for k, v in st.work_type_share.items() %}{{ k }} {{ v | pct }}{{ ", " if not loop.last }}{% endfor %} · rework inside the step in {{ st.rework_share | pct }} of runs (same activity again after a pause of 30+ min) · back-and-forth between activities in {{ (st.back_and_forth_share or 0) | pct }} of runs · median {{ st.median_apps_per_run }} app(s) and {{ "%.2f" | format(st.switches_per_run or 0) }} switches per run.</p>
+{% if st.variation.flagged %}<p>People do this step differently: {% for r in st.variation.reasons %}{{ r }}{{ "; " if not loop.last }}{% endfor %}.</p>{% endif %}
+{% if st.automation_candidates %}<p>Candidates for SME review (facts only): {% for a in st.automation_candidates %}"{{ a.activity }}": {{ a.events | cnt }} events, the same pattern in {{ a.pattern_share | pct }} of runs{{ "; " if not loop.last }}{% endfor %}.</p>{% endif %}
+{% if texts.get("inside:" ~ st.step) %}<p>{{ texts.get("inside:" ~ st.step) }}</p>{% endif %}
+{% endif %}{% endfor %}</section>
+
+<section id="s9"><h2>9. Evidence</h2>
+<table><tr><th>Signal</th><th class="n">Score</th><th>Why</th></tr>
+{% for k, v in evidence.items() %}<tr><td>{{ k }}</td><td class="n">{{ "n/a" if v.score is none else "%.2f" | format(v.score) }}</td><td>{{ v.reason }}</td></tr>{% endfor %}</table>
+<p class="caption">Plan: {{ plan.source }}. Skipped: {% for s in (plan.skip or []) %}{{ s.signal }} ({{ s.reason }}){{ "; " if not loop.last }}{% endfor %}</p></section>
+
+<section id="s10"><h2>10. Questions for SMEs</h2>
+{% if questions %}<ul>{% for q in questions %}<li>{{ q.question }}</li>{% endfor %}</ul>{% else %}<p class="na">No open questions.</p>{% endif %}</section>
+
+<section id="s11"><h2>11. Effort patterns</h2>
+<p>Month-end share of hours: {{ m.overall.month_end_share | pct }} · application switches: {{ m.overall.switches | cnt }} · hours without a step: {{ m.overall.unassigned_hours | hrs }} · hours in generic clicks: {{ m.overall.generic_hours | hrs }}</p>
+<table><tr><th>Hour of day</th>{% for h in m.time_of_day %}<th class="n">{{ h.value }}</th>{% endfor %}</tr>
+<tr><td>Share of hours</td>{% for h in m.time_of_day %}<td class="n">{{ h.share | pct }}</td>{% endfor %}</tr></table></section>
+
+<section id="s12"><h2>12. Record links</h2>
+{% if mode in ("case", "partial") and m.case %}<p>Mode: {{ mode }}. {{ m.case.cases | cnt }} linked cases; median cycle time {{ (m.case.median_cycle_h * 3600) | dur }}; {{ m.case.variants | cnt }} paths.</p>
+{% else %}<p class="na">No record ID links the events, so there is no cycle time or path analysis.</p>{% endif %}</section>
+
+<section id="s13"><h2>13. Appendix</h2>
+<details><summary>Decisions (strategies, case link, assignment)</summary><ul>
+{% for k, d in decisions.items() %}<li><b>{{ k }}</b>: {{ d.message }}</li>{% endfor %}</ul></details>
+<details><summary>Mapping and settings</summary><pre>{{ mapping | tojson(indent=1) }}</pre></details>
+<details><summary>AI provenance</summary><p>Summary: {{ story.source }}{% if story.reason %} ({{ story.reason }}){% endif %}. Evidence plan: {{ plan.source }}.</p></details>
+<details><summary>Calculation checks ({{ checks.passed }} passed, {{ checks.failed }} failed)</summary>
+<table><tr><th>Check</th><th>Passed</th><th>Detail</th></tr>{% for c in checks.checks %}<tr><td>{{ c.check }}</td><td>{{ "yes" if c.passed else "NO" }}</td><td>{{ c.detail }}</td></tr>{% endfor %}</table></details>
+</section>
+</body></html>

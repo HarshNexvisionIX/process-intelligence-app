@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.release-venv/
+venv/
+.pytest_cache/
+
+# Secrets
+.env
+# Your chosen AI models (written by the AI settings page)
+config/ai_providers.local.yaml
+
+# Data: uploads, generated files and job outputs never go into git
+data/*
+!data/.gitkeep
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+
+# Bench datasets: downloaded by hand, never in git; only their dataset.yaml descriptions are
+test_datasets/**
+!test_datasets/**/
+!test_datasets/**/dataset.yaml
+!test_datasets/README.md
+
+# Web UI: dependencies are installed by npm, never committed
+web/node_modules/
+
+# Local working folders: your own input files, old snapshots and backups never go into git
+Claude outputs/
+check_inputs/
+_backup_*/
+*.zip
+
+# Raw event data anywhere (keeps client data out of git)
+*.parquet
+*.xes
+*.xes.gz
+
+# Editor settings
+.vscode/

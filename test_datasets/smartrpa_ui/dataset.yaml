@@ -1,0 +1,12 @@
+# Optional. SmartRPA UI logs (Office: Excel, browser), Zenodo 6518291. Download here, list the columns, fill in.
+name: smartrpa_ui
+source_url: https://doi.org/10.5281/zenodo.6518291
+licence: see the Zenodo page
+dataset_class: public
+optional: true
+files: TODO
+mapping: TODO
+truth: TODO                         # routine labels if provided
+sample: {rows: 200000}
+expected:
+  mode: no_case

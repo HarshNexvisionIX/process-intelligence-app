@@ -1,0 +1,21 @@
+Level 3 step: {l3}
+Stage: {stage}
+Task names in this step: {tasks}
+Applications: {apps}
+Preferred sub-step names from the business documents (use them, written exactly, where they fit): {preferred}
+What the business documents say about this step (use it to name and describe the sub-steps in the business's own words):
+{context}
+
+Top screens (screen (application) — share of the step's events — top clicks):
+{screens}
+
+Units (id | application | screen | click | share of the step's events):
+{units}
+
+Return exactly this JSON shape:
+{"substeps": [
+  {"id": "S1", "label": "Find and open the HR case",
+   "description": "Searches People Hubs in ServiceNow and opens the case record to work on it.",
+   "rules": [{"application": "ServiceNow", "screen_regex": "(?i)^people hubs", "click_regex": "(?i)\b(search|open record)\b"}],
+   "examples": ["U001", "U004"]}],
+ "assign_unmatched": {"U088": "S1"}}

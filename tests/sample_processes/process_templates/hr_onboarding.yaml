@@ -1,0 +1,45 @@
+# HR onboarding: from the job requisition to a paid, onboarded employee.
+# Steps are matched to activity names by their words and synonyms (app/core/templates.py).
+# The step order is the business order (HR onboarding process deck):
+#   1 Requisition Creation, 2 Candidate Identification and ID Creation, 3 Case Assignment,
+#   4 Offer Processing, 5 Case Tracking, 6 Background Checks Initiation, 7 Vetting Status Monitoring,
+#   8 Hire Processing, 9 Employee Profile Creation, 10 Onboarding Task, 11 Payroll Activation.
+# No step is marked mandatory: the business has not said which ones are. Set mandatory: true only for
+# steps the business marks mandatory (conformance then reports the cases without them).
+name: HR onboarding
+stages:
+  - name: Requisition & sourcing
+    steps:
+      - {name: Requisition creation, mandatory: false,
+         synonyms: [job requisition, create requisition, requisition, position request, vacancy creation,
+                    job opening, open position, headcount request]}
+      - {name: Candidate identification, mandatory: false,
+         synonyms: [candidate sourcing, sourcing, candidate search, identify candidate, candidate selection,
+                    shortlisting, candidate id creation, applicant identification]}
+  - name: Intake & offer
+    steps:
+      - {name: Case assignment, mandatory: false,
+         synonyms: [assign case, case allocation, ticket assignment, assign recruiter, assignment]}
+      - {name: Offer processing, mandatory: false,
+         synonyms: [offer letter, create offer, offer approval, send offer, offer acceptance, offer]}
+      - {name: Case tracking, mandatory: false,
+         synonyms: [track case, case follow up, case status, case monitoring, follow up]}
+  - name: Vetting
+    steps:
+      - {name: Background checks, mandatory: false,
+         synonyms: [background check, background verification, screening, pre employment check,
+                    reference check, background checks initiation, criminal record check]}
+      - {name: Vetting monitoring, mandatory: false,
+         synonyms: [vetting status, vetting, security clearance, clearance monitoring, vetting status monitoring,
+                    check status]}
+  - name: Hire & payroll
+    steps:
+      - {name: Hire processing, mandatory: false,
+         synonyms: [hire, new hire, hiring, process hire, hire employee, contract creation]}
+      - {name: Employee profile creation, mandatory: false,
+         synonyms: [employee record, create employee, employee master data, personnel file, employee profile]}
+      - {name: Onboarding tasks, mandatory: false,
+         synonyms: [onboarding, onboarding task, induction, welcome, equipment provisioning, first day,
+                    orientation]}
+      - {name: Payroll activation, mandatory: false,
+         synonyms: [payroll setup, add to payroll, activate payroll, salary setup, payroll]}

@@ -1,0 +1,597 @@
+{
+  "version": "1.1.0",
+  "decision": "approve",
+  "work_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b",
+  "scenarios": [
+    {
+      "name": "clean",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\clean",
+        "--stage",
+        "phase",
+        "--application",
+        "Application_name",
+        "--window-title",
+        "simplified_title",
+        "--merge-repeats",
+        "--app-map",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\app-map.csv"
+      ],
+      "exit": 0,
+      "seconds": 1.722,
+      "peak_rss_mb": 177.1,
+      "timings": {
+        "normalise": 0.17,
+        "run_quality": 0.097,
+        "run_mining": 0.274,
+        "generate_report": 0.463
+      },
+      "facts": 105,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "definition",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\definition",
+        "--stage",
+        "phase",
+        "--definition",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\definition.json",
+        "--export-bpmn",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\definition.bpmn",
+        "--order",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\order.json"
+      ],
+      "exit": 0,
+      "seconds": 2.011,
+      "peak_rss_mb": 178.9,
+      "timings": {
+        "normalise": 0.089,
+        "run_quality": 0.116,
+        "run_mining": 0.328,
+        "generate_report": 0.493
+      },
+      "facts": 148,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "dirty",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\dirty.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\dirty"
+      ],
+      "exit": 0,
+      "seconds": 1.493,
+      "peak_rss_mb": 165.9,
+      "timings": {
+        "normalise": 0.054,
+        "run_quality": 0.117,
+        "run_mining": 0.23,
+        "generate_report": 0.438
+      },
+      "facts": 98,
+      "band": "Medium",
+      "flow": "High"
+    },
+    {
+      "name": "shuffled",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\shuffled.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\shuffled",
+        "--stage",
+        "phase"
+      ],
+      "exit": 0,
+      "seconds": 1.381,
+      "peak_rss_mb": 161.3,
+      "timings": {
+        "normalise": 0.044,
+        "run_quality": 0.113,
+        "run_mining": 0.254,
+        "generate_report": 0.459
+      },
+      "facts": 79,
+      "band": "High",
+      "flow": "None"
+    },
+    {
+      "name": "shuffled_confirmed",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\shuffled.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\shuffled_confirmed",
+        "--stage",
+        "phase",
+        "--order",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\order.json"
+      ],
+      "exit": 0,
+      "seconds": 1.393,
+      "peak_rss_mb": 163.1,
+      "timings": {
+        "normalise": 0.044,
+        "run_quality": 0.108,
+        "run_mining": 0.252,
+        "generate_report": 0.471
+      },
+      "facts": 73,
+      "band": "High",
+      "flow": "Medium"
+    },
+    {
+      "name": "folder",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\five_files",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\folder"
+      ],
+      "exit": 0,
+      "seconds": 1.377,
+      "peak_rss_mb": 166.4,
+      "timings": {
+        "normalise": 0.047,
+        "run_quality": 0.094,
+        "run_mining": 0.223,
+        "generate_report": 0.433
+      },
+      "facts": 98,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "tiny",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\tiny.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\tiny"
+      ],
+      "exit": 0,
+      "seconds": 0.589,
+      "peak_rss_mb": 141.7,
+      "timings": {
+        "normalise": 0.016,
+        "run_quality": 0.059,
+        "run_mining": 0.001,
+        "generate_report": 0.17
+      },
+      "facts": 5,
+      "band": "Not feasible",
+      "flow": null
+    },
+    {
+      "name": "bad_timestamp",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\bad.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\bad_timestamp",
+        "--timestamp",
+        "timestamp"
+      ],
+      "exit": 2,
+      "seconds": 0.396,
+      "peak_rss_mb": 124.2,
+      "timings": {},
+      "facts": 0,
+      "band": null,
+      "flow": null
+    },
+    {
+      "name": "missing_columns",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\plain.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\missing_columns"
+      ],
+      "exit": 0,
+      "seconds": 1.347,
+      "peak_rss_mb": 163.2,
+      "timings": {
+        "normalise": 0.038,
+        "run_quality": 0.091,
+        "run_mining": 0.255,
+        "generate_report": 0.448
+      },
+      "facts": 98,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "derived_case",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\tickets.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\derived_case",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--window-title",
+        "window_title",
+        "--derive-case",
+        "text_pattern",
+        "--pattern",
+        "ticket"
+      ],
+      "exit": 0,
+      "seconds": 1.528,
+      "peak_rss_mb": 173.6,
+      "timings": {
+        "normalise": 0.103,
+        "run_quality": 0.093,
+        "run_mining": 0.228,
+        "generate_report": 0.462
+      },
+      "facts": 99,
+      "band": "High",
+      "flow": "Medium"
+    },
+    {
+      "name": "work_sessions",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\work_sessions",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--derive-case",
+        "work_session"
+      ],
+      "exit": 0,
+      "seconds": 0.978,
+      "peak_rss_mb": 157.4,
+      "timings": {
+        "normalise": 0.036,
+        "run_quality": 0.079,
+        "run_mining": 0.167,
+        "generate_report": 0.356
+      },
+      "facts": 48,
+      "band": "High",
+      "flow": "Medium"
+    },
+    {
+      "name": "overview",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\overview",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--overview-only"
+      ],
+      "exit": 0,
+      "seconds": 0.673,
+      "peak_rss_mb": 147.4,
+      "timings": {
+        "normalise": 0.022,
+        "run_quality": 0.073,
+        "run_mining": 0.09,
+        "generate_report": 0.175
+      },
+      "facts": 6,
+      "band": "Not feasible",
+      "flow": null
+    },
+    {
+      "name": "milestones",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\milestones.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\milestones",
+        "--action",
+        "activity_alias_name",
+        "--stage",
+        "phase",
+        "--merge-repeats"
+      ],
+      "exit": 0,
+      "seconds": 2.666,
+      "peak_rss_mb": 199.3,
+      "timings": {
+        "normalise": 0.385,
+        "run_quality": 0.128,
+        "run_mining": 1.027,
+        "generate_report": 0.514
+      },
+      "facts": 159,
+      "band": "High",
+      "flow": "Medium"
+    },
+    {
+      "name": "subprocess",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\subprocess.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\subprocess",
+        "--action",
+        "activity_alias_name",
+        "--merge-repeats"
+      ],
+      "exit": 0,
+      "seconds": 3.511,
+      "peak_rss_mb": 189.5,
+      "timings": {
+        "normalise": 0.375,
+        "run_quality": 0.085,
+        "run_mining": 1.801,
+        "generate_report": 0.393
+      },
+      "facts": 187,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "subprocess_standards",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\subprocess.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\subprocess_standards",
+        "--action",
+        "activity_alias_name",
+        "--standards",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\standards.json"
+      ],
+      "exit": 0,
+      "seconds": 3.598,
+      "peak_rss_mb": 197.8,
+      "timings": {
+        "normalise": 0.264,
+        "run_quality": 0.147,
+        "run_mining": 1.839,
+        "generate_report": 0.491
+      },
+      "facts": 192,
+      "band": "High",
+      "flow": "High"
+    },
+    {
+      "name": "large",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\inputs\\big.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\large"
+      ],
+      "exit": 0,
+      "seconds": 22.753,
+      "peak_rss_mb": 1473.4,
+      "timings": {
+        "normalise": 2.401,
+        "run_quality": 3.061,
+        "run_mining": 7.324,
+        "generate_report": 7.944
+      },
+      "facts": 98,
+      "band": "High",
+      "flow": "High"
+    }
+  ],
+  "tests": {
+    "normal": {
+      "exit": 0,
+      "seconds": 156.42,
+      "summary": "e version (PDEP-8).\n  See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.\n    df.reset_index(inplace=True)  # noqa: PD002\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n220 passed, 2 deselected, 66 warnings in 155.22s (0:02:35)\n"
+    },
+    "slow": {
+      "exit": 0,
+      "seconds": 42.69,
+      "summary": "..                                                                       [100%]\n2 passed, 220 deselected in 41.92s\n"
+    }
+  },
+  "smoke": {
+    "pages": [
+      {
+        "page": "upload_page",
+        "errors": [],
+        "tabs": [
+          "Upload file(s)",
+          "Use files on this computer",
+          "Try a sample"
+        ]
+      },
+      {
+        "page": "quality_page",
+        "errors": [],
+        "tabs": []
+      },
+      {
+        "page": "map_page",
+        "errors": [],
+        "tabs": [
+          "Process map",
+          "Sub-processes",
+          "Variants",
+          "Bottlenecks",
+          "Rework",
+          "Resources",
+          "Applications",
+          "Trends"
+        ]
+      },
+      {
+        "page": "business_page",
+        "errors": [],
+        "tabs": [
+          "Start the definition",
+          "Knowledge sources",
+          "Edit the definition",
+          "Check against the data",
+          "Conflicts & questions",
+          "Approve",
+          "Final map"
+        ]
+      },
+      {
+        "action": "empty evidence filter",
+        "errors": []
+      },
+      {
+        "page": "report_page",
+        "errors": [],
+        "tabs": []
+      },
+      {
+        "page": "jobs_page",
+        "errors": [],
+        "tabs": []
+      }
+    ],
+    "clean_ai_calls": 1,
+    "draft_ai_calls": 1,
+    "draft_accepted": true,
+    "tiny_ai_calls": 0,
+    "knowledge": {
+      "map_confidence_in_report": true,
+      "documented_gap_list": true,
+      "undocumented_list": true,
+      "summary": {
+        "score": 59.6,
+        "breakdown": {
+          "Confirmed": 5,
+          "Business only": 0,
+          "Partly confirmed": 0,
+          "Documented ≠ actual": 0,
+          "Undocumented practice": 17,
+          "Needs decision": 0,
+          "Unverified": 1
+        },
+        "elements": 23
+      },
+      "quotes_in_ai_payload": false,
+      "business_page_errors": [],
+      "business_page_tabs": [
+        "Start the definition",
+        "Knowledge sources",
+        "Edit the definition",
+        "Check against the data",
+        "Conflicts & questions",
+        "Approve",
+        "Final map"
+      ]
+    }
+  },
+  "consistency": {
+    "unreferenced_setting_leaf_candidates": [],
+    "env_undocumented": [],
+    "dependencies": {
+      "requirements.txt": {
+        "pins": 16,
+        "release_mismatches": [
+          [
+            "faster-whisper",
+            "1.2.1",
+            null
+          ],
+          [
+            "pytesseract",
+            "0.3.13",
+            null
+          ]
+        ],
+        "original_venv_mismatches": [
+          [
+            "faster-whisper",
+            "1.2.1",
+            null
+          ],
+          [
+            "pytesseract",
+            "0.3.13",
+            null
+          ]
+        ]
+      },
+      "requirements.lock.txt": {
+        "pins": 85,
+        "release_mismatches": [],
+        "original_venv_mismatches": []
+      }
+    },
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]"
+  },
+  "leak_hits": [
+    {
+      "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\clean\\jobs\\20261105-135637-5ea605\\evidence.json",
+      "location": "$.definition_fingerprint",
+      "category": "hex32",
+      "count": 1,
+      "examples": [
+        "9d58a0dbefde6a1ddee774e2345452d160217cb1ca86a9963b843a294b623935"
+      ]
+    },
+    {
+      "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\claude\\d--process-mining-app\\a0fc5ed4-8a81-4ac9-a4ee-962ac3fdf95a\\scratchpad\\release-1.1.0b\\definition\\jobs\\20261105-135640-139160\\evidence.json",
+      "location": "$.definition_fingerprint",
+      "category": "hex32",
+      "count": 1,
+      "examples": [
+        "9d58a0dbefde6a1ddee774e2345452d160217cb1ca86a9963b843a294b623935"
+      ]
+    }
+  ]
+}

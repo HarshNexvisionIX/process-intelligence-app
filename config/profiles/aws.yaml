@@ -1,0 +1,25 @@
+# Private AWS profile: every task is routed only to the private vLLM service.
+deployment:
+  profile: aws
+ai:
+  allow_external: false
+  allow_external_for_client: false
+  routes:
+    summary: [vllm_private]
+    order_suggestion: [vllm_private]
+    evidence_explain: [vllm_private]
+    definition_draft: [vllm_private]
+    knowledge_extract: [vllm_private]
+    l4_bucketing: [vllm_private]
+    l4_summary: [vllm_private]
+    nc_evidence_plan: [vllm_private]
+    nc_pack_from_docs: [vllm_private]
+    nc_assign_rules: [vllm_private]
+    nc_activities: [vllm_private]
+    nc_summary: [vllm_private]
+    nc_readout: [vllm_private]
+    nc_process_map: [vllm_private]
+    nc_stage_explain: [vllm_private]
+storage:
+  data_dir: /data
+  s3_backup: false

@@ -1,0 +1,4 @@
+# Rules that give a step to clicks WITHOUT a source label. Only status sme_confirmed or rule is applied; first
+# match wins, in this order. match: app (name or "*"), screen and action (regular expressions on the cleaned
+# screen / click; no nested quantifiers). Empty until the business confirms rules (N3 proposes, N5 reviews).
+rules: []

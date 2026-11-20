@@ -1,0 +1,6 @@
+Summary of the {kind}: {name}
+Step confidence (order of sub-steps): {confidence}
+{context}
+
+Facts (id | label | value | badge):
+{facts}

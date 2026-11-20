@@ -1,0 +1,30 @@
+# Purchase to pay: from a purchase request to a paid supplier invoice.
+name: Purchase to pay
+stages:
+  - name: Request
+    steps:
+      - {name: Create request, mandatory: true,
+         synonyms: [purchase requisition, create purchase requisition, requisition, purchase request, create pr]}
+      - {name: Approve request, mandatory: false,
+         synonyms: [approve requisition, requisition approval, release requisition, approve pr]}
+      - {name: Reject request, mandatory: false, synonyms: [reject requisition, decline request]}
+  - name: Ordering
+    steps:
+      - {name: Create order, mandatory: true,
+         synonyms: [create purchase order, purchase order, create po, po creation, order creation]}
+      - {name: Change price, mandatory: false, synonyms: [price change, change po price, update price]}
+      - {name: Cancel order, mandatory: false, synonyms: [delete purchase order, cancel po, order cancellation]}
+  - name: Receiving
+    steps:
+      - {name: Receive goods, mandatory: false,
+         synonyms: [goods receipt, record goods receipt, goods received, gr, receipt of goods]}
+  - name: Invoicing
+    steps:
+      - {name: Receive invoice, mandatory: true,
+         synonyms: [invoice receipt, record invoice, vendor invoice, invoice received, scan invoice]}
+      - {name: Block invoice, mandatory: false, synonyms: [invoice block, set payment block, payment block]}
+      - {name: Unblock invoice, mandatory: false, synonyms: [remove payment block, release invoice, invoice release]}
+      - {name: Change vendor bank, mandatory: false,
+         synonyms: [change bank details, vendor bank change, update vendor bank, bank details change]}
+      - {name: Pay invoice, mandatory: true,
+         synonyms: [payment, clear invoice, invoice payment, payment run, pay vendor]}

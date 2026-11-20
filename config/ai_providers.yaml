@@ -1,0 +1,89 @@
+# AI providers (OpenAI-compatible endpoints). No secrets here: keys come from .env (key_env).
+# Your chosen models and limit overrides are written by the "AI settings" page to
+# config/ai_providers.local.yaml (git-ignored); values there win.
+# Free-tier limits change: check them in each provider's console. null = unknown (not enforced).
+# private: true = the provider may receive CLIENT datasets (page 1 "Dataset class"); hosted free tiers are
+# false. The custom LLM_BASE_URL endpoint counts as private when its address is local or on your network.
+providers:
+  gemini:
+    private: false
+    name: Google Gemini (AI Studio)
+    label: Gemini
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai/
+    key_env: GEMINI_API_KEY
+    default_model: ""                # choose from the live list on the AI settings page
+    json_mode: true
+    context_tokens: 1000000
+    limits: {rpm: null, rpd: null, tpm: null, tpd: null}   # per project; shown in AI Studio
+    day_reset_tz: America/Los_Angeles  # Gemini daily quotas reset at Pacific midnight
+    extra_body: {}
+    free_tier_note: "Free tier: Google may use prompts and answers to improve its models; do not send data your client forbids."
+  groq:
+    private: false
+    name: Groq
+    label: Groq
+    base_url: https://api.groq.com/openai/v1
+    key_env: GROQ_API_KEY
+    default_model: openai/gpt-oss-120b
+    json_mode: true
+    context_tokens: 131072
+    limits: {rpm: 30, rpd: 1000, tpm: 8000, tpd: 200000}
+    day_reset_tz: UTC
+    extra_body: {reasoning_effort: low}
+    free_tier_note: "Free tier: check Groq's data policy; do not send data your client forbids."
+  openrouter:
+    private: false
+    name: OpenRouter (free models)
+    label: OpenRouter
+    base_url: https://openrouter.ai/api/v1
+    key_env: OPENROUTER_API_KEY
+    default_model: ""                # choose a model ending in :free on the AI settings page
+    json_mode: false
+    context_tokens: 32000
+    limits: {rpm: 20, rpd: 50, tpm: null, tpd: null}       # 1,000 requests/day with at least $10 credit
+    day_reset_tz: UTC
+    extra_body: {}
+    free_tier_note: "Free tier: some free models log prompts for training; turn training off in OpenRouter's privacy settings if needed."
+  cerebras:
+    private: false
+    name: Cerebras
+    label: Cerebras
+    base_url: https://api.cerebras.ai/v1
+    key_env: CEREBRAS_API_KEY
+    default_model: ""                # choose from the live list on the AI settings page
+    json_mode: false                 # answers are read with the "first JSON object" parser
+    context_tokens: null             # depends on the model; check the Cerebras console
+    limits: {rpm: null, rpd: null, tpm: null, tpd: null}   # free-tier limits per model: see the console
+    day_reset_tz: UTC
+    extra_body: {}
+    free_tier_note: "Free tier: check Cerebras's data policy; do not send data your client forbids."
+  # Private providers (private: true): the only ones a CLIENT dataset may use. Both need a model chosen here or
+  # on the AI settings page; until then they are listed but not used.
+  ollama_local:
+    private: true
+    name: Ollama on this computer
+    label: Ollama (local)
+    base_url: http://localhost:11434/v1
+    key_env: OLLAMA_API_KEY            # Ollama needs no key; any value works if you set one
+    key_optional: true
+    default_model: ""                  # e.g. qwen2.5:3b after `ollama pull qwen2.5:3b`
+    json_mode: true
+    context_tokens: 8192
+    limits: {rpm: null, rpd: null, tpm: null, tpd: null}
+    day_reset_tz: UTC
+    extra_body: {}
+    free_tier_note: "Runs on this computer: nothing leaves it."
+  vllm_private:
+    private: true
+    name: Private vLLM / OpenAI-compatible server
+    label: vLLM (private)
+    base_url: ""                       # your server inside the network, e.g. http://10.0.0.5:8000/v1
+    key_env: VLLM_API_KEY
+    key_optional: true
+    default_model: ""
+    json_mode: true
+    context_tokens: null
+    limits: {rpm: null, rpd: null, tpm: null, tpd: null}
+    day_reset_tz: UTC
+    extra_body: {}
+    free_tier_note: "Your own server: use it only if it is inside your network."

@@ -1,0 +1,4 @@
+rules:
+  - {id: R1, step: Enter, match: {app: "*", action: "^enter"}, status: rule, version: 1}
+  - {id: R2, step: Approve, match: {app: "*", action: "^approve"}, status: rule, version: 1}
+  - {id: R3, step: Pay, match: {app: "*", action: "^post"}, status: rule, version: 1}

@@ -1,0 +1,746 @@
+# Central settings. Code reads these instead of hard-coding numbers,
+# so thresholds can be tuned without changing code.
+
+ingest:
+  exact_distinct_max_rows: 5000000   # page 1 counts distinct values exactly below this many rows (else "about N")
+  # Rows sampled to profile columns and suggest a mapping.
+  # Profiling the full file is unnecessary and slow at 10M+ rows.
+  profile_sample_rows: 200000
+  parquet_compression: zstd
+  # Multi-file datasets (folder, list of files or glob pattern)
+  max_files: 5000          # refuse more files than this (protects memory and the UI)
+
+mapping:
+  # A column is accepted as a timestamp only if at least this share parses.
+  min_timestamp_parse_rate: 0.95
+  # Suggestions below this confidence are shown, but flagged for the user to check.
+  min_suggestion_confidence: 0.6
+  # Timestamp text formats tried, in order, when values are not ISO.
+  timestamp_formats:
+    - "%Y-%m-%d %H:%M:%S"
+    - "%Y-%m-%dT%H:%M:%S"
+    - "%Y-%m-%d %H:%M"
+    - "%d-%m-%Y %H:%M:%S"
+    - "%d/%m/%Y %H:%M:%S"
+    - "%d/%m/%Y %H:%M"
+    - "%m/%d/%Y %H:%M:%S"
+    - "%m/%d/%Y %H:%M"
+    - "%d.%m.%Y %H:%M:%S"
+    - "%Y/%m/%d %H:%M:%S"
+    - "%Y-%m-%d"
+    - "%d/%m/%Y"
+    - "%m/%d/%Y"
+    - "%d-%m-%Y"
+
+  # Checks run when the user clicks "Validate and convert".
+  # Only real blockers stop conversion; everything else is a warning,
+  # because the quality gate (page 2) decides whether the data can be trusted.
+  validation:
+    block_if_parse_rate_below: 0.50   # timestamps: below this the mapping is surely wrong
+    warn_if_missing_above: 0.05       # case ID / activity missing in the rows kept
+    min_events_per_case: 1.5          # below this, the case ID is probably an event ID
+    max_activities: 2000              # above this, the activity column is probably too detailed
+
+  # Values that look like codes (hex hashes, UUIDs, long IDs) are poor activity names.
+  # A column is treated as code-like when at least this share of sample values match.
+  code_like_share: 0.6
+
+  # Personal data detection: matching columns are pre-selected to be LEFT OUT
+  # of the converted file. The user can change the selection.
+  sensitive:
+    name_hints: [email, mail, phone, mobile, address, firstname, lastname, fullname,
+                 customername, employeename, candidatename, personname, username,
+                 dob, birth, ssn, pan, aadhaar, passport, salary, iban, accountnumber]
+    value_share: 0.3          # share of sample values that look like emails/phones/person names
+    person_name_min_distinct: 300   # person names are many; app or team names are few
+
+# Filled on Day 2: quality checks, thresholds, weights and bands.
+# Data Quality and Feasibility Gate.
+# Each check has a WARN and a FAIL threshold. Tune here, never in code.
+quality:
+  checks:
+    required_fields:     {warn: 0.01,  fail: 0.05}   # share of rows missing case, activity or time
+    timestamp_validity:  {warn: 0.005, fail: 0.02}   # share unreadable, placeholder or future
+    timestamp_granularity: {warn: 0.30, fail: 0.80}  # share of times at exactly 00:00:00
+    ordering_ties:       {warn: 0.10,  fail: 0.30}   # share of events sharing a time inside a case
+    duplicates:          {warn: 0.01,  fail: 0.10}   # share of exact duplicate events
+    label_hygiene:       {warn_activities: 200}      # any near-duplicate label also warns
+    case_completeness:   {warn: 0.20,  fail: 0.50}   # share of cases without a usual start or end
+    case_size:           {warn: 0.20,  fail: 0.50}   # share of one-event cases
+    volume:              {warn: 1000,  fail: 100}    # number of cases (lower is worse)
+    pattern_strength:    {warn: 0.60,  fail: 0.90}   # unique paths / cases
+    model_stability:     {warn: 0.85,  fail: 0.70}   # similarity of maps from half-samples (lower is worse)
+
+  # A start or end activity counts as "usual" if at least this share of cases use it.
+  usual_start_end_share: 0.02
+  # Placeholder dates: anything before this year is treated as a system default.
+  earliest_valid_year: 1990
+  # Model stability: number of half-samples to compare.
+  stability_samples: 20
+  # Repeated steps (same activity twice in a row in a case). Common in desktop,
+  # clickstream and ticket-status data. Above this share, suggest merging them.
+  repeats_tip_share: 0.30
+  # Typo search between activity names is skipped above this many names.
+  max_labels_for_typo_search: 20000
+
+  # Six dimensions; weights must add up to 1.
+  dimensions:
+    completeness:   {weight: 0.20, checks: [required_fields, case_completeness]}
+    timestamps:     {weight: 0.15, checks: [timestamp_validity, timestamp_granularity]}
+    ordering:       {weight: 0.15, checks: [ordering_ties, duplicates]}
+    volume:         {weight: 0.15, checks: [case_size, volume]}
+    pattern:        {weight: 0.15, checks: [label_hygiene, pattern_strength]}
+    stability:      {weight: 0.20, checks: [model_stability]}
+
+  # Any failed check caps the final score at this value.
+  fail_cap: 39
+  # More than this many warnings caps the score at Medium.
+  warn_cap: {max_warnings: 2, cap: 79}
+  bands:
+    - {name: High,          min: 80}
+    - {name: Medium,        min: 60}
+    - {name: Low,           min: 40}
+    - {name: Not feasible,  min: 0}
+
+# Mining engine (process map and analyses)
+mining:
+  top_variants: 50            # variants returned, most frequent first
+  min_support_cases: 30       # results based on fewer cases are flagged "low support"
+  top_bottlenecks: 10
+  top_rework: 10
+  top_handovers: 20
+  start_node: "▶ Start"
+  end_node: "■ End"
+  # Map simplification defaults (the UI sliders start here)
+  default_activity_coverage: 1.0    # share of events kept by keeping the most frequent activities
+  default_edge_coverage: 0.9        # share of transitions kept by keeping the most frequent arrows
+  max_nodes: 40                     # never draw more activities than this
+  # Time view of the map: this share of arrows (the slowest by median wait) is drawn in a warm colour
+  highlight_slowest_share: 0.10
+  # What each quality band allows
+  band_rules:
+    High:          {allowed: [kpis, map, variants, bottlenecks, rework, resources, applications, app_switching, trends], label: ""}
+    Medium:        {allowed: [kpis, map, variants, bottlenecks, rework, resources, applications, app_switching, trends], label: "Results shown with caveats (quality: Medium)."}
+    Low:           {allowed: [kpis, map, variants], label: "Exploratory only (quality: Low). Bottlenecks, rework, resources, applications and trends are hidden."}
+    "Not feasible": {allowed: [], label: "No analysis: the data did not pass the quality gate."}
+
+# Fact store and report
+facts:
+  bootstrap_resamples: 200     # resamples used for confidence intervals
+  bootstrap_max_values: 20000  # sample cap per bootstrap (keeps it fast on big data)
+  stability_samples: 20        # half-samples used to test whether a ranking is stable
+  badges:
+    high:   {min_support: 300, max_relative_ci: 0.25, min_stability: 0.9}
+    medium: {min_support: 30}
+  hide_below_support: 30       # facts with fewer supporting cases are not shown at all
+  top_variants: 10
+  top_transitions: 15
+report:
+  title: "ProcessLens Report"
+  map_activity_coverage: 1.0
+  map_edge_coverage: 0.9
+  max_table_rows: 20           # longest tables (resources, handovers) show at most this many rows
+  # The optimised report (metrics.py, report_checks.py; definitions in docs/METRICS.md):
+  min_cases: 30                # a waiting-time pair needs at least this many cases to be listed
+  min_wait_minutes: 60         # waiting pairs with a shorter median are left out (and counted)
+  rework_gap_minutes: 30       # back at a step within this gap = quick switching; after it = rework
+  top_n: 10                    # rows in the top-N tables (switches, handovers, back-and-forth)
+  collapse_appendix: true      # the appendix starts collapsed (<details>)
+  # Calculation checks: tolerance of the independent recomputation (counts are exact).
+  check_hours_tolerance: 0.05
+  check_share_tolerance_pp: 0.05
+  # How report maps are drawn (Graphviz in the browser: Viz.js 3.30.0, pinned):
+  #   inline  the bundled copy is embedded in report.html: no network request at all (default)
+  #   cdn     report.html loads Viz.js from viz_js_url (the data still stays in the file)
+  #   off     no drawing; the tables below each map still show everything
+  viz_js_mode: inline
+  viz_js_file: "app/static/vendor/viz-global-3.30.0.js"     # relative to the project folder
+  # Checked every time a report is written; a missing or changed file means "off" (never cdn).
+  viz_js_sha256: "c857641af952c8f82ac7243917f8563959046e5cfc44d7e84eff9a2b470f5eab"
+  viz_js_url: "https://cdn.jsdelivr.net/npm/@viz-js/viz@3.30.0/dist/viz-global.js"
+
+# Langfuse server compatibility (checked once when Langfuse is enabled; never blocks the app).
+# Python SDK langfuse 5.x needs a self-hosted Langfuse server of at least this version.
+observability:
+  langfuse_min_server_version: "4.59.0"
+  health_check_timeout_seconds: 3
+
+# Optional backup after a job reaches its completed analysis state. Disabled unless explicitly enabled.
+storage:
+  s3_backup: false
+  s3_include_raw: false
+
+# AI-written summary (Part 5). Switched on in .env (AI_ENABLED, LLM_*).
+ai:
+  temperature: 0
+  max_retries: 2
+  max_facts: 60                 # at most this many facts are sent, highest priority first
+  timeout_seconds: 60
+  prompt_name: "pm-report-writer"
+  prompt_label: "production"
+  banned_causal_phrases: ["caused by", "because of", "due to", "leads to", "results in", "the reason is"]
+  # Filler phrases that hide the measure ("as indicated by 4.2 h"): rejected, as is any "< 1 min".
+  banned_filler_phrases: ["as indicated by", "reflected by", "captured by", "shown by"]
+  # Every placeholder must sit in a sentence with one of these words (what the number measures).
+  measure_words: [case, cases, hour, hours, h, time, share, shares, run, runs, event, events, step, steps,
+                  switch, switches, wait, waits, waiting, median, percent, takes, take, took, spend, spent, covers,
+                  cover, covered, reach, reaches, reached, repeated, repeat, rework, path, paths, work, effort,
+                  minutes, days, weeks, per, of, score, quality, users, participants, applications, activities,
+                  variants, transitions, handovers, follow, follows, done, confidence, strength, within, longer]
+  exploratory_hedges: ["may", "might", "appears", "suggests", "possibly", "could"]
+  max_findings: 6
+  max_recommendations: 4
+  # Before anything is sent to the AI, emails and runs of this many digits (ticket/ID
+  # numbers) become "[id]". If more than this share of the activity names sent contain
+  # one, the AI is skipped and the template summary is used.
+  payload_mask_min_digits: 6
+  max_masked_activity_share: 0.20
+  # Which providers answer which task, in order (ai_client.py). A provider is used only when its
+  # key is in .env and a model is chosen. LLM_BASE_URL / LLM_MODEL form a "custom" provider used first.
+  routes:
+    summary:            [groq, cerebras, gemini, openrouter]
+    order_suggestion:   [groq, cerebras, gemini, openrouter]
+    evidence_explain:   [groq, cerebras, gemini, openrouter]
+    definition_draft:   [gemini, groq, cerebras, openrouter]   # long documents are cut into chunks that fit the
+    knowledge_extract:  [gemini, groq, cerebras, openrouter]   # smallest provider here (ai_client.chunk_chars)
+    l4_bucketing:       [gemini, cerebras, groq, openrouter]
+    l4_summary:         [groq, cerebras, gemini, openrouter]
+    # No-case mode (app/nocase/ai_gateway.py): private providers first; client data only ever uses those.
+    nc_evidence_plan:   [ollama_local, vllm_private, groq, cerebras, gemini, openrouter]
+    nc_pack_from_docs:  [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]
+    nc_assign_rules:    [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]
+    nc_activities:      [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]
+    nc_summary:         [ollama_local, vllm_private, groq, cerebras, gemini, openrouter]
+    nc_readout:         [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]   # AI readout (web UI)
+    nc_process_map:     [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]   # AI-enhanced conceptual map (web UI)
+    nc_stage_explain:   [ollama_local, vllm_private, gemini, groq, cerebras, openrouter]   # explain one step + Level 4 summaries (web UI)
+  max_wait_seconds: 20          # wait at most this long for a rate limit (Retry-After) before the next provider
+  # Client datasets (page 1, the default) use only providers with `private: true` in ai_providers.yaml.
+  # true = let client datasets use the other providers too (the sidebar shows a warning).
+  allow_external_for_client: false
+  rate_limit_retries: 2         # on 429: retry this often with backoff (Retry-After, else 2, 4 ... s) before moving on
+  # Seconds between two calls to the same provider (Level 4 makes one call per step): stays under per-minute limits.
+  pace_seconds: {default: 2, groq: 3, cerebras: 3, gemini: 4}
+  max_output_tokens: 2000       # counted in the budget check of every request
+  chunk_share: 0.6              # long documents: chunk = min(context, tokens per minute) x this share
+
+# Application mapping (page 1): give masked application values their real names.
+apps:
+  # A recorded value counts as "masked" when it fully matches one of these patterns.
+  masked_patterns:
+    - "[0-9a-fA-F]{16,}"                                                    # hex hashes (MD5, SHA...)
+    - "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"  # UUIDs
+    - "[^A-Za-z]*"                                                          # no letters at all
+  categories: [HR system, Ticketing, ERP, Email, Spreadsheet, Document, Browser, File system, Chat,
+               Security/vetting, Other]
+  unnamed_label: "Unnamed app"     # masked apps without a real name: "Unnamed app 1", "Unnamed app 2"...
+  example_titles: 3                # window titles shown per application on the mapping screen
+
+# Simple process map (page 3, report section 4): the intended order of steps.
+reference_map:
+  min_case_share: 0.02             # steps reached by fewer cases go into one "Other steps" group
+  order_strength: {strong: 0.5, partial: 0.2}   # labels for the order strength score (0-1)
+  back_and_forth_pairs: 3          # pairs drawn as dashed two-way lines
+  back_and_forth_max_dependency: 0.2   # a pair counts as back-and-forth below this |dependency|
+  label_wrap: 22                   # characters per line in step boxes
+  max_steps_per_row: 5             # without a stage column, steps wrap into rows of this many
+
+# Application switches (page 3 Applications tab, report section 8).
+app_switching:
+  session_gap_minutes: 30          # a longer pause between two events starts a new work session: no switch
+  top_pairs: 15                    # switch pairs (and app ping-pong patterns) listed
+  map_max_apps: 15                 # the switch map draws at most this many (most used) applications
+  min_step_app_share: 0.05         # an app counts as "used in a step" from this share of the step's events
+
+# Flow confidence: is there a reliable ORDER of steps (separate from data quality)?
+flow_confidence:
+  bands: {high: 80, medium: 60, low: 40}          # score 0-100; below low = "None"
+  # Source "data": the score comes from the order strength (0-1) ...
+  strength_points: {strong: 0.5, partial: 0.2}     # 0.5+ -> 80+, 0.2-0.5 -> 50-79, below 0.2 -> below 40
+  # ... weighted by how stable the suggested order is across half-samples of the cases
+  stability_weight: 0.25                           # score = strength score x (1 - w + w x stability)
+  stability_samples: 20                            # half-samples (64 case buckets, 32 per half)
+  stability_min_tau: 0.8                           # a half "agrees" when Kendall tau with the full order >= this
+  stability_min_gap: 0.05                          # steps whose positions differ less are a tie (no order evidence)
+  # Words that describe a sequence; with flow band Low/None the AI may not use them with sequence facts
+  sequence_words: ["then", "followed by", "after", "before", "next"]
+
+# Search for a better reading of the data (page 2 and run_pipeline --find-readings)
+reading_finder:
+  max_candidates: 30
+  sample_cases: 50000
+  session_gap_minutes: 30            # a pause longer than this starts a new work session
+  id_rows_per_value: {min: 2, max: 200}   # an ID-like column has 2-200 rows per value on average
+  min_fill: 0.5                      # candidate columns must be at least this full
+  activity_distinct: {min: 3, max: 60}
+  weights: {order_strength: 0.5, stability: 0.2, multi_step: 0.15, coverage: 0.15}
+  # Order strength and stability count fully only when at least this share of cases has 2+ steps;
+  # with fewer, they rest on a handful of transitions and are scaled down.
+  min_multi_step_share: 0.5
+
+# Process templates: the app ships NONE (they are not evidence about your process; the tests keep their own
+# copies in tests/sample_processes/). The switches below stay off.
+templates:
+  # Templates are NOT a source of evidence about YOUR process:
+  # the Level 3 order must come from your documents, checked against the data (order_evidence.py).
+  use_for_order: false             # true: page 3 / the report may offer "Template: ..." as the step order
+  use_for_definition_draft: false  # true: page 4 shows "Start from template"
+  min_token_overlap: 0.6             # share of a template step's words found in the activity name
+  min_event_share: 0.6               # suggest a template only when this share of events matches
+
+# When there is no case ID column: derive one (page 1 "Case ID: derive it", run_pipeline --derive-case).
+derived_case:
+  # ID-like tokens searched in text columns (window titles, actions, free text), most specific first.
+  # group = which part of the match is the ID (0 = the whole match).
+  id_patterns:
+    ticket:    {regex: '\b(INC|REQ|RITM|CASE|TKT|SR|CHG|PRB)[-_ ]?\d{5,}\b', group: 0, label: "Ticket / incident number"}
+    code:      {regex: '\b[A-Z]{2,5}[-_]?\d{4,}\b', group: 0, label: "Requisition / PO / invoice-style code"}
+    masked:    {regex: '#([0-9a-fA-F]{16,})#', group: 1, label: "Masked token (#hex#)"}
+    digits:    {regex: '\b\d{6,12}\b', group: 0, label: "Long number"}
+  sample_rows: 200000              # rows scanned per text column when looking for IDs
+  fill_within_session: true        # a row without an ID gets the ID of its session when the IDs before and after agree
+  session_gap_minutes: 30          # a longer pause starts a new work session
+  split_sessions_at_midnight: false
+  hash_length: 16                  # derived case IDs are salted SHA-256 hashes (hex characters kept)
+
+# When there is no activity column: activity = application + cleaned window title.
+derived_activity:
+  min_count: 200                   # screens with fewer events become "Other screen"
+  max_words: 6                     # words kept from the cleaned window title
+  min_users_for_phrase: 5          # a capitalised phrase is kept only when this many users saw it
+  # "View Worker - <anything> - Workday": the middle part is always replaced with "<name>"
+  name_screen_prefixes: ["View Worker", "Edit Worker", "Profile"]
+  name_screen_apps: ["Workday", "ServiceNow"]
+  # a capitalised phrase containing one of these words is screen text, not a person name
+  screen_words: [access, order, request, report, invoice, approval, approvals, worker, payment,
+                 purchase, sales, customer, vendor, supplier, account, accounts, home, settings,
+                 dashboard, inbox, list, detail, details, overview, search, task, tasks, ticket,
+                 incident, case, form, page, screen, menu, entry, document, record, item, items,
+                 easy, new, my, all, open, edit, create, view, change, display, maintain, status]
+
+# Business process definition: the evidence check (evidence.py). Code decides every verdict.
+evidence:
+  min_case_share: 0.02             # a step's activities reach this share of cases -> "step exists" Supported
+  uncovered_activity_share: 0.02   # an activity in this share of cases but in no step -> Contradicted claim
+  order_min_cases: 20              # fewer cases with both steps -> order claim "No data"
+  order_dep_supported: 0.5         # dependency (first occurrences) for Supported ...
+  order_pair_share_supported: 0.7  # ... together with this share of cases in the declared order
+  order_dep_balanced: 0.2          # |dependency| below this -> "done in both orders" (Partly)
+  mandatory_supported: 0.9         # share of cases (reaching the end step) that contain a mandatory step
+  mandatory_partly: 0.5
+  system_supported: 0.6            # share of a step's events in the declared application
+  system_partly: 0.2
+  sla_target_share: 0.9            # share of step runs within the SLA for Supported
+  sla_partly_share: 0.6
+  loop_contradiction_share: 0.3
+  standard_supported: 0.6          # share of a step's runs that follow its standard way (sub-processes)
+  standard_partly: 0.3    # a "next" flow where this share of cases loops back -> Contradicted
+  start_end_top: 3                 # the first / last step must be among this many top start / end activities
+
+# AI help for the definition (definition_ai.py; only when the AI is switched on)
+definition_ai:
+  max_doc_chars: 60000             # longer documents are cut into chunks of this size
+  max_doc_mb: 5                    # largest document accepted
+  quote_match: 0.9                 # a step's source_quote must match the document this closely
+  max_quote_words: 25
+  prompt_name_draft: "pm-definition-drafter"
+  prompt_name_suggest: "pm-definition-reviewer"
+milestones:
+  # Whole click labels that are people's names (e.g. names of your users), in addition to the first-name
+  # lexicon (config/first_names.txt). Such clicks are stored as "<other click>": their events stay counted.
+  person_names: []
+  verbs: [submit, save, send, approve, complete, finish, confirm, create, generate, issue, activate, close, resolve, initiate, assign, post, release, sign]
+  min_count: 300
+  min_users: 3
+  min_pair: 30
+  chain_dependency: 0.8
+
+
+# Sub-processes: how the work is done inside each step (subprocess.py)
+subprocess:
+  run_gap_minutes: 30              # no longer used: a run is consecutive events of a step in a case (as on the map)
+  min_action_count: 100            # per step, rarer actions become "Other action"
+  min_pair: 30                     # action pairs seen fewer times are ignored for order strength
+  top_paths: 10                    # action paths kept per step
+  max_actions_on_map: 20
+  map_edge_coverage: 0.9           # share of transitions shown on the action map by default
+  min_user_runs: 30                # users with fewer runs of a step are not listed
+  high_min_runs: 300               # step confidence High needs at least this many runs
+  min_app_share: 0.05              # apps with at least this share of a step's events are listed
+  max_steps: 60                    # steps detailed in mining.json (most runs first)
+
+# Knowledge sources (knowledge.py): SOPs, transcripts, videos, notes, models, policies, SME answers
+knowledge:
+  reliability:                     # default reliability per kind (editable per source)
+    sop: 0.9
+    policy: 0.9
+    walkthrough: 0.8               # a video or transcript that shows the work being done
+    video: 0.8
+    sme_answer: 0.75
+    model: 0.7
+    transcript: 0.6                # interview / meeting transcript
+    notes: 0.5
+  resolution_reliability: 0.95     # a person's decision on a conflict
+  stale_after_days: 540            # older sources count x stale_factor and are flagged "may be outdated"
+  stale_factor: 0.8
+  min_belief: 0.6                  # "Update draft from knowledge" proposes keys with at least this belief
+  max_belief: 0.99
+  whisper_model: "small"           # faster-whisper model (local, CPU int8)
+  frame_interval_seconds: 10       # key frames for OCR at most every N seconds
+  scene_threshold: 0.3             # ffmpeg scene-change threshold for key frames
+  max_file_mb: 500
+  max_chunk_chars: 12000           # text sent to the AI per extraction call
+  max_quote_words: 25
+  max_questions: 10
+  prompt_name: "pm-knowledge-extractor"
+
+# Combined confidence (combined_confidence.py): business belief x data verdict
+combined:
+  belief_threshold: 0.6
+  badge_factor: {High: 1.0, Medium: 0.8, Exploratory: 0.5}
+  partly_score: 0.5
+  business_only_cap: 70            # with no data, confidence = belief x 100, at most this
+  weights: {step: 2.0, flow: 1.5, owner: 1.0, system: 1.0, mandatory: 1.0, sla: 1.0, activity: 1.0}
+
+# Level 4: AI-built sub-steps inside each Level 3 step (level4.py). The AI sees only distinct click
+# names with their share of events (the action catalogue); code applies the grouping to every event.
+level4:
+  # Generic clicks (whole words) that only move around the application. A click made only of these words goes to
+  # one sub-step "Navigate and search" (or, on a specific screen, to the sub-step of that screen). New builds only.
+  navigation_words: [select, search, open, filter, scroll, view, list, navigate, go, back, next, previous, home, menu,
+                     tab, page, refresh, sort, close, expand, collapse, show, hide, more, all, results, find, browse,
+                     click, details, done, skip, main, content, ok, continue, link, here, top, bottom, return]
+  max_doc_names: 30                # sub-step names from your documents sent to the AI as preferred labels (names only)
+  split_hours_share: 0.25          # a sub-step above this share of the step's hours ...
+  split_min_units: 15              # ... with more units than this gets a split proposal (applied only when accepted)
+  label_verbs: [add, approve, assign, attach, book, calculate, cancel, change, check, close, complete, compose,
+                confirm, copy, create, enter, export, fill, find, generate, initiate, issue, link, log, maintain,
+                manage, monitor, navigate, notify, open, paste, post, prepare, print, process, record, register,
+                reject, release, request, review, save, schedule, search, select, send, set, sign, submit, track,
+                update, upload, validate, verify, view, write]
+  min_users: 3                 # a click name needs this many users ...
+  min_events: 20               # ... and this many events to be shown to the AI
+  coverage_target: 0.90        # units sent per L3: the most frequent until they cover this share of events
+  max_units_per_l3: 400
+  phase1_units: 150            # phase 1: the AI proposes buckets from the top units
+  chunk_units: 120             # phase 2: remaining units assigned in chunks of this size
+  min_buckets: 3
+  max_buckets: 10
+  max_name_words: 6
+  max_description_words: 20
+  tail_overlap: 0.6            # an unseen click joins a bucket of the same application at this word overlap
+  min_partial_coverage: 0.6    # an AI answer covering at least this (but < min_coverage) is kept; the rest goes to
+                               # the tail rules, Other and the review queue
+  local_only: false            # true: bucketing may only use providers in your own network
+  max_map_buckets: 11          # max_buckets + Other
+  first_names_file: config/first_names.txt   # first names that mark a person name inside a click label
+  min_coverage: 0.80           # AI rules + assignments must cover this share of the step's events
+  max_other_share: 0.20        # at most this share of the step's events may stay in "Other"
+  edge_coverage: 0.8           # Level 4 flow map: most frequent arrows until this share of transitions ...
+  min_edge_run_share: 0.05     # ... plus every arrow used in at least this share of runs
+  max_edges: 12
+  max_start_end_edges: 2
+  max_lines_per_step: 6        # storyboard: sub-steps listed per step box
+  regex_timeout_ms: 50         # per click name, when testing an AI regex (in a separate process)
+  regex_timeout_cap_ms: 2000   # at most this long for one regex over all click names
+  max_regex_chars: 200
+  auto_build: true             # the analysis builds the taxonomy with the AI (when on) for unconfirmed steps
+  top_screens: 25              # screens (with their top clicks) sent to the AI per step
+  # Typed text (stored only as <typed text>): a greeting / sign-off word (whole words only, so "hi" never
+  # matches "History"), or a sentence (3+ words with punctuation) without any of the ui_words below.
+  typed_words: [hello, hi, hey, dear, regards, thanks, thank, cheers, sincerely, greetings]
+  ui_words: [view, select, click, enter, open, search, send, submit, save, create, copy, display, change, edit, add,
+             delete, remove, choose, type, press, close, approve, reject, assign, upload, download, print, check,
+             review, update, cancel, confirm, attach, export, import, filter, sort, refresh, next, back, previous,
+             new, home, tab, menu, button, field, record, records, file, files, subject, cc, bcc, to, from, all,
+             list, form, data, details, detail, page, screen, summary, description, notes, note, activity,
+             activities, actions, action, task, tasks, case, cases, ticket, request, report, dashboard, profile,
+             worker, employee, number, name, date, status, comment, comments, attachment, email, mail, message,
+             inbox, folder, document, item, items, options, settings, help, login, logout, ok, yes, no, apply,
+             go, link, overview, history, favorites, home, preview, validate, list, lists, group, pay, tax, bank,
+             absence, absences, benefits, insurance, payroll, order, invoice, goods, vendor, supplier, account]
+
+# Screen labels from window titles (screens.clean_screen): a title segment of 1-4 capitalised words with
+# none of these words (nor level4.ui_words) is treated as a person and dropped. Extend freely.
+screens:
+  ui_vocabulary: [View, Worker, Job, Application, Search, Results, Event, Business, Process, Review, Home, Task,
+                  Tasks, Hire, Offer, Data, Master, Display, Maintain, Create, Change, Overview, Notification,
+                  Categories, Saved, Schedule, History, Calendar, Pattern, Assign, People, Hub, Hubs, Contact,
+                  Record, Compose, Email, Terminated, Employee, Contract, Message, Send, Communication, Actions,
+                  Personnel, Tax, Bank, Details, Book, Tracker, Report, Excel, Workday, ServiceNow, SAP, Exion,
+                  SharePoint, Inbox, Outlook, Profile, Absence, Leave, Balance, Candidate, Onboarding, Checklist,
+                  Payroll, Requisition, Vetting, Status, Case, Cases, Ticket, Form, Portal, Dashboard, List, Team,
+                  Teams, Approval, Approvals, Background, Check, Checks, Identification, Creation, Activation,
+                  Assignment, Tracking, Processing, Monitoring, Initiation, New, Edit, My, All, Open, Closed, Complete,
+                  # UI nouns of click names ("Core Activity", "Work Notes", "Explore Grid"): never a person.
+                  Activity, Core, Grid, Filter, Notes, Action, Reason, Canvas, Pane, Range, Value, Detail,
+                  Comments, Matrix, Selected, Options, Item, Explore, Work, Hold, Published, Candidates]
+  # A trailing title segment with one of these names is the application, not part of the screen.
+  app_names: [Workday, ServiceNow, SAP, SAP Logon, Exion, SharePoint, Excel, Microsoft Excel, Outlook,
+              Microsoft Outlook, Teams, Microsoft Teams, Word, Microsoft Word, Google Chrome, Chrome,
+              Microsoft Edge, Edge, Onboarding Tool, Security Watchdog, SecureVerify]
+
+# Optional process model discovered with PM4Py (app/core/pm4py_model.py; page 3 "Discovered model (PM4Py)").
+# LICENCE: PM4Py is AGPL v3 and is used here for INTERNAL use only. Set enabled: false before the app is sold
+# to or hosted for clients (or buy a commercial PM4Py licence). Install: pip install -r requirements-pm4py.txt
+pm4py:
+  enabled: true
+  noise_threshold: 0.2      # Inductive Miner (infrequent): 0 = every path kept; higher = a simpler model
+  max_cases: 20000          # larger logs use a fixed sample of this many cases (same model on every run)
+  fitness: true             # token-based replay fitness of the cases on the model
+  precision: true           # token-based replay precision: does the model allow paths nobody uses?
+  precision_max_cases: 200  # precision is the slowest PM4Py step (minutes on 1,000 varied cases): a fixed sample
+  alignment_max_cases: 200  # skipped / extra steps come from alignments on a fixed sample of this many cases
+                            # (1,000 always ran past timeout_s on the HR data; 200 finishes)
+  timeout_s: 120            # each PM4Py step (model, precision, alignments) runs in its own process and is stopped
+                            # after this many seconds; a slow precision or alignment never loses the model
+  build_on_run: false       # false (default): the Level 3 model is built only with "Build model" on page 3 (it
+                            # takes about 3 minutes on the HR data and adds little on partial cases); true: also
+                            # with Run analysis. The per-step Level 4 models are built with "Inside each step"
+  min_precision_to_show: 0.4   # a Level 3 model below this precision (or one that allows any order) is not drawn
+                               # by default: page 3 and the report say that no stable order was found instead
+
+# The Level 3 order from your business documents, checked against the data (order_evidence.py, page 4).
+order_evidence:
+  edge_days: 7          # only cases fully inside the data: first event >= this many days after the start, last
+                        # event >= this many days before the end (cases cut off at the edges are left out)
+  min_cases: 30         # fewer cases with both steps: the verdict is "unclear"
+  supports: 0.65        # first A before first B in at least this share of the cases with both: "supports"
+  contradicts: 0.35     # at most this share: "contradicts"; in between: "unclear"
+
+# Inside each step (inside_step.py, page 3 tab "Inside each step"). A run here = consecutive clicks of one case and
+# one Level 3 step by ONE person with no gap longer than gap_minutes (the map's step run split by person and pause).
+inside_step:
+  gap_minutes: 30
+  max_runs: 2000        # PM4Py per step: at most this many runs (a fixed sample)
+  min_runs: 10          # patterns need at least this many runs ...
+  min_users: 2          # ... and this many users
+  cv_flag: 0.5          # a user whose median run time differs from the step's by more than this share is flagged
+  other_pattern_share: 0.2   # a user's main pattern used by fewer than this share of the other users: flagged
+  automation_min_runs: 100   # automation candidates: at least this many runs ...
+  automation_pattern_share: 0.6   # ... with one pattern in at least this share of runs, and mostly data entry
+  completion_verbs: [submit, post, save, send, approve, complete, confirm]
+  # Work type of a sub-step from the words of its clicks and screen (whole words; the first type that matches most
+  # events wins). The AI may propose types; code decides with these rules.
+  work_types:
+    entry: [enter, type, fill, create, add, update, edit, change, save, submit, upload, attach, copy, paste,
+            maintain, record, write, set, post]
+    lookup: [search, find, select, filter, lookup, browse, list, results, query]
+    review: [view, review, check, verify, validate, display, read, open, preview, approve]
+    communication: [email, mail, send, compose, reply, forward, message, notify, inbox, chat, call, teams, outlook]
+    navigation: [navigate, home, menu, tab, back, next, previous, scroll, refresh, close, expand, collapse]
+
+# Draws that must give the same result in any data folder (half-samples, bootstrap): app/core/stable.py
+analysis:
+  random_seed: 42
+
+# No case ID mode ("clickstream mapping", app/nocase/). New keys only; the case-ID mode never reads them.
+nocase:
+  # Business nouns that make a title segment a screen, not a person name (passed to screens.clean_screen as
+  # extra_vocabulary; the case mode does not use them)
+  screen_words: [incident, memo, credit, debit, payment, payments, run, invoice, invoices, case, cases, request,
+                 requests, ticket, tickets, order, orders, vendor, vendors, inbox, approval, approvals, entry,
+                 report, reports, dashboard, queue, form, forms, details, summary, list, profile, account,
+                 accounts, ledger, journal, receipt, claim, claims, payroll, benefits, leave, absence, offer,
+                 # generic business / UI nouns used by screen_norm.fallback to tell a screen from a person's name
+                 matching, match, policy, policies, driver, drivers, model, template, tracker, export, recon,
+                 reconciliation, pack, team, ops, operations, chat, intranet, document, documents, finance,
+                 portal, workspace, settings, overview, home, task, tasks, review, upload, download, cost, costs]
+  screen:                            # app/nocase/screen_norm.py (window title -> stable screen label)
+    # Trailing title segments that only name the application or browser (the mapped app is always included)
+    app_suffixes: [excel, microsoft excel, word, microsoft word, powerpoint, microsoft powerpoint, outlook,
+                   microsoft outlook, teams, microsoft teams, microsoft edge, google chrome, chrome, firefox,
+                   mozilla firefox, internet explorer, safari, sharepoint, onedrive, notepad, adobe acrobat,
+                   acrobat reader, sap logon, sap gui, citrix, remote desktop connection]
+    # A first segment that says little on its own; the label then takes the next segment with it
+    generic_first_words: ["re", "fw", "fwd", chat, inbox, home, message, meeting, untitled, new tab]
+  carry_forward_seconds: 120        # an empty screen takes the same actor's previous screen in the same app within this
+  # Clicks that say nothing about the work (compared lower case with the cleaned action)
+  generic_actions: [click, select, open, close, back, next, ok, cancel, scroll, refresh, navigate, view, home, menu,
+                    tab, search, enter, submit, save, done, continue, "<other click>", "<typed text>", "<person>"]
+  id_shapes:
+    min_length: 5                    # a token is an ID candidate with at least this many characters ...
+    min_digits: 3                    # ... and at least this many digits
+    top: 10                          # shapes listed overall; values are never stored
+    top_per_app: 3                   # shapes listed per application
+  label_fill_min: 0.5                # source step labels are used when the lowest mapped level is this full
+  case_link:                         # verdict on a mapped case_id: usable | weak | not_a_case
+    min_median_events: 2             # median events per case below this -> not_a_case
+    max_single_event_share: 0.5      # more single-event cases than this -> weak ...
+    not_a_case_single_share: 0.8     # ... and this many or more -> not_a_case
+    min_fill: 0.5                    # fewer events with a case ID than this -> weak
+    # The case-link test (app/nocase/strategies/case_link.py)
+    min_coverage: 0.6                # case mode only when IDs cover this share of the events in scope ...
+    max_conflict_share: 0.05         # ... and fewer linked events than this have a rejected (colliding) ID
+    max_actors: 3                    # an ID used by more people than this on one day is a collision (rejected)
+    max_span_days: 120               # the median ID must not span more days than this
+    partial_min_app_share: 0.05      # partial mode: a well-covered app must hold at least this share of events
+    max_shapes: 5                    # ID shapes tested (most frequent first)
+  counter:                           # an integer column that is an event counter, not a case
+    min_unique_share: 0.9            # distinct / non-null
+    min_increasing_share: 0.9        # consecutive values (by time, all actors) that increase
+    min_step_one_share: 0.5          # increases that are exactly 1
+  active_time_min_fill: 0.5          # active time is "measured" with at least this fill rate, else "estimated"
+  integer_like:                      # a text column holds whole numbers (counter check) when ...
+    sample_rows: 5000                # ... in this many sampled values ...
+    min_digit_share: 0.95            # ... at least this share are digits only
+  ai_enabled: true                   # the no-case AI layers (evidence plan, AI step rules, activities, summaries)
+  payload:
+    # Capitalised words that are on the first-names list but are ordinary words in screens and clicks
+    name_exceptions: [mark, rose, grace, frank, bob, amber, will, may, case, view, post]
+  # Which strategy does each stage (app/nocase/strategies/): the first that applies (assign: all, as layers)
+  strategies:
+    episodes: [SourceSession, ActorAppContext, ActorGap, DayWindow]
+    case_link: [CaseColumn, IdPatternInText, RecordJoin, NoCase]
+    assign: [SourceLabel, LibraryRules, AiProposedRules, Unassigned]
+  episodes:
+    gap_minutes: 30                  # ActorGap / ActorAppContext: idle longer than this starts a new episode
+    context_minutes: 10              # ActorAppContext: after a pause over this, a new app / screen starts one too
+    auto_pick: true                  # run every strategy that applies; pick by a data-only quality score (never truth)
+    good_minutes: [5, 120]           # score: a median episode length in this range is best ...
+    # ... few single-event episodes, few units each. Calibrated once on the bench datasets with truth
+    # (scripts/calibrate_episodes.py, 13 Nov: pick regret 0 on icc_like_A and B); the pick itself never sees truth.
+    score_weights: {single: 0.35, length: 0.05, concentration: 0.6}
+    last_resort: [DayWindow]         # picked only when no other strategy applies (a day is never a better sitting)
+  assign:
+    inferred_min_share: 0.9          # SourceLabel: a unit takes its labelled events' majority step at this share
+    rule_statuses: [sme_confirmed, rule]   # library rules with these statuses are applied
+    regex_test_texts: 2000           # rule regexes are timed on at most this many screen / click texts
+    generic_neighbour_share: 0.8     # a generic click takes its episode neighbours' step when this many agree
+    ai_units_per_call: 40            # AiProposedRules: unassigned units per AI call (small: every unit gets an answer) ...
+    ai_max_units: 1200               # ... and at most this many in total (largest first)
+    ai_examples_per_step: 5          # already assigned units shown per step
+    ai_default_confidence: 0.5       # confidence of an AI rule when no evidence score exists yet
+    # The default: the AI names ONE step per unit (or OTHER); the code turns each answer into an exact rule for
+    # that unit (application + whole screen + whole click). Easier for any model than writing regexes. The old
+    # regex prompt (ai_prompt) is used only when this one is removed.
+    ai_classify_prompt: >-
+      You link units of desktop work to the business steps of one process. Each unit line is: id | application |
+      cleaned screen | cleaned click | share of events | near: the steps of the work done just before and after.
+      Use the step names and descriptions, the screen and the application; a generic click (Open, Scroll, Select
+      Cell) follows its screen. Return JSON {"assign": [{"unit": "U00001", "step": "<one of the steps, exactly
+      as written>", "why": "<a few words>"}]} with one item for EVERY unit given. Use "OTHER" as the step for
+      work that belongs to none of these steps (other processes, e-mail admin, chat, browsing) or that you
+      cannot tell. Never invent a step.
+    ai_prompt: >-
+      You map units of desktop work (application | cleaned screen | cleaned click) to the business steps given.
+      Return JSON {"rules": [{"step": "<one of the steps>", "match": {"app": "<application or *>",
+      "screen": "<regex>", "action": "<regex>"}, "why": "...", "examples": ["U00001"]}], "cannot_assign":
+      [{"unit_ids": ["U00002"], "reason": "..."}]}. Rules must not overlap. Use short regexes without nested
+      quantifiers. Leave a unit unassigned rather than guess.
+  eval:                              # app/nocase/eval/evaluate.py (truth columns, evaluation only)
+    case_truth: [case_id, true_batch, case, session, order, routine, invoice]
+    step_truth: [l3, true_step, activity, step]
+    process_truth: [true_process, process]
+    confusion_top: 10
+  evidence:                          # app/nocase/ai/evidence.py
+    profile_top: 30                  # top cleaned screens / clicks shown to the AI (with counts, no raw values)
+    repeat_tolerance: 0.1            # repeatability: an actor / week agrees when within this of the overall agreement
+    repeat_min_events: 20            # ... counted only for actors / weeks with this many labelled events
+    min_labelled_events: 200         # signals judged against steps show n/a (never a score) below this many labelled events
+    component_weights: {coverage: 0.4, consistency: 0.2, agreement: 0.0, repeatability: 0.4}
+    agreement_share: 0.5             # with labels: score = agreement x (1 - this + this x the other components)
+    plan_prompt: >-
+      You plan which signals in a desktop clickstream can tell the business step, the activities inside a step,
+      the order of steps or a case. You see a profile only (names, fill rates, shapes, top cleaned screens and
+      clicks). Return JSON {"plan": [{"use": "step_assignment|activities|order|case_link", "signal": one of
+      source_label, screen, action, completion_verb, id_in_text, episode_sequence, co_occurrence, app_transition,
+      time_pattern, document, library_rule, sme_answer, "column": "...", "why": "...", "expected": "..."}],
+      "skip": [{"signal": "...", "reason": "..."}], "questions_for_sme": ["..."]}. Never invent numbers.
+  pack_from_docs:                    # app/nocase/ai/pack_from_docs.py
+    chunk_chars: 12000               # characters per chunk when no provider states its size
+    prompt: >-
+      Read this part of a process document. Return JSON {"stages": [{"name": "...", "description": "...",
+      "steps": [{"name": "...", "description": "..."}]}], "order_hints": ["..."], "exceptions": ["..."]} with the
+      stages and steps in business order. Use the document's words; no names of people, no numbers or IDs.
+  activities:                        # app/nocase/engine/activities.py (Level 4 / 5 inside each step)
+    min_groups: 3
+    max_groups: 10
+    min_coverage: 0.8                # the AI groups must cover this share of the step's events ...
+    max_other: 0.2                   # ... and leave at most this share in Other
+    max_description_words: 30
+    level5_min_units: 12             # an activity with more units than this is split by its clicks (Level 5)
+    ai_units: 300                    # units of a step shown to the AI (largest first)
+    hours_tolerance: 0.05            # totals check: activity hours = step hours within this
+    ai_prompt: >-
+      Group these units of desktop work (application | cleaned screen | cleaned click) of ONE business step into
+      3 to 10 activities. Return JSON {"groups": [{"label": "verb + object, at most 6 words", "description": "at
+      most 30 words, plain business words, no digits or names", "rules": [{"app": "<application or *>",
+      "screen": "<regex>", "action": "<regex>"}]}]}. Labels are business activities, not click names, unique.
+  measures:                          # app/nocase/engine/measures.py
+    estimate_cap_seconds: 300        # time not measured: gap to the actor's next event, at most this
+    end_time_min_share: 0.5          # no active time but this share of events has an end time: end - start
+    switch_gap_seconds: 1800         # an app switch: consecutive events of one actor within this
+    month_end_days: 3                # the last N days of the month count as month end
+    cycle_percentile: 90             # case / partial mode: the cycle-time percentile shown
+  flow:                              # app/nocase/engine/flow.py
+    min_episodes: 20                 # an inferred edge must be seen in this many episodes ...
+    min_actors: 2                    # ... by this many people
+    max_edges: 12                    # edges drawn besides the business-order spine
+    top_down_after_steps: 6          # a map with more steps runs top to bottom (labels stay readable)
+  confidence:                        # app/nocase/engine/confidence.py
+    default_weight: 1.0              # weight of a signal without a calibrated weight
+    bands: {high: 0.8, medium: 0.6, low: 0.4}
+    max_questions: 50                # SME questions kept (conflicting units first)
+  checks:                            # app/nocase/report/checks.py
+    hours_tolerance: 0.05
+    fact_tolerance: 1.0e-9           # a fact must equal its source number within this
+    top_edges: 12
+  narrative:                         # app/nocase/report/narrative.py
+    causal_words: [because, due to, caused by, leads to, results in, as a result of]
+    prompt: >-
+      Write short plain-English summaries of desktop work for a business reader. Use ONLY {{Fxxx}} placeholders
+      for numbers (never write a digit), no causal claims, no names. Return JSON {"texts": {"<section>": "<text>"}}
+      for the sections listed.
+  inside:                            # app/nocase/engine/inside_step.py (inside each step)
+    min_runs: 10                     # a pattern (and a described step) needs this many step runs ...
+    min_actors: 2                    # ... done by this many people
+    top_patterns: 5
+    max_transitions: 20
+    rework_gap_minutes: 30           # an activity coming back after another one AND at least this long after it was
+                                     # last done is rework (as in the case-ID mode); quicker returns are back-and-forth
+    pattern_max_items: 5             # a usual pattern shows at most this many activities (then …); returns shown as ⇄
+    cv_flag: 0.5                     # people's median run times vary more than this (CV): flagged
+    pattern_others_min: 0.2          # a person's usual pattern used by fewer of the others' runs than this: flagged
+    automation_min_events: 100       # automation candidates: at least this many events ...
+    automation_pattern_share: 0.6    # ... one pattern in at least this share of its runs, entry work
+    hours_tolerance: 0.05
+  bench:                             # scripts/bench.py (test_datasets/)
+    partial_min_id_share: 0.6        # provisional mode: ID shapes in this share of events -> "partial" (try a case link)
+
+# Automatic mode detection at upload (app/intake/mode_detect.py): case ID or no case ID. It only decides and
+# pre-fills page 1; false = page 1 exactly as before. Borderline evidence -> "confirm" (no-case, with a question).
+intake:
+  auto_detect: true
+  min_case_coverage: 0.6             # a case column must be filled in this share of the scope rows ...
+  case_coverage_with_margin: 0.7     # ... and in this share (and no test near its limit) for a direct "case"
+  margin: 0.1                        # a test within 10% of its limit -> "confirm"
+  min_median_events: 2               # repeats: median events per value ...
+  max_single_share: 0.5              # ... and at most this share of single-event values
+  min_distinct: 2                    # not a constant
+  max_distinct_share: 0.5            # not (nearly) one value per row
+  max_free_text_share: 0.3           # not free text: at most this share of values with 3+ words (a window title, a comment)
+  max_span_days: 120                 # the median value must not span more days than this
+  min_case_values: 10                # not a category: at least this many distinct values ...
+  max_shared_value_days: 0.2         # ... and at most this share of value-days used by more people than nocase.case_link.max_actors
+  max_value_day_share: 0.5           # without a user column: a typical value may occur on at most this share of days ...
+  category_min_days: 7               # ... checked only when the file spans at least this many days
+  person_ratio: [0.8, 1.25]          # distinct values / distinct users in this range ...
+  person_pairs_ratio: 1.1            # ... and (value, user) pairs barely more than either -> it is the user column
+  time_parse_rate: 0.9               # a column that reads as dates in this share is a time, not a case
+  max_decimal_share: 0.5             # a text column that is mostly numbers with decimals is a measure, not an ID
+  measure_sample_rows: 5000          # values sampled for that check
+  counter: {sample_rows: 200000, min_unique_share: 0.9, min_increasing_share: 0.9}
+  name_hints: [case, ticket, request, order, invoice, incident, po, doc, transaction, claim, application]
+  repeat_score_events: 10            # score: coverage + repeat strength (median events / this, at most 1) ...
+  repeat_weight: 0.5                 # ... times this + the name hint weight
+  hint_weight: 0.2
+  process_flag_columns: [is_process]
+  process_flag_values: ["1", "true", "yes", "y", "1.0"]
+  label_column_regex: '^(l[1-3]|level[_ ]?[1-3].*)$'
+  text_columns_max: 6                # text columns searched for IDs
+  shape_sample_rows: 200000          # rows sampled to find ID shapes in a text column
+  pattern_check_ids: 500             # IDs compared with the "Derive it" patterns (never stored)
+  derive_pattern_match: 0.95         # a "Derive it" pattern must match this share of them
+  whole_value_share: 0.9             # an "ID" that is the whole cell this often is a column of IDs, not IDs in text
+  reasons_shown: 5                   # column reasons in the banner (all of them are in "Why?")

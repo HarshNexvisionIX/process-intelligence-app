@@ -1,0 +1,30 @@
+case_id,activity,timestamp,user,application,stage,active_time,wait_time,tat_time,idle_time,is_process,action,window_title
+C1,Receive Request,2026-03-02 09:00:00,u1,Workday,Intake,120,60,180,30,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+C1,Receive Request,2026-03-02 09:02:00,u1,Excel,Intake,60,0,60,0,1,Copy,Casual Leave balance -06-17 20_10 IST.xlsx - Excel
+C1,Check Request,2026-03-02 09:10:00,u1,Excel,Intake,300,120,420,0,1,Save,Prod Tracker 2026.xlsx - Excel
+C1,Approve,2026-03-02 11:00:00,u2,Workday,Delivery,180,600,780,60,1,Submit,View Worker - Razumovs - Workday
+C1,Notify,2026-03-02 11:20:00,u2,Outlook,Delivery,60,0,60,0,1,Send Email,Inbox - Priya Sharma - Outlook
+C2,Receive Request,2026-03-02 10:00:00,u1,Workday,Intake,100,0,100,0,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+C2,Check Request,2026-03-02 10:05:00,u1,Workday,Intake,200,0,200,0,1,Save,View Worker - (Terminated) - Workday
+C2,Receive Request,2026-03-02 12:00:00,u1,Workday,Intake,50,0,50,0,1,Paste,View Job Application - Ayakha Ningiza - Workday
+C2,Approve,2026-03-02 13:00:00,u2,Workday,Delivery,150,0,150,0,1,Submit,View Worker - Razumovs - Workday
+C2,Notify,2026-03-02 13:10:00,u2,Outlook,Delivery,40,0,40,0,1,Send Email,Inbox - Priya Sharma - Outlook
+C3,Receive Request,2026-03-03 09:00:00,u3,Excel,Intake,60,0,60,0,1,Open Request,Prod Tracker 2026.xlsx - Excel
+C3,Check Request,2026-03-03 09:02:00,u3,Excel,Intake,60,0,60,0,1,Save,Prod Tracker 2026.xlsx - Excel
+C3,Receive Request,2026-03-03 09:04:00,u3,Excel,Intake,30,0,30,0,1,Copy,Prod Tracker 2026.xlsx - Excel
+C3,Check Request,2026-03-03 09:06:00,u3,Excel,Intake,30,0,30,0,1,Save,Prod Tracker 2026.xlsx - Excel
+C3,Approve,2026-03-03 10:00:00,u3,Workday,Delivery,120,0,120,0,1,Submit,View Worker - Razumovs - Workday
+C4,Receive Request,2026-03-04 09:00:00,u2,Workday,Intake,90,0,90,0,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+C4,Check Request,2026-03-04 09:30:00,u2,Workday,Intake,60,0,60,0,1,Save,View Worker - (Terminated) - Workday
+C4,Approve,2026-03-04 09:30:00,u2,Workday,Delivery,60,0,60,0,1,Submit,View Worker - Razumovs - Workday
+C4,Notify,2026-03-04 09:45:00,u2,Outlook,Delivery,30,0,30,0,1,Send Email,Inbox - Priya Sharma - Outlook
+C5,Receive Request,2026-03-05 09:00:00,u3,Workday,Intake,100,0,100,0,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+C5,Approve,2026-03-05 12:00:00,u3,Workday,Delivery,100,0,100,0,1,Submit,View Worker - Razumovs - Workday
+C5,Check Request,2026-03-05 15:00:00,u3,Excel,Intake,100,0,100,0,1,Save,Prod Tracker 2026.xlsx - Excel
+C5,Notify,2026-03-05 18:00:00,u3,Outlook,Delivery,100,0,100,0,1,Send Email,Inbox - Priya Sharma - Outlook
+C6,Receive Request,2026-03-06 09:00:00,u1,Workday,Intake,45,15,60,0,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+,Receive Request,2026-03-02 09:01:00,u1,Workday,Intake,10,0,10,0,1,Open Request,View Job Application - Ayakha Ningiza - Workday
+,Check Request,2026-03-03 10:00:00,u2,Excel,Intake,20,0,20,0,1,Save,Prod Tracker 2026.xlsx - Excel
+C1,,2026-03-02 09:05:00,u1,Excel,,15,0,15,0,1,Copy,Prod Tracker 2026.xlsx - Excel
+C1,Receive Request,2026-03-02 09:03:00,u1,Teams,Intake,25,0,25,0,0,Send Email,Chat - Priya Sharma - Teams
+C2,Approve,2026-03-02 12:30:00,u2,Workday,Delivery,35,0,35,0,0,Submit,View Worker - Razumovs - Workday

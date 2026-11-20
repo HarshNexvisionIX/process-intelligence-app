@@ -1,0 +1,9 @@
+name: HR-like (fixture)
+stages:
+  - name: Intake
+    steps:
+      - {name: Onboarding, description: "New hire set up."}
+  - name: Offer and pay
+    steps:
+      - {name: Offer Processing, description: "Offer prepared and sent."}
+      - {name: Payroll Change, description: "Bank or pay details changed."}

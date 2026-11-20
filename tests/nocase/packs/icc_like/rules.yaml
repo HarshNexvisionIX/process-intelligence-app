@@ -1,0 +1,5 @@
+rules:
+  - {id: R1, step: Invoice Check, stage: Checks, match: {app: SAP, screen: "invoice display|vendor master"}, status: sme_confirmed, version: 1}
+  - {id: R2, step: Credit Note, stage: Checks, match: {app: SAP, screen: "credit memo"}, status: rule, version: 1}
+  - {id: R3, step: Credit Note, stage: Checks, match: {app: Outlook, screen: "inbox"}, status: proposed, version: 1}
+  - {id: R4, step: Credit Note, stage: Checks, match: {app: "*", action: "(a+)+b"}, status: rule, version: 1}

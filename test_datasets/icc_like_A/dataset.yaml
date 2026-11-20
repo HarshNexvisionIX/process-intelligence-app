@@ -1,0 +1,32 @@
+# Synthetic ICC-like desktop clickstream (July-September 2026 month-ends, 10 people, about 41k events).
+# Copy icc_like_clickstream_A.parquet and icc_like_clickstream_A_TRUTH.parquet here
+# (from "Claude outputs/icc_like_test_data.zip"). Columns checked in the file itself (2026-11-13).
+name: icc_like_A
+source_url: "local: Claude outputs/icc_like_test_data.zip (generate_icc_like.py)"
+licence: synthetic, made for this project
+dataset_class: public
+files:
+  - {path: icc_like_clickstream_A.parquet, format: parquet}
+mapping:
+  columns:
+    ts: date_time                   # TIMESTAMP WITH TIME ZONE
+    actor: participant_id
+    app: Application_name
+    text: title                     # window title (entity codes, months, file names, SAP document numbers)
+    action: activity_alias_name
+    active_s: active_time
+  # sequence_id is deliberately NOT mapped: the profile must report it as an event counter.
+  eval:
+    event_id: event_id              # the key that joins the truth file; evaluation only
+truth:
+  file: icc_like_clickstream_A_TRUTH.parquet
+  join: event_id
+  columns: [true_process, true_phase, true_step, true_batch]
+sample: {rows: null}                # small enough to use whole
+expected:
+  mode: no_case
+  counters: [sequence_id]           # "an event counter, not a case"
+  id_shape_share: [0.10, 0.30]      # ~12-23% of events carry a batch hint in the title: not enough for case mode
+  target_process: ICC               # the truth's process name of the work being mapped (the rest is other work)
+scenarios:
+  sme_rules: {process: icc_sme, pack: tests/nocase/packs/icc_sme}   # rules an SME would write from screen names

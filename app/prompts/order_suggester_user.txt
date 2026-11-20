@@ -1,0 +1,9 @@
+Step names (each must appear exactly once):
+{activities}
+
+Stage names already used in the data (may be empty):
+{stages}
+
+Return exactly this JSON shape:
+{"stages": [{"name": "First stage", "steps": ["a step name", "another step name"]},
+            {"name": "Second stage", "steps": ["..."]}]}

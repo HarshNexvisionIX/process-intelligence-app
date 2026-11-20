@@ -1,0 +1,15 @@
+# Labelled Active Window Tracking data (one person's desktop: window titles + app).
+# Clone or download github.com/project-pivot/labelled-awt-data into this folder, then list the real columns and
+# fill in `mapping` (expected roles: timestamp, application, window title as `text`). The `Case` and `Activity`
+# columns are TRUTH ONLY: never map them as case_id, l1-l5, actor or text.
+name: awt_labelled
+source_url: https://github.com/project-pivot/labelled-awt-data
+licence: see the repository
+dataset_class: public
+files: TODO
+mapping: TODO
+truth: TODO                         # e.g. columns: [Activity, Case]
+sample: {rows: 200000}
+expected:
+  mode: no_case
+  later: "the window-title signal is chosen by the evidence planner (N3)"

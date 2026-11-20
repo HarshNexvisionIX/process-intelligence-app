@@ -1,0 +1,21 @@
+Data quality band: {band}
+
+The process appears to involve these steps (most frequent first): {process_hint}
+
+Order strength of the steps: {order_strength_label}
+Step order confirmed by the business: {order_confirmed}
+Flow band (how reliable the order of steps is): {flow_band}
+Where the order comes from: {order_source}
+
+Verified facts (ID | label | value | badge | support):
+{facts_table}
+
+Write:
+- "summary": 2 to 4 sentences a manager reads first.
+- "findings": at most {max_findings} specific findings.
+- "recommendations": at most {max_recommendations} next steps, each tied to the facts it rests on.
+
+Return exactly this JSON shape:
+{"summary":        [{"text": "The median case takes {{F003}}.", "facts": ["F003"]}],
+ "findings":       [{"text": "...", "facts": ["F010", "F011"]}],
+ "recommendations":[{"text": "...", "facts": ["F020"]}]}

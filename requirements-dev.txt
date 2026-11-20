@@ -1,0 +1,7 @@
+# Development-only tools. NOT shipped with the app.
+-r requirements.txt
+
+# PM4Py (AGPL v3): the tests cross-check our DuckDB results with it, and the optional, internal-use-only
+# process model uses it (requirements-pm4py.txt, pm4py.enabled in config/settings.yaml).
+-r requirements-pm4py.txt
+moto[s3]==5.2.5       # mocked S3 round-trip tests; never used by the app at runtime

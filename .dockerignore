@@ -1,0 +1,14 @@
+.env
+.env.*
+data/
+.venv/
+.task-env/
+venv/
+tests/
+**/__pycache__/
+**/*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+test_datasets/_bench/
+*.log

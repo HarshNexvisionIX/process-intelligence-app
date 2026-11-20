@@ -1,0 +1,3 @@
+columns: {ts: viewed_at, actor: visitor, text: page}
+eval: {session: session_truth}
+dataset_class: public

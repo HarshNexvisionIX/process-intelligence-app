@@ -1,0 +1,21 @@
+# ICC test pack written from screen names only (an SME would know them), WITHOUT looking at the truth files.
+# Used by the bench scenario sme_rules (python scripts/bench.py --scenario sme_rules). Not confirmed by any business.
+name: ICC (SME test pack)
+provenance: {source: "test pack", status: documented, confirmed: false}
+stages:
+  - name: Data Collection & Input Preparation
+    steps:
+      - {name: Extract cost data, description: "Cost data is extracted from SAP reports."}
+      - {name: Collect allocation drivers, description: "Allocation drivers are collected from entities."}
+      - {name: Validate inputs, description: "Inputs are checked before calculation."}
+  - name: Recharge Calculation & Output Preparation
+    steps:
+      - {name: Calculate recharges, description: "Recharges are calculated in the recharge model."}
+      - {name: Prepare journal and invoice, description: "Journals and invoices are prepared."}
+      - {name: Approval, description: "The recharge is approved by email."}
+  - name: Posting & Close
+    steps:
+      - {name: Post in SAP, description: "Journals are posted in SAP."}
+      - {name: Intercompany reconciliation, description: "Intercompany balances are matched."}
+      - {name: Resolve exceptions and queries, description: "Differences are resolved."}
+      - {name: Month-end reporting, description: "The close pack is prepared and sent."}

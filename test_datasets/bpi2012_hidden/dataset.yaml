@@ -1,0 +1,14 @@
+# BPI Challenge 2012 (loan applications) with the case ID hidden; activities are already labelled.
+# Download the XES(.gz) from 4TU into this folder; after conversion list the real columns and fill in `mapping`
+# (timestamp, resource as actor, activity as l3 so the source labels are used as steps). The case ID is truth only.
+name: bpi2012_hidden
+source_url: https://doi.org/10.4121/uuid:3926db30-f712-4394-aebc-75976070e91f
+licence: 4TU.ResearchData licence (see the page)
+dataset_class: public
+files: TODO
+mapping: TODO
+truth: TODO                         # case ID and activity, evaluation only
+sample: {rows: 300000}
+expected:
+  mode: no_case
+  source_labels_used: true          # the activity labels are used as steps (status observed)

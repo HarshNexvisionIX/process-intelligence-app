@@ -1,0 +1,4087 @@
+{
+  "version": "1.0.0",
+  "date": "2026-11-05",
+  "temporary_root": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67",
+  "runs": [
+    {
+      "name": "bad_timestamp",
+      "exit": 2,
+      "seconds": 0.404,
+      "peak_rss_mb": 134.6,
+      "timings": {},
+      "job": {
+        "job_id": "20261105-114840-6376ef",
+        "source_name": "bad.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\bad.parquet",
+        "status": "profiled",
+        "created_at": "2026-11-05T11:48:40.836507+00:00",
+        "format": "parquet",
+        "rows": 18186
+      },
+      "flow": null,
+      "order": null,
+      "strength": null,
+      "facts": 0,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp\\jobs\\20261105-114840-6376ef",
+      "html": null,
+      "excel": null
+    },
+    {
+      "name": "clean",
+      "exit": 0,
+      "seconds": 2.356,
+      "peak_rss_mb": 181.2,
+      "timings": {
+        "normalise": 0.162,
+        "run_quality": 0.117,
+        "run_mining": 0.312,
+        "generate_report": 0.928
+      },
+      "job": {
+        "job_id": "20261105-114820-7013d8",
+        "source_name": "clean.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:20.719810+00:00",
+        "format": "parquet",
+        "rows": 24288,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 24288,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 24288,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "app_switches_total": 6102,
+          "seconds": 0.16,
+          "size_mb": 0.5
+        },
+        "warnings": [],
+        "layout_signature": "0dea8365f39a3fb9",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "available",
+            "available": true,
+            "needs": "application column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Application switches",
+            "status": "available",
+            "available": true,
+            "needs": "application column (+ user column)",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "available",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "fallback",
+            "available": true,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "Only one level (the stage column) is known.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:48:22+00:00",
+        "flow_band": "High",
+        "reported_at": "2026-11-05T11:48:22+00:00"
+      },
+      "flow": {
+        "score": 98,
+        "band": "High",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "clean",
+        "stages": [
+          {
+            "name": "Request",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Reject Request"
+            ]
+          },
+          {
+            "name": "Ordering",
+            "steps": [
+              "Create Order",
+              "Change Price",
+              "Cancel Order"
+            ]
+          },
+          {
+            "name": "Receiving",
+            "steps": [
+              "Receive Goods"
+            ]
+          },
+          {
+            "name": "Invoicing",
+            "steps": [
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.941,
+      "facts": 105,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\report.xlsx"
+    },
+    {
+      "name": "definition",
+      "exit": 0,
+      "seconds": 2.193,
+      "peak_rss_mb": 186.3,
+      "timings": {
+        "normalise": 0.082,
+        "run_quality": 0.13,
+        "run_mining": 0.317,
+        "generate_report": 0.534
+      },
+      "job": {
+        "job_id": "20261105-115828-bfd49f",
+        "source_name": "clean.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:58:28.950992+00:00",
+        "format": "parquet",
+        "rows": 24288,
+        "summary": {
+          "events": 24288,
+          "events_before_merge": 24288,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 24288,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "app_switches_total": 6102,
+          "seconds": 0.08,
+          "size_mb": 0.4
+        },
+        "warnings": [
+          "3 masked applications are not mapped (48.2% of events). They will appear as 'Unnamed app N': 157f4148… (6,355 events), 1acdd5d8… (2,742 events), 038e648f… (2,598 events)."
+        ],
+        "layout_signature": "0dea8365f39a3fb9",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "available",
+            "available": true,
+            "needs": "application column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Application switches",
+            "status": "available",
+            "available": true,
+            "needs": "application column (+ user column)",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "available",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "fallback",
+            "available": true,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "Only one level (the stage column) is known.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:58:30+00:00",
+        "flow_band": "High",
+        "definition": {
+          "name": "Purchasing",
+          "version": 2,
+          "status": "draft"
+        },
+        "reported_at": "2026-11-05T11:58:30+00:00"
+      },
+      "flow": {
+        "score": 99,
+        "band": "High",
+        "source": "confirmed",
+        "reasons": [
+          "order confirmed by the business",
+          "84% of cases follow it exactly"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "Purchasing",
+        "stages": [
+          {
+            "name": "Process",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Receive Goods",
+              "Receive Invoice",
+              "Pay Invoice"
+            ]
+          }
+        ],
+        "other_steps": [
+          "Block Invoice",
+          "Unblock Invoice",
+          "Change Price",
+          "Reject Request",
+          "Cancel Order",
+          "Change Vendor Bank"
+        ],
+        "source": "edited",
+        "confirmed_by_business": true,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.941,
+      "facts": 122,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\report.xlsx"
+    },
+    {
+      "name": "derived_case",
+      "exit": 0,
+      "seconds": 1.701,
+      "peak_rss_mb": 178.7,
+      "timings": {
+        "normalise": 0.105,
+        "run_quality": 0.107,
+        "run_mining": 0.235,
+        "generate_report": 0.5
+      },
+      "job": {
+        "job_id": "20261105-115117-96d327",
+        "source_name": "tickets.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\tickets.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:51:17.422387+00:00",
+        "format": "parquet",
+        "rows": 18186,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 18186,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 18186,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.1,
+          "size_mb": 0.4
+        },
+        "warnings": [],
+        "layout_signature": "8dd3a8fdfed51c29",
+        "case_source": {
+          "kind": "text_pattern",
+          "column": "window_title",
+          "pattern": "ticket",
+          "confirmed": false,
+          "label": "Case = ticket / incident number found in window_title"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "Case = ticket / incident number found in window_title",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "Case = ticket / incident number found in window_title",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "Case = ticket / incident number found in window_title",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Rework",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "Case = ticket / incident number found in window_title",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:51:18+00:00",
+        "flow_band": "Medium",
+        "reported_at": "2026-11-05T11:51:18+00:00"
+      },
+      "flow": {
+        "score": 79,
+        "band": "Medium",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given",
+          "the case ID was found in text and its meaning is not yet confirmed by the business"
+        ],
+        "allowed": {
+          "map_title": "Intended order",
+          "arrows": true,
+          "sequence_badge_cap": "Medium",
+          "sequence_in_summary": true,
+          "ai_sequence": "intended order only"
+        }
+      },
+      "order": {
+        "process_name": "tickets",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Change Price",
+              "Receive Goods",
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice",
+              "Reject Request",
+              "Cancel Order"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.941,
+      "facts": 99,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\report.xlsx"
+    },
+    {
+      "name": "dirty",
+      "exit": 0,
+      "seconds": 1.486,
+      "peak_rss_mb": 173.7,
+      "timings": {
+        "normalise": 0.051,
+        "run_quality": 0.131,
+        "run_mining": 0.217,
+        "generate_report": 0.426
+      },
+      "job": {
+        "job_id": "20261105-114827-2056b8",
+        "source_name": "dirty.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\dirty.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:27.636037+00:00",
+        "format": "parquet",
+        "rows": 18534,
+        "summary": {
+          "events": 18534,
+          "events_before_merge": 18534,
+          "cases": 3000,
+          "activities": 24,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 242,
+          "rows_in_file": 18534,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.05,
+          "size_mb": 0.3
+        },
+        "warnings": [],
+        "layout_signature": "eb53522bc1bf5368",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 79,
+        "band": "Medium",
+        "mined_at": "2026-11-05T11:48:28+00:00",
+        "flow_band": "High",
+        "reported_at": "2026-11-05T11:48:28+00:00"
+      },
+      "flow": {
+        "score": 97,
+        "band": "High",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "dirty",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Change Price",
+              "Receive Goods",
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice",
+              "Reject Request",
+              "Cancel Order"
+            ]
+          }
+        ],
+        "other_steps": [
+          "create request ",
+          "create order ",
+          "approve request ",
+          "receive goods ",
+          "pay invoice ",
+          "receive invoice ",
+          "block invoice ",
+          "unblock invoice ",
+          "change price ",
+          "cancel order ",
+          "change vendor bank ",
+          "reject request "
+        ],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.937,
+      "facts": 98,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\report.xlsx"
+    },
+    {
+      "name": "folder",
+      "exit": 0,
+      "seconds": 1.431,
+      "peak_rss_mb": 174.4,
+      "timings": {
+        "normalise": 0.042,
+        "run_quality": 0.098,
+        "run_mining": 0.205,
+        "generate_report": 0.518
+      },
+      "job": {
+        "job_id": "20261105-114835-ab706e",
+        "source_name": "five_files (5 files)",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\five_files",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:35.918890+00:00",
+        "format": "parquet",
+        "rows": 18186,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 18186,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 18186,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.04,
+          "size_mb": 0.3
+        },
+        "warnings": [],
+        "layout_signature": "59727708e07e77a4",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:48:36+00:00",
+        "flow_band": "High",
+        "reported_at": "2026-11-05T11:48:37+00:00"
+      },
+      "flow": {
+        "score": 98,
+        "band": "High",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "five_files (5 files)",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Change Price",
+              "Receive Goods",
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice",
+              "Reject Request",
+              "Cancel Order"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.941,
+      "facts": 98,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\report.xlsx"
+    },
+    {
+      "name": "large",
+      "exit": 0,
+      "seconds": 23.561,
+      "peak_rss_mb": 1369.9,
+      "timings": {
+        "normalise": 1.902,
+        "run_quality": 3.402,
+        "run_mining": 8.485,
+        "generate_report": 7.762
+      },
+      "job": {
+        "job_id": "20261105-114850-be367b",
+        "source_name": "big.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\big.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:50.686856+00:00",
+        "format": "parquet",
+        "rows": 2500000,
+        "summary": {
+          "events": 2500000,
+          "events_before_merge": 2500000,
+          "cases": 412820,
+          "activities": 12,
+          "first_event": "2024-01-01 00:00:47",
+          "last_event": "2025-04-19 21:15:25",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 2500000,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 1.9,
+          "size_mb": 38.7
+        },
+        "warnings": [],
+        "layout_signature": "eb53522bc1bf5368",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:49:06+00:00",
+        "flow_band": "High",
+        "reported_at": "2026-11-05T11:49:13+00:00"
+      },
+      "flow": {
+        "score": 98,
+        "band": "High",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "big",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Change Price",
+              "Receive Goods",
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice",
+              "Reject Request",
+              "Cancel Order"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.94,
+      "facts": 98,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\report.xlsx"
+    },
+    {
+      "name": "missing_columns",
+      "exit": 0,
+      "seconds": 1.265,
+      "peak_rss_mb": 174.8,
+      "timings": {
+        "normalise": 0.035,
+        "run_quality": 0.092,
+        "run_mining": 0.209,
+        "generate_report": 0.439
+      },
+      "job": {
+        "job_id": "20261105-114842-95f95d",
+        "source_name": "plain.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\plain.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:42.611706+00:00",
+        "format": "parquet",
+        "rows": 18186,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 18186,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 18186,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.03,
+          "size_mb": 0.3
+        },
+        "warnings": [],
+        "layout_signature": "eb53522bc1bf5368",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:48:43+00:00",
+        "flow_band": "High",
+        "reported_at": "2026-11-05T11:48:43+00:00"
+      },
+      "flow": {
+        "score": 98,
+        "band": "High",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Process flow",
+          "arrows": true,
+          "sequence_badge_cap": "High",
+          "sequence_in_summary": true,
+          "ai_sequence": "yes"
+        }
+      },
+      "order": {
+        "process_name": "plain",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Change Price",
+              "Receive Goods",
+              "Block Invoice",
+              "Receive Invoice",
+              "Change Vendor Bank",
+              "Unblock Invoice",
+              "Pay Invoice",
+              "Reject Request",
+              "Cancel Order"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.941,
+      "facts": 98,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\report.xlsx"
+    },
+    {
+      "name": "overview",
+      "exit": 0,
+      "seconds": 0.852,
+      "peak_rss_mb": 156.8,
+      "timings": {
+        "normalise": 0.025,
+        "run_quality": 0.087,
+        "run_mining": 0.109,
+        "generate_report": 0.236
+      },
+      "job": {
+        "job_id": "20261105-115123-0ddd25",
+        "source_name": "sessions.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:51:23.773661+00:00",
+        "format": "parquet",
+        "rows": 12000,
+        "summary": {
+          "events": 12000,
+          "events_before_merge": 12000,
+          "cases": 6,
+          "activities": 4,
+          "first_event": "2024-01-01 08:00:00",
+          "last_event": "2025-05-14 08:09:00",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 12000,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.02,
+          "size_mb": 0
+        },
+        "warnings": [],
+        "layout_signature": "7fc15a3e8b380ced",
+        "case_source": {
+          "kind": "overview",
+          "label": "No case: activity overview only"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "missing",
+            "available": false,
+            "needs": "case, activity, timestamp",
+            "fallback": "No case: activity overview only.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "missing",
+            "available": false,
+            "needs": "case, activity, timestamp",
+            "fallback": "No case: activity overview only.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "missing",
+            "available": false,
+            "needs": "case, timestamp",
+            "fallback": "No case: activity overview only.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Rework",
+            "status": "missing",
+            "available": false,
+            "needs": "case, activity",
+            "fallback": "No case: activity overview only.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "fallback",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "Without cases, trends count events per month.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 39,
+        "band": "Not feasible",
+        "mined_at": "2026-11-05T11:51:24+00:00",
+        "flow_band": "None",
+        "reported_at": "2026-11-05T11:51:24+00:00"
+      },
+      "flow": null,
+      "order": null,
+      "strength": null,
+      "facts": 6,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\report.xlsx"
+    },
+    {
+      "name": "shuffled",
+      "exit": 0,
+      "seconds": 1.313,
+      "peak_rss_mb": 172,
+      "timings": {
+        "normalise": 0.037,
+        "run_quality": 0.109,
+        "run_mining": 0.229,
+        "generate_report": 0.447
+      },
+      "job": {
+        "job_id": "20261105-114830-c05c6e",
+        "source_name": "shuffled.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\shuffled.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:30.514752+00:00",
+        "format": "parquet",
+        "rows": 18186,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 18186,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 18186,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.04,
+          "size_mb": 0.3
+        },
+        "warnings": [],
+        "layout_signature": "0739583cfe74ae69",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "available",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "fallback",
+            "available": true,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "Only one level (the stage column) is known.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:48:31+00:00",
+        "flow_band": "None",
+        "reported_at": "2026-11-05T11:48:31+00:00"
+      },
+      "flow": {
+        "score": 8,
+        "band": "None",
+        "source": "data",
+        "reasons": [
+          "no fixed order in the data",
+          "no business order given"
+        ],
+        "allowed": {
+          "map_title": "Step overview — no fixed order found",
+          "arrows": false,
+          "sequence_badge_cap": "Exploratory",
+          "sequence_in_summary": false,
+          "ai_sequence": "no"
+        }
+      },
+      "order": {
+        "process_name": "shuffled",
+        "stages": [
+          {
+            "name": "Request",
+            "steps": [
+              "Approve Request",
+              "Create Request",
+              "Reject Request"
+            ]
+          },
+          {
+            "name": "Ordering",
+            "steps": [
+              "Create Order",
+              "Change Price",
+              "Cancel Order"
+            ]
+          },
+          {
+            "name": "Receiving",
+            "steps": [
+              "Receive Goods"
+            ]
+          },
+          {
+            "name": "Invoicing",
+            "steps": [
+              "Pay Invoice",
+              "Change Vendor Bank",
+              "Receive Invoice",
+              "Block Invoice",
+              "Unblock Invoice"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.04,
+      "facts": 79,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\report.xlsx"
+    },
+    {
+      "name": "shuffled_confirmed",
+      "exit": 0,
+      "seconds": 1.294,
+      "peak_rss_mb": 172.5,
+      "timings": {
+        "normalise": 0.037,
+        "run_quality": 0.11,
+        "run_mining": 0.228,
+        "generate_report": 0.434
+      },
+      "job": {
+        "job_id": "20261105-114833-52b9dd",
+        "source_name": "shuffled.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\shuffled.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:33.220440+00:00",
+        "format": "parquet",
+        "rows": 18186,
+        "summary": {
+          "events": 18186,
+          "events_before_merge": 18186,
+          "cases": 3000,
+          "activities": 12,
+          "first_event": "2024-01-01 13:26:00",
+          "last_event": "2025-03-14 03:01:16",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 18186,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.04,
+          "size_mb": 0.3
+        },
+        "warnings": [],
+        "layout_signature": "0739583cfe74ae69",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "available",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "fallback",
+            "available": true,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "Only one level (the stage column) is known.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:48:34+00:00",
+        "flow_band": "Medium",
+        "reported_at": "2026-11-05T11:48:34+00:00"
+      },
+      "flow": {
+        "score": 50,
+        "band": "Medium",
+        "source": "confirmed",
+        "reasons": [
+          "order confirmed by the business",
+          "1% of cases follow it exactly"
+        ],
+        "allowed": {
+          "map_title": "Intended order",
+          "arrows": true,
+          "sequence_badge_cap": "Medium",
+          "sequence_in_summary": true,
+          "ai_sequence": "intended order only"
+        }
+      },
+      "order": {
+        "process_name": "Purchasing",
+        "stages": [
+          {
+            "name": "Process",
+            "steps": [
+              "Create Request",
+              "Approve Request",
+              "Create Order",
+              "Receive Goods",
+              "Receive Invoice",
+              "Pay Invoice"
+            ]
+          }
+        ],
+        "other_steps": [
+          "Block Invoice",
+          "Unblock Invoice",
+          "Change Price",
+          "Reject Request",
+          "Cancel Order",
+          "Change Vendor Bank"
+        ],
+        "source": "edited",
+        "confirmed_by_business": true,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 0.04,
+      "facts": 73,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\report.xlsx"
+    },
+    {
+      "name": "tiny",
+      "exit": 0,
+      "seconds": 0.617,
+      "peak_rss_mb": 151,
+      "timings": {
+        "normalise": 0.014,
+        "run_quality": 0.055,
+        "run_mining": 0.002,
+        "generate_report": 0.191
+      },
+      "job": {
+        "job_id": "20261105-114838-67b5d5",
+        "source_name": "tiny.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\tiny.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:48:38.843574+00:00",
+        "format": "parquet",
+        "rows": 355,
+        "summary": {
+          "events": 355,
+          "events_before_merge": 355,
+          "cases": 60,
+          "activities": 12,
+          "first_event": "2024-01-10 15:35:40",
+          "last_event": "2025-02-01 21:17:05",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 355,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.01,
+          "size_mb": 0
+        },
+        "warnings": [],
+        "layout_signature": "eb53522bc1bf5368",
+        "case_source": {
+          "kind": "column",
+          "column": "case_id",
+          "label": "Case = column case_id"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "available",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Rework",
+            "status": "available",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 39,
+        "band": "Not feasible",
+        "mined_at": "2026-11-05T11:48:39+00:00",
+        "flow_band": null,
+        "reported_at": "2026-11-05T11:48:39+00:00"
+      },
+      "flow": null,
+      "order": null,
+      "strength": null,
+      "facts": 5,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\report.xlsx"
+    },
+    {
+      "name": "work_sessions",
+      "exit": 0,
+      "seconds": 1.234,
+      "peak_rss_mb": 166.7,
+      "timings": {
+        "normalise": 0.051,
+        "run_quality": 0.107,
+        "run_mining": 0.201,
+        "generate_report": 0.479
+      },
+      "job": {
+        "job_id": "20261105-115120-70e363",
+        "source_name": "sessions.parquet",
+        "source_path": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "status": "reported",
+        "created_at": "2026-11-05T11:51:20.720943+00:00",
+        "format": "parquet",
+        "rows": 12000,
+        "summary": {
+          "events": 12000,
+          "events_before_merge": 12000,
+          "cases": 3000,
+          "activities": 4,
+          "first_event": "2024-01-01 08:00:00",
+          "last_event": "2025-05-14 08:09:00",
+          "unparsed_timestamps": 0,
+          "rows_in_file": 12000,
+          "rows_left_out": 0,
+          "columns_left_out": [],
+          "seconds": 0.05,
+          "size_mb": 0.1
+        },
+        "warnings": [],
+        "layout_signature": "7fc15a3e8b380ced",
+        "case_source": {
+          "kind": "work_session",
+          "label": "Case = work session (30-min gap)"
+        },
+        "capabilities": [
+          {
+            "feature": "Process map",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "Cases are WORK SESSIONS, not business cases: the map shows how people work in one sitting, not the end-to-end business flow.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Variants (paths)",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity, timestamp",
+            "fallback": "Cases are WORK SESSIONS, not business cases: the map shows how people work in one sitting, not the end-to-end business flow.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Waiting times and bottlenecks",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, timestamp",
+            "fallback": "Cases are WORK SESSIONS, not business cases: the map shows how people work in one sitting, not the end-to-end business flow.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Rework",
+            "status": "fallback",
+            "available": true,
+            "needs": "case, activity",
+            "fallback": "Cases are WORK SESSIONS, not business cases: the map shows how people work in one sitting, not the end-to-end business flow.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Resources and handovers",
+            "status": "available",
+            "available": true,
+            "needs": "user / resource column",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Applications",
+            "status": "missing",
+            "available": false,
+            "needs": "application column",
+            "fallback": "No application column: applications are not shown.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Application switches",
+            "status": "missing",
+            "available": false,
+            "needs": "application column (+ user column)",
+            "fallback": "No application column: switches cannot be counted.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Stages on the map",
+            "status": "fallback",
+            "available": true,
+            "needs": "stage / group column",
+            "fallback": "No stage column → steps are grouped by the process template or your business definition; without either, the map has no stage boxes.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Sub-process hierarchy",
+            "status": "missing",
+            "available": false,
+            "needs": "process level columns (level 1-3)",
+            "fallback": "No process level columns → no sub-process hierarchy (levels that are missing are skipped).",
+            "icon": "❌"
+          },
+          {
+            "feature": "Milestones",
+            "status": "missing",
+            "available": false,
+            "needs": "an action / completion column (e.g. submitted, approved)",
+            "fallback": "No action column → milestones (submitted, approved, closed) cannot be detected.",
+            "icon": "❌"
+          },
+          {
+            "feature": "Step runs",
+            "status": "fallback",
+            "available": true,
+            "needs": "a step-run ID column",
+            "fallback": "No step-run ID → one run of a step is estimated from the time gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Active time and effort",
+            "status": "fallback",
+            "available": true,
+            "needs": "an end time (or active-time) column",
+            "fallback": "No end time → time spent is estimated from gaps between events.",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "Trends",
+            "status": "available",
+            "available": true,
+            "needs": "timestamp",
+            "fallback": "",
+            "icon": "✅"
+          },
+          {
+            "feature": "Business definition check",
+            "status": "fallback",
+            "available": true,
+            "needs": "an approved business definition of the process",
+            "fallback": "Until a business definition is approved, the order comes from the business, a template, the AI or the data (page 3).",
+            "icon": "⚠️"
+          },
+          {
+            "feature": "AI summary",
+            "status": "fallback",
+            "available": true,
+            "needs": "AI switched on and allowed (.env)",
+            "fallback": "The summary is written from fixed templates.",
+            "icon": "⚠️"
+          }
+        ],
+        "feasibility": 100,
+        "band": "High",
+        "mined_at": "2026-11-05T11:51:21+00:00",
+        "flow_band": "Medium",
+        "reported_at": "2026-11-05T11:51:21+00:00"
+      },
+      "flow": {
+        "score": 79,
+        "band": "Medium",
+        "source": "data",
+        "reasons": [
+          "the data shows a clear order",
+          "no business order given",
+          "Cases are WORK SESSIONS, not business cases: the map shows how people work in one sitting, not the end-to-end business flow."
+        ],
+        "allowed": {
+          "map_title": "Intended order",
+          "arrows": true,
+          "sequence_badge_cap": "Medium",
+          "sequence_in_summary": true,
+          "ai_sequence": "intended order only"
+        }
+      },
+      "order": {
+        "process_name": "sessions",
+        "stages": [
+          {
+            "name": "",
+            "steps": [
+              "Open",
+              "Check",
+              "Approve",
+              "Close"
+            ]
+          }
+        ],
+        "other_steps": [],
+        "source": "suggested",
+        "confirmed_by_business": false,
+        "updated_at": "",
+        "mandatory_steps": [],
+        "template_name": null,
+        "template_match_share": null
+      },
+      "strength": 1,
+      "facts": 48,
+      "folder": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363",
+      "html": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\report.html",
+      "excel": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\report.xlsx"
+    }
+  ],
+  "pytest_normal": {
+    "command": [
+      "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+      "-m",
+      "pytest",
+      "-q"
+    ],
+    "exit": 0,
+    "seconds": 148.71,
+    "summary": "........................................................................ [ 40%]\n........................................................................ [ 81%]\n.................................                                        [100%]\n============================== warnings summary ===============================\ntests/test_app_switching.py: 3 warnings\ntests/test_map_page.py: 12 warnings\ntests/test_missing_columns.py: 3 warnings\ntests/test_reference_map.py: 15 warnings\ntests/test_report.py: 3 warnings\n  D:\\process-mining-app\\.release-venv\\Lib\\site-packages\\streamlit\\elements\\lib\\built_in_chart_utils.py:620: Pandas4Warning: The inplace keyword in DataFrame.reset_index is deprecated and will be removed in a future version (PDEP-8).\n  See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.\n    df.reset_index(inplace=True)  # noqa: PD002\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n177 passed, 2 deselected, 36 warnings in 147.18s (0:02:27)\n"
+  },
+  "pytest_slow": {
+    "command": [
+      "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+      "-m",
+      "pytest",
+      "-q",
+      "-m",
+      "slow"
+    ],
+    "exit": 0,
+    "seconds": 50.88,
+    "summary": "..                                                                       [100%]\n2 passed, 177 deselected in 49.82s\n"
+  },
+  "scenarios": [
+    {
+      "name": "clean",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean",
+        "--stage",
+        "phase",
+        "--application",
+        "Application_name",
+        "--window-title",
+        "simplified_title",
+        "--merge-repeats",
+        "--app-map",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\app-map.csv"
+      ]
+    },
+    {
+      "name": "definition",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition",
+        "--stage",
+        "phase",
+        "--definition",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\definition.json",
+        "--export-bpmn",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.bpmn",
+        "--order",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\order.json"
+      ]
+    },
+    {
+      "name": "dirty",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\dirty.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty"
+      ]
+    },
+    {
+      "name": "shuffled",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\shuffled.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled",
+        "--stage",
+        "phase"
+      ]
+    },
+    {
+      "name": "shuffled_confirmed",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\shuffled.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed",
+        "--stage",
+        "phase",
+        "--order",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\order.json"
+      ]
+    },
+    {
+      "name": "folder",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\five_files",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder"
+      ]
+    },
+    {
+      "name": "tiny",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\tiny.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny"
+      ]
+    },
+    {
+      "name": "bad_timestamp",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\bad.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp",
+        "--timestamp",
+        "timestamp"
+      ]
+    },
+    {
+      "name": "missing_columns",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\plain.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns"
+      ]
+    },
+    {
+      "name": "derived_case",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\tickets.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--window-title",
+        "window_title",
+        "--derive-case",
+        "text_pattern",
+        "--pattern",
+        "ticket"
+      ]
+    },
+    {
+      "name": "work_sessions",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--derive-case",
+        "work_session"
+      ]
+    },
+    {
+      "name": "overview",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--overview-only"
+      ]
+    },
+    {
+      "name": "large",
+      "data_dir": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large",
+      "args": [
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\big.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large"
+      ]
+    }
+  ],
+  "leaks": {
+    "files_scanned": [
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\process_definitions\\purchasing\\current.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\process_definitions\\purchasing\\v1.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\process_definitions\\purchasing\\v2.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\app_switches.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\evidence.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\process_definitions\\purchasing\\current.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\process_definitions\\purchasing\\v1.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\process_definitions\\purchasing\\v2.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\app_switches.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\app_switches.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\evidence.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\app_switches.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\evidence.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp\\jobs\\20261105-114840-6376ef\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-114845-f0a2a8\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-114847-69d81e\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\events.parquet",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\facts.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\job.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\mapping.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\mining.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\narrative.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\quality.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\reference.json",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\report.html",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\report.xlsx",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions.console.log",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean.ai_payload.txt",
+      "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.ai_payload.txt"
+    ],
+    "hits": [
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\app_switches.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 6102,
+        "examples": [
+          "C00000013",
+          "C00000015",
+          "C00000021"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18186,
+        "examples": [
+          "C00000034",
+          "C00000063",
+          "C00000081"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\evidence.json",
+        "location": "$.definition_fingerprint",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "6ea3f1ff925145cb7ac7e1ccdd9ab14c03baec55b8832524a25252d1555d45ff"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean\\jobs\\20261105-114820-7013d8\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\app_switches.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 6102,
+        "examples": [
+          "C00000016",
+          "C00000024",
+          "C00000045"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 24288,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-114824-f21edd\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\app_switches.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 6102,
+        "examples": [
+          "C00000030",
+          "C00000045",
+          "C00000055"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 24288,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115112-6651a4\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\app_switches.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 6102,
+        "examples": [
+          "C00000013",
+          "C00000015",
+          "C00000021"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 24288,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\evidence.json",
+        "location": "$.definition_fingerprint",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "6ea3f1ff925145cb7ac7e1ccdd9ab14c03baec55b8832524a25252d1555d45ff"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition\\jobs\\20261105-115828-bfd49f\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18461,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty\\jobs\\20261105-114827-2056b8\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18186,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled\\jobs\\20261105-114830-c05c6e\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18186,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed\\jobs\\20261105-114833-52b9dd\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18186,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder\\jobs\\20261105-114835-ab706e\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 355,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny\\jobs\\20261105-114838-67b5d5\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp\\jobs\\20261105-114840-6376ef\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 18186,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns\\jobs\\20261105-114842-95f95d\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-114845-f0a2a8\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case\\jobs\\20261105-115117-96d327\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-114847-69d81e\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions\\jobs\\20261105-115120-70e363\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-114848-19c26a\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview\\jobs\\20261105-115123-0ddd25\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\events.parquet",
+        "location": "column case_id",
+        "category": "input_case_id",
+        "count": 2500000,
+        "examples": [
+          "C00000004",
+          "C00000005",
+          "C00000007"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large\\jobs\\20261105-114850-be367b\\job.json",
+        "location": "$.source_path",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\bad_timestamp.console.log",
+        "location": "line 3",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean.console.log",
+        "location": "line 48",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\clean.console.log",
+        "location": "line 49",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.console.log",
+        "location": "line 37",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.console.log",
+        "location": "line 55",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\definition.console.log",
+        "location": "line 56",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\derived_case.console.log",
+        "location": "line 46",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty.console.log",
+        "location": "line 48",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\dirty.console.log",
+        "location": "line 49",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\folder.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\large.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\missing_columns.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview.console.log",
+        "location": "line 38",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\overview.console.log",
+        "location": "line 39",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\shuffled_confirmed.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny.console.log",
+        "location": "line 38",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\tiny.console.log",
+        "location": "line 39",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions.console.log",
+        "location": "line 1",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions.console.log",
+        "location": "line 44",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      },
+      {
+        "file": "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\work_sessions.console.log",
+        "location": "line 45",
+        "category": "hex32",
+        "count": 1,
+        "examples": [
+          "35939a6909ee49329b8eac4d28595d67"
+        ]
+      }
+    ]
+  },
+  "consistency": {
+    "unreferenced_setting_leaf_candidates": [],
+    "env_undocumented": [],
+    "dependencies": {
+      "requirements.txt": {
+        "pins": 14,
+        "release_mismatches": [],
+        "original_venv_mismatches": [
+          [
+            "pypdf",
+            "6.6.2",
+            "6.21.4"
+          ]
+        ]
+      },
+      "requirements.lock.txt": {
+        "pins": 85,
+        "release_mismatches": [],
+        "original_venv_mismatches": [
+          [
+            "pypdf",
+            "6.6.2",
+            "6.21.4"
+          ]
+        ]
+      }
+    },
+    "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "smoke": {
+    "pages": [
+      {
+        "page": "upload_page",
+        "errors": [],
+        "tabs": [
+          "Upload file(s)",
+          "Use files on this computer",
+          "Try a sample"
+        ]
+      },
+      {
+        "page": "quality_page",
+        "errors": [],
+        "tabs": []
+      },
+      {
+        "page": "map_page",
+        "errors": [],
+        "tabs": [
+          "Process map",
+          "Variants",
+          "Bottlenecks",
+          "Rework",
+          "Resources",
+          "Applications",
+          "Trends"
+        ]
+      },
+      {
+        "page": "business_page",
+        "errors": [],
+        "tabs": [
+          "Start the definition",
+          "Edit the definition",
+          "Check against the data",
+          "Approve",
+          "Final map"
+        ]
+      },
+      {
+        "action": "empty evidence filter",
+        "errors": []
+      },
+      {
+        "page": "report_page",
+        "errors": [],
+        "tabs": []
+      },
+      {
+        "page": "jobs_page",
+        "errors": [],
+        "tabs": []
+      }
+    ],
+    "clean_ai_calls": 1,
+    "draft_ai_calls": 1,
+    "draft_accepted": true,
+    "tiny_ai_calls": 0
+  },
+  "readme_examples": [
+    {
+      "label": "generate_clean",
+      "exit": 0,
+      "seconds": 1.66,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\generate_synthetic.py",
+        "--cases",
+        "20000",
+        "--out",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\clean.parquet"
+      ]
+    },
+    {
+      "label": "generate_dirty",
+      "exit": 0,
+      "seconds": 3.57,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\generate_synthetic.py",
+        "--cases",
+        "20000",
+        "--missing-ts",
+        "0.03",
+        "--ties",
+        "0.15",
+        "--duplicates",
+        "0.02",
+        "--typos",
+        "0.02",
+        "--date-only",
+        "0.4",
+        "--placeholder",
+        "0.01",
+        "--missing-case",
+        "0.01",
+        "--out",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\dirty.csv",
+        "--ts-format",
+        "%d/%m/%Y %H:%M:%S"
+      ]
+    },
+    {
+      "label": "generate_daily",
+      "exit": 0,
+      "seconds": 5.19,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\generate_synthetic.py",
+        "--cases",
+        "20000",
+        "--split-by",
+        "day",
+        "--out",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\daily"
+      ]
+    },
+    {
+      "label": "generate_large",
+      "exit": 0,
+      "seconds": 37.81,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\generate_synthetic.py",
+        "--cases",
+        "1650000",
+        "--out",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\ten_million.parquet"
+      ]
+    },
+    {
+      "label": "simple",
+      "exit": 0,
+      "seconds": 7.44,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\simple"
+      ]
+    },
+    {
+      "label": "filtered",
+      "exit": 0,
+      "seconds": 3.52,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\filtered",
+        "--drop-missing-case",
+        "--merge-repeats",
+        "--filter-column",
+        "Application_name",
+        "--filter-values",
+        "SAP Logon",
+        "Excel"
+      ]
+    },
+    {
+      "label": "apps",
+      "exit": 0,
+      "seconds": 3.61,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\clean.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\apps",
+        "--application",
+        "Application_name",
+        "--window-title",
+        "simplified_title",
+        "--app-map",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\app-map.csv"
+      ]
+    },
+    {
+      "label": "tickets",
+      "exit": 0,
+      "seconds": 3.51,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\tickets.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\tickets",
+        "--activity",
+        "activity",
+        "--timestamp",
+        "timestamp",
+        "--resource",
+        "resource",
+        "--window-title",
+        "window_title",
+        "--derive-case",
+        "text_pattern",
+        "--pattern",
+        "ticket"
+      ]
+    },
+    {
+      "label": "sessions",
+      "exit": 0,
+      "seconds": 2.67,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\sessions",
+        "--derive-case",
+        "work_session",
+        "--session-gap",
+        "30"
+      ]
+    },
+    {
+      "label": "time_windows",
+      "exit": 0,
+      "seconds": 4.46,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\time_windows",
+        "--derive-case",
+        "time_window",
+        "--window",
+        "day"
+      ]
+    },
+    {
+      "label": "overview",
+      "exit": 0,
+      "seconds": 2.14,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\overview",
+        "--overview-only"
+      ]
+    },
+    {
+      "label": "record_join",
+      "exit": 0,
+      "seconds": 2.96,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\inputs\\sessions.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\record_join",
+        "--resource",
+        "resource",
+        "--record-file",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\records.csv"
+      ]
+    },
+    {
+      "label": "derive_activity",
+      "exit": 0,
+      "seconds": 5.31,
+      "command": [
+        "D:\\process-mining-app\\.release-venv\\Scripts\\python.exe",
+        "D:\\process-mining-app\\scripts\\run_pipeline.py",
+        "--input",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\no_activity.parquet",
+        "--auto-map",
+        "--no-ai",
+        "--data-dir",
+        "C:\\Users\\hp\\AppData\\Local\\Temp\\pm-release-35939a6909ee49329b8eac4d28595d67\\readme\\derive_activity",
+        "--derive-activity"
+      ]
+    }
+  ],
+  "folder_overview": {
+    "files": 5,
+    "rows": 18186,
+    "per_file": [
+      {
+        "file": "part_0.parquet",
+        "rows": 3638
+      },
+      {
+        "file": "part_1.parquet",
+        "rows": 3637
+      },
+      {
+        "file": "part_2.parquet",
+        "rows": 3637
+      },
+      {
+        "file": "part_3.parquet",
+        "rows": 3637
+      },
+      {
+        "file": "part_4.parquet",
+        "rows": 3637
+      }
+    ],
+    "columns_missing_in_files": [
+      {
+        "column": "region",
+        "missing_in": 3
+      }
+    ]
+  }
+}

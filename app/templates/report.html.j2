@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }} · {{ source }}</title>
+<style>
+  :root { --ink:#1f2933; --muted:#616e7c; --line:#d9e2ec; --soft:#f5f7fa; --accent:#4a6fa5;
+          --high:#1f7a4d; --medium:#a8650a; --expl:#7b8794; --warm:#d9480f; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink);
+         background: #fff; margin: 0 auto; max-width: 1040px; padding: 24px 16px 64px; line-height: 1.45; }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  h2 { font-size: 20px; border-bottom: 2px solid var(--line); padding-bottom: 4px; margin-top: 36px; }
+  h3 { font-size: 15px; margin: 18px 0 6px; }
+  .meta, .caption { color: var(--muted); font-size: 13px; }
+  .banner { padding: 10px 14px; border-radius: 6px; margin: 14px 0; font-size: 14px; }
+  .b-High { background: #e3f4ea; } .b-Medium { background: #fff4de; }
+  .b-Low { background: #fdecd8; } .b-Not { background: #fbe1e1; } .b-ok { background: #e3f4ea; }
+  .na { background: var(--soft); color: var(--muted); border: 1px solid var(--line); border-radius: 6px;
+        padding: 10px 14px; font-size: 14px; }
+  .wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 6px 0 12px; }
+  th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--soft); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.total td { font-weight: 600; border-top: 2px solid var(--line); }
+  .badge { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 9px; color: #fff;
+           white-space: nowrap; background: var(--warm); }
+  .High { background: var(--high); } .Medium { background: var(--medium); } .Exploratory { background: var(--expl); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; margin: 10px 0; }
+  .tile { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+  .tile .v { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .tile .l { font-size: 13px; } .tile .n { color: var(--muted); font-size: 11px; }
+  .findings li { margin-bottom: 8px; }
+  .fid { color: var(--muted); font-size: 11px; }
+  #map-svg svg, .svg svg { max-width: 100%; height: auto; }
+  .partial { color: var(--muted); font-style: italic; }
+  details > summary { cursor: pointer; font-weight: 600; margin: 8px 0; }
+  .no-print { margin: 12px 0; }
+  @media print {
+    @page { size: A4; margin: 16mm 14mm; }
+    body { max-width: none; padding: 0; font-size: 12px; }
+    section.sec { page-break-before: always; }
+    section.sec:first-of-type { page-break-before: auto; }
+    .no-print { display: none; }
+    tr, .finding { page-break-inside: avoid; }
+    details { display: block; } details > * { display: block; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>{{ title }}</h1>
+  <div class="meta header-line">{{ source }} · {{ header.period }} · Case = {{ header.case_column }} ·
+    Activity = {{ header.activity_column }} · <strong>{{ header.order_badge }}</strong> ·
+    <strong class="checks-line">{{ header.checks }}</strong></div>
+  <div class="meta">job {{ job_id }} · generated {{ generated_at[:19] }} UTC · {{ case_label }}</div>
+  {% if header.draft %}<div class="banner b-Not"><strong>{{ header.checks }}.</strong> These numbers did not match
+    their independent recomputation:<ul>{% for c in header.failed %}<li>{{ c.check }}: report {{ c.report }}, recomputed {{ c.recomputed }}</li>{% endfor %}</ul></div>{% endif %}
+  {% if case_note.strip() %}<div class="banner b-Low">{{ case_note.strip() }}</div>{% endif %}
+  <div class="banner b-{{ band.split(' ')[0] }}"><strong>Data quality: {{ band }} ({{ score }} / 100).</strong>
+    {{ band_label }}</div>
+  <div class="no-print caption">For a PDF: use your browser's Print → Save as PDF.</div>
+</header>
+{# Viz.js draws the maps. inline: embedded copy, no network request; cdn: loaded online; off: tables only. #}
+{% if viz_mode == "inline" %}<script>{{ viz_inline | safe }}</script>
+{% elif viz_mode == "cdn" %}<script src="{{ viz_js_url }}"></script>{% endif %}
+{% macro draw(el_id, dot) %}{% if viz_mode != "off" %}<script>(function(){var dot={{ dot | tojson }};if(!window.Viz||!Viz.instance)return;Viz.instance().then(function(v){var el=document.getElementById("{{ el_id }}");el.innerHTML="";el.appendChild(v.renderSVGElement(dot));}).catch(function(){});})();</script>{% endif %}{% endmacro %}
+{% macro mapbox(el_id, what) %}<div id="{{ el_id }}" class="svg">{% if viz_mode == "off" %}<div class="na">Map drawing is switched off (report.viz_js_mode); {{ what }}</div>{% else %}<noscript><div class="na">The map needs JavaScript; {{ what }}</div></noscript>{% endif %}</div>{% endmacro %}
+
+{% for s in sections %}
+<section class="sec" id="{{ s.key }}">
+  <h2>{{ s.number }}. {{ s.title }}</h2>
+  {% if not s.available %}
+  <div class="na">{{ s.reason if (s.reason or "").startswith("Not available") else "Not available: " ~ (s.reason or "") }}</div>
+
+  {% elif s.key == "key" and s.no_case %}{% set o = s.activity_overview %}
+  <div class="na">No case: activity overview only. The process map, waiting times and conformance need a case.</div>
+  <p>{{ fc(o.events) }} events by {{ fc(o.users) }} users.</p>
+  <h3>Activities</h3>
+  <table><tr><th>Activity</th><th class="num">Events</th><th class="num">Users</th></tr>
+    {% for a in o.activities %}<tr><td>{{ a.activity }}</td><td class="num">{{ fc(a.events) }}</td><td class="num">{{ fc(a.users) }}</td></tr>{% endfor %}
+  </table>
+  <h3>When work happens</h3>
+  <div class="wrap"><table><tr><th>Hour</th>{% for h in o.by_hour %}<th class="num">{{ h.hour }}</th>{% endfor %}</tr>
+    <tr><td>Events</td>{% for h in o.by_hour %}<td class="num">{{ fc(h.events) }}</td>{% endfor %}</tr></table></div>
+  <h3>Step runs (consecutive events of one step by one user)</h3>
+  <table><tr><th>Activity</th><th class="num">Runs</th><th class="num">Median events per run</th><th class="num">Median time</th></tr>
+    {% for r in o.step_runs %}<tr><td>{{ r.activity }}</td><td class="num">{{ fc(r.runs) }}</td><td class="num">{{ r.median_events }}</td><td class="num">{{ fd(r.median_minutes / 60 if r.median_minutes is not none else none) }}</td></tr>{% endfor %}
+  </table>
+
+  {% elif s.key == "key" %}
+  <div class="tiles">{% for label, value, note in s.tiles %}<div class="tile"><div class="v">{{ value }}</div><div class="l">{{ label }}</div><div class="n">{{ note }}</div></div>{% endfor %}</div>
+
+  {% elif s.key == "scope" %}
+  <table class="scope"><tr><th>From the file to the analysis</th><th class="num">Rows</th>{% if s.has_active %}<th class="num">Active hours</th>{% endif %}</tr>
+    {% for r in s.rows %}<tr{% if r.strong %} class="total"{% endif %}><td>{{ r.label }}</td><td class="num">{{ fc(r.rows) }}</td>{% if s.has_active %}<td class="num">{{ fh(r.hours) }}</td>{% endif %}</tr>{% endfor %}
+  </table>
+  {% if s.missing %}<p><strong>Active hours not in this analysis: {{ fh(s.missing.total) }}</strong>{% if s.missing.parts %} —
+    {% for label, h in s.missing.parts %}{{ label | lower }}: {{ fh(h) }}{{ "; " if not loop.last else "." }}{% endfor %}{% endif %}</p>{% endif %}
+  <p class="caption">Each row is counted under the first reason that applies, so the lines add up to the rows in the file.</p>
+
+  {% elif s.key == "summary" %}
+  {% if s.summary %}<ul class="findings">
+    {% for f in s.summary %}<li class="finding">{{ f.text }} <span class="fid">({{ f.facts | join(", ") }})</span></li>{% endfor %}
+  </ul>{% else %}<div class="na">No finding is supported strongly enough to state here.</div>{% endif %}
+  {% if s.findings %}<h3>Key findings</h3><ul class="findings">
+    {% for f in s.findings %}<li class="finding">{{ f.text }} <span class="fid">({{ f.facts | join(", ") }})</span></li>{% endfor %}
+  </ul>{% endif %}
+  {% if s.recommendations %}<h3>Recommendations</h3><ul class="findings">
+    {% for f in s.recommendations %}<li class="finding">{{ f.text }} <span class="fid">({{ f.facts | join(", ") }})</span></li>{% endfor %}
+  </ul>{% endif %}
+  <p class="caption provenance">{{ s.provenance }} Every number comes from the fact store (IDs in brackets, details in the appendix).</p>
+
+  {% elif s.key == "process" %}
+  {% if s.business %}{% set bz = s.business %}
+  <h3>Business process map</h3>
+  {% if not bz.approved %}<div class="banner b-Not draft-banner"><strong>DRAFT — not approved.</strong> This business process definition has not been approved yet.</div>{% endif %}
+  <p class="caption">{{ bz.title }}</p>
+  <p class="evidence-line"><strong>{{ bz.score_line }}</strong></p>
+  {% if bz.combined_line %}<p class="combined-line"><strong>{{ bz.combined_line }}</strong></p>{% endif %}
+  {{ mapbox("bmap-svg", "the claims below and the definition in the appendix list everything.") }}
+  <p class="caption">{{ bz.legend }}</p>
+  {% if bz.combined_line %}
+  <h3>Documented ≠ actual</h3>
+  {% if bz.documented_not_actual %}<ul class="findings">{% for e in bz.documented_not_actual %}<li>{{ e.label }} — data: {{ e.data }}</li>{% endfor %}</ul>
+  {% else %}<p class="caption">None found.</p>{% endif %}
+  <h3>Undocumented practice</h3>
+  {% if bz.undocumented %}<ul class="findings">{% for e in bz.undocumented %}<li>{{ e.label }} — data: {{ e.data }}</li>{% endfor %}</ul>
+  {% else %}<p class="caption">None found.</p>{% endif %}
+  {% endif %}
+  {% if bz.top_contradicted %}<h3>Contradicted by the data</h3><ul class="findings">
+    {% for c in bz.top_contradicted %}<li>{{ c.statement }} — {{ c.text }} <span class="fid">{{ c.id }}</span></li>{% endfor %}
+  </ul>{% endif %}
+  {{ draw("bmap-svg", bz.dot) }}
+  {% if not s.business_only %}<h3>The data's own map</h3>{% endif %}
+  {% endif %}
+  {% if s.business_only %}<div class="na">The data-driven map is not available for this job.</div>{% else %}
+  {% if s.scores_line %}<p class="order-status"><strong>{{ s.scores_line }}</strong></p>{% endif %}
+  {% if s.flow_explain %}<p class="caption flow-explain">{{ s.flow_explain }}</p>{% endif %}
+  {% if s.flow_none %}<p><strong>The data does not show a fixed order. The map shows which steps occur and how often, grouped by stage.</strong></p>{% endif %}
+  {% if s.dot %}{{ mapbox("map-svg", "the step table below lists every step.") }}{{ draw("map-svg", s.dot) }}
+  {% if s.legend %}<p class="caption">{{ s.legend }}</p>{% endif %}{% endif %}
+  <h3>Steps{% if s.sorted_by_cases %} (sorted by cases reached: no confirmed step order){% else %} in the business order{% endif %}</h3>
+  <div class="wrap"><table class="steps"><tr><th>Stage</th><th>Step</th>
+    <th class="num" title="cases with at least one event of the step; % of all cases in scope">Cases reached (% of all cases)</th>
+    <th class="num" title="consecutive events of one step in a case">Step runs</th><th class="num">Events</th>
+    {% if s.has_active %}<th class="num">Active hours</th><th class="num" title="step hours ÷ active hours in scope">Share of hours (% of all hours)</th>
+    <th class="num" title="active hours ÷ cases reaching the step">Hours per case reached</th>
+    <th class="num">Median active time per step run</th>{% endif %}
+    <th>Top applications{% if s.has_active %} (hours){% endif %}</th>
+    <th class="num" title="cases that return to the step after the rework gap ÷ cases reaching the step">Rework (% of cases reached)</th>
+    {% if s.has_wait %}<th class="num">Waiting hours</th><th class="num" title="wait ÷ turnaround time">Waiting share (wait ÷ TAT)</th>{% endif %}</tr>
+    {% for r in s.rows %}<tr><td>{{ r.stage or "–" }}</td><td>{{ r.step }}</td>
+      <td class="num">{{ fc(r.cases) }} ({{ fp(r.cases_share) }})</td><td class="num">{{ fc(r.runs) }}</td><td class="num">{{ fc(r.events) }}</td>
+      {% if s.has_active %}<td class="num">{{ fh(r.active_hours) }}</td><td class="num">{{ fp(r.hours_share) }}</td>
+      <td class="num">{{ fd(r.hours_per_case) }}</td><td class="num">{{ fds(r.median_active_run_s) }}</td>{% endif %}
+      <td>{% for a in r.top_apps %}{{ a.application }}{% if s.has_active %} ({{ fh(a.hours) }}){% endif %}{{ ", " if not loop.last }}{% endfor %}</td>
+      <td class="num">{% if r.rework_cases %}{{ fc(r.rework_cases) }} ({{ fp(r.rework_share) }}){% else %}–{% endif %}</td>
+      {% if s.has_wait %}<td class="num">{{ fh(r.waiting_hours) }}</td><td class="num">{{ fp(r.waiting_share) }}</td>{% endif %}</tr>{% endfor %}
+  </table></div>
+  {% if s.other_line %}<p class="other-line">{{ s.other_line }}</p>{% endif %}
+  {% if band == "Low" %}<p class="caption">Exploratory — do not use for decisions.</p>{% endif %}
+  {% endif %}
+
+  {% elif s.key == "time" %}
+  {% if not s.has_active %}<div class="na">No active-time column was mapped, so hours cannot be shown: the tables count events. Map "Active time" on page 1.</div>{% endif %}
+  <h3>{{ "Hours" if s.has_active else "Events" }} by stage</h3>
+  <table><tr><th>Stage</th><th>Steps</th><th class="num">Cases</th><th class="num">Runs</th>{% if s.has_active %}<th class="num">Active hours</th><th class="num">Share of hours</th>{% endif %}</tr>
+    {% for st in s.stages %}<tr><td>{{ st.stage or "Other activities without a stage" }}</td><td class="caption">{{ st.steps | join(", ") }}</td><td class="num">{{ fc(st.cases) }}</td><td class="num">{{ fc(st.runs) }}</td>{% if s.has_active %}<td class="num">{{ fh(st.active_hours) }}</td><td class="num">{{ fp(st.hours_share) }}</td>{% endif %}</tr>{% endfor %}
+  </table>
+  <h3>Step × application ({{ "active hours" if s.has_active else "events" }})</h3>
+  <div class="wrap"><table class="matrix"><tr><th>Step</th>{% for a in s.matrix.apps %}<th class="num">{{ a }}</th>{% endfor %}<th class="num">Total</th></tr>
+    {% for r in s.matrix.rows %}<tr><td>{{ r.step }}</td>{% for v in r["values"] %}<td class="num">{{ (fh(v, true) if s.has_active else fc(v, true)) }}</td>{% endfor %}<td class="num"><strong>{{ fh(r.total) if s.has_active else fc(r.total) }}</strong></td></tr>{% endfor %}
+    <tr class="total"><td>Total</td>{% for v in s.matrix.column_totals %}<td class="num">{{ fh(v) if s.has_active else fc(v) }}</td>{% endfor %}<td class="num">{{ fh(s.matrix.grand_total) if s.has_active else fc(s.matrix.grand_total) }}</td></tr>
+  </table></div>
+  <h3>{{ "Hours" if s.has_active else "Events" }} by application</h3>
+  <table><tr><th>Application</th><th class="num">Cases</th><th class="num">Events</th>{% if s.has_active %}<th class="num">Active hours</th><th class="num">Share of hours (% of all hours)</th>{% endif %}</tr>
+    {% for a in s.applications %}<tr><td>{{ a.application }}</td><td class="num">{{ fc(a.cases) }}</td><td class="num">{{ fc(a.events) }}</td>{% if s.has_active %}<td class="num">{{ fh(a.active_hours) }}</td><td class="num">{{ fp(a.hours_share) }}</td>{% endif %}</tr>{% endfor %}
+  </table>
+
+  {% elif s.key == "inside" %}
+  {% if s.banner %}<div class="banner b-Low level4-banner">{{ s.banner }}</div>{% endif %}
+  {% for b in s.blocks %}
+  <h3>{{ b.l3 }}</h3>
+  {% if b.summary %}<p>{{ b.summary }}</p>{% endif %}
+  {% set ins = (s.detail or {}).get(b.l3) %}
+  {% if ins and ins.enough %}
+  <p class="inside-text">{{ ins.text }}</p><p class="caption provenance">{{ ins.provenance }}</p>
+  <table class="inside-patterns"><tr><th>Usual pattern inside the step (status {{ ins.status }})</th><th class="num">Work sittings</th><th class="num">Share of sittings</th></tr>
+    {% for p in ins.patterns %}<tr><td>{{ p.path | join(" → ") }}</td><td class="num">{{ fc(p.runs) }}</td><td class="num">{{ fp(p.share) }}</td></tr>{% endfor %}
+  </table>
+  <table class="inside-time"><tr><th>Where the time goes</th><th class="num">Hours</th><th class="num">Share of hours</th><th class="num">Median per sitting</th><th>Work type</th></tr>
+    {% for t in ins.time_split %}<tr><td>{{ t.sub_step }}</td><td class="num">{{ fh(t.hours) }}</td><td class="num">{{ fp(t.share_of_hours) }}</td><td class="num">{{ fds(t.median_run_s) }}</td><td>{{ t.work_type }}</td></tr>{% endfor %}
+  </table>
+  <p class="caption">{{ fc(ins.runs) }} work sittings · median {{ fds(ins.median_run_s) }} of active time per sitting · rework inside the step in {{ fp(ins.rework.share) }} of sittings · {{ "%.2f" | format(ins.apps.switches_per_run) }} application switches per sitting{% if ins.cv is not none %} · spread between people {{ "%.2f" | format(ins.cv) }} ({{ ins.cv_label }}){% endif %}{% if ins.people_flagged %} · people differ: {% for p in ins.people_flagged %}{{ p.user }} ({{ p.flags | join(", ") }}){{ ", " if not loop.last }}{% endfor %}{% endif %}{% if ins.pm %} · PM4Py Level 4 model: fitness {{ "%.2f" | format(ins.pm.fitness) }}{% if ins.pm.precision is not none %}, precision {{ "%.2f" | format(ins.pm.precision) }}{% endif %}{% endif %}.</p>
+  {% if ins.automation %}<p class="caption">Candidates for SME review: {{ ins.automation | join("; ") }}.</p>{% endif %}
+  {% elif ins %}<p class="caption">Inside the step: {{ ins.reason }}.</p>{% endif %}
+  {% if b.fallback %}<p class="caption fallback">{{ b.fallback }}. Top screens:</p>{% endif %}
+  {% if b.rows %}<table class="level4"><tr><th>{{ "Screen" if b.fallback else "Sub-step" }}</th>{% if not b.fallback %}<th>What is done</th>{% endif %}<th class="num">Share of the step's {{ "hours" if b.hours_based else "clicks" }}</th><th class="num">Median active time per run</th></tr>
+    {% for r in b.rows %}<tr><td>{{ r.name }}</td>{% if not b.fallback %}<td class="caption">{{ r.description }}</td>{% endif %}<td class="num">{{ fp(r.share) }}</td><td class="num">{{ r.active }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% endfor %}
+  <p class="caption">"Step runs" are consecutive events of one step in a case (the map); "work sittings" split them by person and by pauses over 30 minutes, so a step has at least as many sittings as step runs. Where each summary and taxonomy comes from is listed in the appendix.</p>
+
+  {% elif s.key == "conformance" %}
+  {% if not s.trusted %}<p class="na">{{ s.line }}</p>{% else %}{% set c = s.conf %}
+  <table><tr><th>Measure</th><th class="num">Value</th><th class="num">Basis</th></tr>
+    <tr><td>Cases whose steps follow the order (first occurrences)</td><td class="num">{{ fp(c.in_order_share) }}</td><td class="num">{{ fc(c.in_order_cases) }} of {{ fc(c.ordered_cases) }} cases with 2+ ordered steps</td></tr>
+    <tr><td>Step pairs done in the intended order</td><td class="num">{{ fp(c.pair_order_share) }}</td><td class="num">{{ fc(c.pairs_ok) }} of {{ fc(c.pairs) }} pairs</td></tr>
+    <tr><td>Cases that reach {{ c.last_step }}</td><td class="num">{{ fp(c.reach_last_share) }}</td><td class="num">{{ fc(c.reach_last) }} of {{ fc(s.cases) }} cases</td></tr>
+  </table>
+  <h3>Steps done earlier than intended</h3>
+  {% if c.earlier %}<table><tr><th>Step done before the step meant to come first</th><th class="num">Cases</th></tr>
+    {% for e in c.earlier %}<tr><td>{{ e.step }} done before {{ e.before }}</td><td class="num">{{ fc(e.cases) }}</td></tr>{% endfor %}</table>
+  {% else %}<p class="caption">None.</p>{% endif %}
+  <h3>Cases reaching each step</h3>
+  <table><tr><th>Step</th><th class="num">Cases</th><th class="num">% of all cases</th></tr>
+    {% for r in c.reached %}<tr><td>{{ r.step }}</td><td class="num">{{ fc(r.cases) }}</td><td class="num">{{ fp(r.share) }}</td></tr>{% endfor %}</table>
+  {% endif %}
+
+  {% elif s.key == "waiting" %}
+  {% if s.rows %}<table class="waiting"><tr><th>From → to</th><th class="num">Cases</th><th class="num">Median wait</th><th class="num">90% wait</th><th class="num">Total waiting hours</th></tr>
+    {% for w in s.rows %}<tr><td>{{ w["from"] }} → {{ w.to }}</td><td class="num">{{ fc(w.cases) }}</td><td class="num">{{ fd(w.median_wait_h) }}</td><td class="num">{{ fd(w.p90_wait_h) }}</td><td class="num">{{ fh(w.total_wait_h) }}</td></tr>{% endfor %}
+  </table>{% else %}<p class="na">{{ s.empty_line }}</p>{% endif %}
+  <p class="caption">Ranked by total waiting hours over all cases. Wait = start of the next step run − end of the previous one.
+    Left out: {{ fc(s.left_out_short) }} pairs with a median under {{ s.limit }} and {{ fc(s.left_out_low) }} pairs with fewer than {{ s.min_cases }} cases.</p>
+
+  {% elif s.key == "rework" %}
+  {% if s.rows %}<table class="rework"><tr><th>Step</th><th class="num">Cases with rework</th><th class="num">% of cases reaching the step</th><th class="num">Extra runs</th>{% if s.has_active %}<th class="num">Extra hours</th>{% endif %}</tr>
+    {% for r in s.rows %}<tr><td>{{ r.step }} <span class="badge">rework</span></td><td class="num">{{ fc(r.rework_cases) }}</td><td class="num">{{ fp(r.rework_share) }}</td><td class="num">{{ fc(r.rework_runs) }}</td>{% if s.has_active %}<td class="num">{{ fh(r.rework_hours) }}</td>{% endif %}</tr>{% endfor %}
+  </table>{% else %}<p class="na">No rework: no step is done again after a pause of {{ s.gap }} minutes or more.</p>{% endif %}
+  <p class="quick-line">Quick switching (back at a step within {{ s.gap }} minutes, e.g. switching screens): {{ fc(s.quick_runs) }} returns in {{ fc(s.quick_steps) }} steps — not counted as rework.</p>
+  {% if s.back %}<h3>Back and forth after a pause (A → B → A)</h3>
+  <table><tr><th>Pattern</th><th class="num">Times</th><th class="num">Cases</th></tr>
+    {% for p in s.back %}<tr><td>{{ p.a }} → {{ p.b }} → {{ p.a }}</td><td class="num">{{ fc(p.count) }}</td><td class="num">{{ fc(p.cases) }}</td></tr>{% endfor %}</table>{% endif %}
+
+  {% elif s.key == "people" %}
+  <p>{{ fc(s.total) }} participants (masked) · {{ fc(s.total_handovers) }} handovers between consecutive step runs.</p>
+  <table><tr><th>Participant</th><th class="num">Cases</th><th class="num">Runs worked in</th><th class="num">Events</th><th class="num">Steps worked</th>{% if s.has_active %}<th class="num">Active hours</th>{% endif %}</tr>
+    {% for p in s.people %}<tr><td>{{ p.participant }}</td><td class="num">{{ fc(p.cases) }}</td><td class="num">{{ fc(p.runs) }}</td><td class="num">{{ fc(p.events) }}</td><td class="num">{{ fc(p.steps) }}</td>{% if s.has_active %}<td class="num">{{ fh(p.active_hours) }}</td>{% endif %}</tr>{% endfor %}
+  </table>
+  <h3>Most frequent handovers</h3>
+  {% if s.handovers %}<table><tr><th>From → to</th><th class="num">Cases</th><th class="num">Times</th></tr>
+    {% for h in s.handovers %}<tr><td>{{ h["from"] }} → {{ h.to }}</td><td class="num">{{ fc(h.cases) }}</td><td class="num">{{ fc(h.count) }}</td></tr>{% endfor %}</table>
+  {% else %}<p class="caption">No handovers.</p>{% endif %}
+  <p class="caption">Participants are masked (P01, P02 ... by active hours); names and user IDs are never shown.</p>
+
+  {% elif s.key == "applications" %}{% set w = s.sw %}
+  <p>{{ fc(w.total) }} application switches in {{ fc(w.cases_with_switch) }} cases · {{ w.per_case_median if w.per_case_median is not none else "–" }} per case (median), {{ "%.1f" | format(w.per_case_mean or 0) }} on average. {{ s.sentence }}</p>
+  {% if s.dot %}{{ mapbox("switch-svg", "the tables below list the switches.") }}{{ draw("switch-svg", s.dot) }}{% endif %}
+  <h3>Most frequent switches</h3>
+  <table><tr><th>From</th><th>To</th><th class="num">Switches</th><th class="num">Cases</th></tr>
+    {% for p in w.pairs %}<tr><td>{{ p["from"] }}</td><td>{{ p.to }}</td><td class="num">{{ fc(p.count) }}</td><td class="num">{{ fc(p.cases) }}</td></tr>{% endfor %}</table>
+  <h3>Switching by step</h3>
+  <table><tr><th>Step</th><th class="num">Switches per run</th><th class="num">Switches</th><th class="num">Runs</th></tr>
+    {% for r in s.by_step %}<tr><td>{{ r.step }}</td><td class="num">{{ "%.2f" | format(r.per_run or 0) }}</td><td class="num">{{ fc(r.switches) }}</td><td class="num">{{ fc(r.runs) }}</td></tr>{% endfor %}</table>
+  <p class="caption">An application switch = two consecutive events of the same case and user with different, known
+    applications, at most {{ w.gap_minutes }} minutes apart. Counted before repeated steps are merged.</p>
+
+  {% elif s.key == "trend" %}
+  {% if s.line %}<p>{{ s.line }}</p>{% endif %}
+  <table><tr><th>ISO week</th><th class="num">Cases started</th>{% if s.has_active %}<th class="num">Active hours</th>{% endif %}<th class="num">Median case duration</th><th></th></tr>
+    {% for w in s.weeks %}<tr{% if w.partial %} class="partial"{% endif %}><td>{{ w.week }}</td><td class="num">{{ fc(w.cases_started) }}</td>{% if s.has_active %}<td class="num">{{ fh(w.active_hours) }}</td>{% endif %}<td class="num">{{ fd(w.median_case_h) }}</td><td>{{ "partial week" if w.partial else "" }}</td></tr>{% endfor %}
+  </table>
+  <p class="caption">Weeks run Monday to Sunday (UTC). Partial weeks are shown but never compared.</p>
+
+  {% elif s.key == "variants" %}{% set v = s.v %}
+  <p>{{ fc(v.count) }} distinct paths of step runs; the 10 most common cover {{ fp(v.top10_share) }} of cases.</p>
+  <p class="caption">A path of step runs merges repeated events of one step, so there are fewer of them than the
+    "unique paths of events" on the data quality page (page 2).</p>
+  {% if v.top %}<table><tr><th>Path (2+ steps)</th><th class="num">Cases</th><th class="num">% of all cases</th><th class="num">Median case duration</th></tr>
+    {% for x in v.top %}<tr><td>{{ x.path | join(" → ") }}</td><td class="num">{{ fc(x.cases) }}</td><td class="num">{{ fp(x.share) }}</td><td class="num">{{ fd(x.median_case_h) }}</td></tr>{% endfor %}</table>{% endif %}
+
+  {% elif s.key == "appendix" %}
+  <details{% if not collapse_appendix %} open{% endif %}><summary>Show the appendix</summary>
+  <h3>Calculation checks</h3>
+  <p><strong>{{ header.checks }}</strong> — every key number recomputed independently from the event file.</p>
+  <table class="checks"><tr><th>#</th><th>Check</th><th>Report value</th><th>Recomputed</th><th>Result</th></tr>
+    {% for c in s.checks.checks %}<tr><td>{{ c.number }}</td><td>{{ c.check }}</td><td class="num">{{ c.report }}</td><td class="num">{{ c.recomputed }}</td><td>{{ "pass" if c.passed else "FAIL" }}</td></tr>{% endfor %}
+  </table>
+  <h3>Definitions</h3>
+  <table>{% for k, v in s.definitions %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+  <h3>Data quality checks</h3>
+  <p>Feasibility score {{ s.quality_score }} / 100 · {{ s.quality_band }}.</p>
+  <table><tr><th>Check</th><th>Status</th><th>Result</th></tr>
+    {% for i in s.quality_checks %}<tr><td>{{ i.title }}</td><td>{{ i.status }}</td><td>{{ i.shown }}</td></tr>{% endfor %}
+  </table>
+  {% if s.fixes %}<h3>What to fix first</h3><ol>
+    {% for fx in s.fixes %}<li><strong>{{ fx.check }}</strong>: {{ fx.problem }}<br>→ {{ fx.fix }}</li>{% endfor %}
+  </ol>{% endif %}
+  <h3>Source</h3>
+  <p>{{ s.source }} ({{ (s.format or "").upper() }}) · job {{ s.job_id }}</p>
+  <h3>Column mapping</h3>
+  <table><tr><th>Role</th><th>Column</th></tr>
+    {% for r in s.mapping %}<tr><td>{{ r.role }}</td><td>{{ r.column }}</td></tr>{% endfor %}
+  </table>
+  <h3>Scope and settings</h3>
+  <table>{% for k, v in s.settings %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+  {% if s.applications %}<h3>Application mapping used</h3>
+  <table><tr><th>Application</th><th>Category</th><th class="num">Events</th></tr>
+    {% for a in s.applications %}<tr><td>{{ a.application }}</td><td>{{ a.category }}</td><td class="num">{{ fc(a.events) }}</td></tr>{% endfor %}
+  </table>
+  <p class="caption">{{ s.unnamed_apps }} masked application(s) had no real name and are shown as "Unnamed app N".</p>{% endif %}
+  {% if s.milestone_lines %}
+  <h3>Confirmed sequences found in the data</h3>
+  <p>Based on {{ "%.0f" | format(s.milestone_coverage * 100) }}% of cases that record milestone actions.</p>
+  <ul>{% for line in s.milestone_lines %}<li>{{ line }}</li>{% endfor %}</ul>
+  <div id="milestone-svg" class="svg"></div>{{ draw("milestone-svg", s.milestone_dot) }}
+  {% endif %}
+  {% if s.definition %}{% set d = s.definition %}
+  <h3>Business process definition</h3>
+  <p>{{ d.name }} · version {{ d.version }} · {{ d.status }}{% if d.approved_by %} · approved by {{ d.approved_by }} on {{ (d.approved_at or "")[:10] }}{% endif %}{% if d.drafted_from_template %} · <span class="badge">drafted from template — please re-check</span>{% endif %}</p>
+  <table><tr><th class="num">#</th><th>Step</th><th>Stage</th><th>Owner</th><th>System</th><th>Mandatory</th><th>SLA</th><th>Rules</th><th>Activities in the data</th></tr>
+    {% for r in d.steps %}<tr><td class="num">{{ r.position }}</td><td>{{ r.name }}</td><td>{{ r.stage }}</td><td>{{ r.owner }}</td><td>{{ r.system }}</td><td>{{ r.mandatory }}</td><td>{{ r.sla }}</td><td>{{ r.rules }}</td><td class="caption">{{ r.activities }}</td></tr>{% endfor %}
+  </table>
+  <h3>Evidence: {{ d.score_line }}</h3>
+  <table><tr><th>Claim</th><th>The definition says</th><th>Verdict</th><th>The data</th><th class="num">Support</th></tr>
+    {% for c in d.claims %}<tr><td>{{ c.id }}</td><td>{{ c.statement }}</td><td>{{ c.verdict }}</td><td>{{ c.text }}</td><td class="num">{{ fc(c.support) }}</td></tr>{% endfor %}
+  </table>
+  {% if d.change_log %}<h3>Change log</h3>
+  <table><tr><th>Version</th><th>When</th><th>By</th><th>What</th></tr>
+    {% for e in d.change_log %}<tr><td>{{ e.version }}</td><td>{{ (e.at or "")[:16] }}</td><td>{{ e.by }}</td><td>{{ e.summary }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% if d.suggestions %}<h3>AI suggestions and decisions</h3>
+  <table><tr><th>Suggestion</th><th>Why</th><th>Claims</th><th>Decision</th></tr>
+    {% for x in d.suggestions %}<tr><td>{{ x.what }}</td><td>{{ x.reason }}</td><td>{{ x.claims }}</td><td>{{ x.status }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% if d.sources %}<h3>Knowledge sources</h3>
+  <table><tr><th>Source</th><th>Title</th><th>Kind</th><th>Date</th><th class="num">Reliability</th><th>Status</th><th class="num">Statements</th></tr>
+    {% for x in d.sources %}<tr><td>{{ x.id }}</td><td>{{ x.title }}</td><td>{{ x.kind }}</td><td>{{ x.date }}{% if x.stale %} (may be outdated){% endif %}</td><td class="num">{{ "%.2f" | format(x.reliability) }}</td><td>{{ x.status }}</td><td class="num">{{ x.statements }}</td></tr>{% endfor %}
+  </table>
+  {% if d.conflicts %}<h3>Conflicts between sources</h3>
+  <table><tr><th>Conflict</th><th>Sides</th><th>Status</th><th>Decision</th></tr>
+    {% for c in d.conflicts %}<tr><td>{{ c.id }}</td><td>{{ c.sides }}</td><td>{{ c.status }}</td><td>{{ c.resolution }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% if d.qa %}<h3>Questions to the experts</h3>
+  <table><tr><th>Question</th><th>Answer</th><th>Source</th></tr>
+    {% for q in d.qa %}<tr><td>{{ q.question }}</td><td>{{ q.answer }}</td><td>{{ q.source }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% if d.pain_points %}<h3>Pain points and workarounds</h3>
+  <table><tr><th>Step</th><th>Kind</th><th>Quote</th><th>Source</th><th>Supported by data</th></tr>
+    {% for p in d.pain_points %}<tr><td>{{ p.step }}</td><td>{{ p.type.replace("_", " ") }}</td><td>“{{ p.quote }}”</td><td>{{ p.source_id }} [{{ p.anchor }}]</td><td>{{ "yes — candidate improvement" if p.supported else "no" }}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% endif %}
+  {% endif %}
+  {% if s.pm4py %}{% set pm = s.pm4py %}
+  <h3>Formal model (PM4Py)</h3>
+  {% if not pm.show_model %}<p>{{ pm.no_order }}</p>{% endif %}
+  <p class="caption">{% if pm.show_model %}A process model discovered{% else %}Computed{% endif %} from {{ fc(pm.cases_used) }} of {{ fc(pm.cases_total) }} cases with the
+    Inductive Miner (noise threshold {{ pm.noise_threshold }}), checked by token replay; skipped and extra steps from
+    {{ pm.method }} on {{ fc(pm.sampled_cases) }} sampled cases. PM4Py {{ pm.version }}. These numbers are separate
+    from the rest of the report and change none of them.</p>
+  <table class="pm4py"><tr><th>Measure</th><th class="num">Value</th><th class="num">Cases</th></tr>
+    {% for f in pm.model %}<tr><td>{{ f.label }} <span class="fid">{{ f.id }}</span></td><td class="num">{{ f.value }}</td><td class="num">{{ fc(f.support) }}</td></tr>{% endfor %}
+  </table>
+  {% if pm.order %}
+  <h3>Cases checked against the step order with PM4Py: {{ pm.order_badge }}</h3>
+  <table class="pm4py-order"><tr><th>Measure</th><th class="num">Value</th><th class="num">Cases</th></tr>
+    {% for f in pm.order %}<tr><td>{{ f.label }} <span class="fid">{{ f.id }}</span></td><td class="num">{{ f.value }}</td><td class="num">{{ fc(f.support) }}</td></tr>{% endfor %}
+  </table>
+  {% for n in pm.order_notes %}<p class="caption">{{ n }}</p>{% endfor %}
+  {% endif %}
+  {% if pm.approved %}
+  <h3>Approved process checked with PM4Py: {{ pm.approved_name }} (version {{ pm.approved_version }})</h3>
+  <table class="pm4py-approved"><tr><th>Measure</th><th class="num">Value</th><th class="num">Cases</th></tr>
+    {% for f in pm.approved %}<tr><td>{{ f.label }} <span class="fid">{{ f.id }}</span></td><td class="num">{{ f.value }}</td><td class="num">{{ fc(f.support) }}</td></tr>{% endfor %}
+  </table>
+  {% for n in pm.approved_notes %}<p class="caption">{{ n }}</p>{% endfor %}
+  {% if pm.not_in_definition %}<p class="caption">Not in the approved process: {% for x in pm.not_in_definition %}{{ x.activity }} ({{ fc(x.cases) }} cases){{ ", " if not loop.last }}{% endfor %}.</p>{% endif %}
+  <p class="caption">{{ pm.caveat }}</p>
+  {% endif %}
+  <p class="caption">{{ pm.licence }}</p>
+  {% endif %}
+  {% if s.order_evidence %}{% set ev = s.order_evidence %}
+  <h3>Order evidence</h3>
+  <p>{{ ev.label }} · {{ fc(ev.cases_used) }} fully observed cases of {{ fc(ev.cases_total) }} ({{ ev.edge_days }} days inside the data).</p>
+  {% if ev.pairs %}<table class="order-evidence"><tr><th>Arrow</th><th>Verdict</th><th class="num">Share doing the first step first</th><th class="num">Cases</th><th>Document quotes</th></tr>
+    {% for p in ev.pairs %}<tr><td>{{ p.a }} → {{ p.b }}{% if p.kind == "conflict" %} (conflict {{ p.conflict }}, {{ p.status }}){% endif %}</td><td>{{ p.verdict }}</td><td class="num">{{ fp(p.share) }}</td><td class="num">{{ fc(p.cases) }}</td><td class="caption">{% for q in p.quotes %}“{{ q.quote }}” [{{ q.source_id }} {{ q.anchor }}]{{ " · " if not loop.last }}{% endfor %}</td></tr>{% endfor %}
+  </table>{% endif %}
+  {% if ev.conflicts %}<p class="caption">Conflicts between documents (decided only by the experts): {% for c in ev.conflicts %}{{ c.id }}: {{ c.sides | join(" vs ") }} ({{ c.status }}){{ "; " if not loop.last }}{% endfor %}.</p>{% endif %}
+  {% if ev.not_stated %}<p class="caption">Position not stated in any document (placed by the data): {{ ev.not_stated | join(", ") }}.</p>{% endif %}
+  {% endif %}
+  {% if s.level4_quality %}
+  <h3>Level 4 quality</h3>
+  <table class="l4-quality"><tr><th>Step</th><th class="num">Sub-steps</th><th class="num">Events in named sub-steps</th><th class="num">Other's share</th><th class="num">Units matching 2+ rules</th><th>Stability</th><th>Flags</th></tr>
+    {% for r in s.level4_quality %}<tr><td>{{ r.step }}</td><td class="num">{{ r.sub_steps }}</td><td class="num">{{ fp(r.named) }}</td><td class="num">{{ fp(r.other) }}</td><td class="num">{{ fc(r.overlap) }}</td><td>{{ r.stability }}</td><td class="caption">{{ r.flags }}</td></tr>{% endfor %}
+  </table>
+  <p class="caption">Targets: ≥ 90% of events in named sub-steps, Other ≤ 10%, no unit matching two rules, stable assignments on rerun.</p>
+  {% endif %}
+  <h3>AI provenance per section</h3>
+  <table>{% for k, v in s.ai_provenance %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+  <h3>Executive summary: how it was written</h3>
+  <table>{% for k, v in s.narrative %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+  <h3>Thresholds in force</h3>
+  <table>{% for k, v in s.thresholds %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</table>
+  <h3>All facts</h3>
+  <table><tr><th>ID</th><th>Fact</th><th class="num">Value</th><th class="num">Support</th><th>95% CI</th><th>Badge</th><th>Source</th></tr>
+    {% for f in s.facts %}<tr><td>{{ f.id }}</td><td>{{ f.label }}</td><td class="num">{{ f.value }}</td><td class="num">{{ fc(f.support or 0) }}</td><td>{{ f.ci }}</td><td><span class="badge {{ f.badge }}">{{ f.badge }}</span></td><td class="caption">{{ f.source }}</td></tr>{% endfor %}
+  </table>
+  </details>
+  {% endif %}
+</section>
+{% endfor %}
+<footer class="caption">ProcessLens v{{ app_version }}</footer>
+</body>
+</html>

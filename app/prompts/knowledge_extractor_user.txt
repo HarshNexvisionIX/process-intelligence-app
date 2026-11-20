@@ -1,0 +1,19 @@
+Step names of the current definition:
+{steps}
+
+Activity names in the event log:
+{activities}
+
+Stage names:
+{stages}
+
+Application names:
+{applications}
+
+The source text (anchors in square brackets):
+"""
+{text}
+"""
+
+Return exactly this JSON shape:
+{"statements": [{"type": "order", "subject": "...", "object": "...", "value": "", "quote": "...", "anchor": "p.2"}]}

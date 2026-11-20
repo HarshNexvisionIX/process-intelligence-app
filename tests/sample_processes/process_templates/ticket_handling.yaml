@@ -1,0 +1,25 @@
+# Ticket handling (IT service desk / customer service): from a new ticket to closure.
+name: Ticket handling
+stages:
+  - name: Intake
+    steps:
+      - {name: Create ticket, mandatory: true,
+         synonyms: [new ticket, open ticket, ticket created, log incident, register incident, create incident,
+                    submit request]}
+      - {name: Categorise ticket, mandatory: false,
+         synonyms: [categorize, classification, triage, set priority, prioritise]}
+      - {name: Assign ticket, mandatory: false,
+         synonyms: [assignment, assign to group, assign agent, route ticket, reassign]}
+  - name: Resolution
+    steps:
+      - {name: Investigate, mandatory: false, synonyms: [diagnose, analysis, in progress, work in progress]}
+      - {name: Wait for customer, mandatory: false,
+         synonyms: [pending customer, awaiting customer, on hold, waiting for user, request information]}
+      - {name: Escalate, mandatory: false, synonyms: [escalation, escalate ticket, second line]}
+      - {name: Resolve ticket, mandatory: true,
+         synonyms: [resolved, resolution, fix applied, solution provided, resolve incident]}
+  - name: Closure
+    steps:
+      - {name: Customer confirmation, mandatory: false, synonyms: [confirm resolution, user confirmation]}
+      - {name: Close ticket, mandatory: true, synonyms: [closed, closure, close incident, ticket closed]}
+      - {name: Reopen ticket, mandatory: false, synonyms: [reopened, reopen incident]}

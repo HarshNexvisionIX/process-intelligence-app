@@ -1,0 +1,12 @@
+Claims (id | what the definition says | verdict | badge):
+{claims}
+
+The definition (ids and names only):
+{definition}
+
+Activity names in the event log:
+{activities}
+
+Return exactly this JSON shape:
+{"explanations": [{"text": "... {{C003}} ...", "claims": ["C003"]}],
+ "suggestions": [{"op": "move_step", "args": {"step_id": "S04", "position": 3}, "reason": "... {{C007}} ...", "claims": ["C007"]}]}

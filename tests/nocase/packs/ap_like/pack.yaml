@@ -1,0 +1,7 @@
+name: AP-like (fixture)
+stages:
+  - name: Payables
+    steps:
+      - {name: Enter, description: "The document is entered."}
+      - {name: Approve, description: "The document is approved."}
+      - {name: Pay, description: "The payment is posted."}

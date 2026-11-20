@@ -1,0 +1,11 @@
+rules:
+  - {id: S1, step: Extract cost data, match: {app: "SAP Logon", screen: "KSB1|FBL3N"}, status: sme_confirmed, version: 1}
+  - {id: S2, step: Collect allocation drivers, match: {app: "*", screen: "drivers"}, status: sme_confirmed, version: 1}
+  - {id: S3, step: Validate inputs, match: {app: Excel, screen: "input check"}, status: sme_confirmed, version: 1}
+  - {id: S4, step: Calculate recharges, match: {app: Excel, screen: "recharge model|recharge tracker"}, status: sme_confirmed, version: 1}
+  - {id: S5, step: Prepare journal and invoice, match: {app: "*", screen: "journal upload|FB60"}, status: sme_confirmed, version: 1}
+  - {id: S6, step: Approval, match: {app: Outlook, screen: "recharge approval"}, status: sme_confirmed, version: 1}
+  - {id: S7, step: Post in SAP, match: {app: "SAP Logon", screen: "FB50|was posted"}, status: sme_confirmed, version: 1}
+  - {id: S8, step: Intercompany reconciliation, match: {app: "*", screen: "F\\.13|intercompany matching|IC recon| vs "}, status: sme_confirmed, version: 1}
+  - {id: S9, step: Resolve exceptions and queries, match: {app: "*", screen: "IC difference|ICC team"}, status: sme_confirmed, version: 1}
+  - {id: S10, step: Month-end reporting, match: {app: "*", screen: "close pack|month-end summary"}, status: sme_confirmed, version: 1}

@@ -1,0 +1,7 @@
+# Optional: the process model discovered with PM4Py (page 3, "Discovered model (PM4Py)").
+#     pip install -r requirements-pm4py.txt
+# LICENCE: PM4Py is AGPL v3. This app uses it for INTERNAL use only. If the app is ever sold to or hosted for
+# clients, set pm4py.enabled: false in config/settings.yaml or buy a commercial PM4Py licence.
+# The rest of the app works without it.
+-r requirements.txt
+pm4py==2.7.23.11

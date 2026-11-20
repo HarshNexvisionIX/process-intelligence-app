@@ -1,0 +1,6 @@
+name: ICC-like (fixture)
+stages:
+  - name: Checks
+    steps:
+      - {name: Invoice Check, description: "An invoice is checked against the vendor."}
+      - {name: Credit Note, description: "A credit note is raised from a mail."}

@@ -1,0 +1,144 @@
+# Hand-computed answers for tests/golden/golden_events.csv (29 rows). Written by hand from the CSV,
+# never by the app. Steps: A = Receive Request, B = Check Request (stage Intake),
+# C = Approve, D = Notify (stage Delivery). Mapping: case_id, activity, timestamp, user = resource,
+# application, stage, active_time, wait_time, tat_time, action, window_title; row filter is_process in 1;
+# leave out rows without case ID / activity. idle_time is NOT mapped (never added to wait).
+# Hours are hours (seconds / 3600); compare with a tolerance of 0.001 h.
+
+scope:
+  rows_in_file: 29
+  active_seconds_in_file: 2350          # 2245 in scope + 105 outside (10+20+15+25+35)
+  left_out_by_filter: {rows: 2, active_seconds: 60}     # is_process 0: rows 28 (25 s) and 29 (35 s)
+  without_case: {rows: 2, active_seconds: 30}           # rows 25 (10 s) and 26 (20 s)
+  without_activity: {rows: 1, active_seconds: 15}       # row 27
+  without_time: {rows: 0, active_seconds: 0}
+  in_scope: {rows: 24, active_seconds: 2245}
+
+totals:
+  rows: 24
+  events: 24
+  runs: 23                    # C1 4 + C2 5 + C3 5 + C4 4 + C5 4 + C6 1
+  cases: 6
+  activities: 4
+  participants: 3
+  applications: 3
+  active_hours: 0.623611      # 2245 s
+  median_case_h: 1.666667     # durations 0, 0.75, 1, 2.333333, 3.166667, 9 -> (1 + 2.333333) / 2
+  p90_case_h: 6.083333        # position 4.5: 3.166667 + 0.5 * (9 - 3.166667)
+  mean_case_h: 2.708333       # 16.25 / 6
+  one_event_cases: 1          # C6, duration 0, counted
+
+case_durations_h: {C1: 2.333333, C2: 3.166667, C3: 1.0, C4: 0.75, C5: 9.0, C6: 0.0}
+
+# Steps in the business order A, B, C, D (stages Intake, Delivery).
+steps:
+  Receive Request:  {stage: Intake,   cases: 6, runs: 8, events: 9, active_seconds: 655, hours_share: 0.291759,
+                     hours_per_case: 0.030324, median_active_run_s: 75,
+                     rework_cases: 1, rework_runs: 1, rework_seconds: 50, quick_cases: 1, quick_runs: 1,
+                     wait_seconds: 75, tat_seconds: 730, waiting_share: 0.102740}
+  Check Request:    {stage: Intake,   cases: 5, runs: 6, events: 6, active_seconds: 750, hours_share: 0.334076,
+                     hours_per_case: 0.041667, median_active_run_s: 80,
+                     rework_cases: 0, rework_runs: 0, rework_seconds: 0, quick_cases: 1, quick_runs: 1,
+                     wait_seconds: 120, tat_seconds: 870, waiting_share: 0.137931}   # row 3: wait 120 s
+  Approve:          {stage: Delivery, cases: 5, runs: 5, events: 5, active_seconds: 610, hours_share: 0.271715,
+                     hours_per_case: 0.033889, median_active_run_s: 120,
+                     rework_cases: 0, rework_runs: 0, rework_seconds: 0, quick_cases: 0, quick_runs: 0,
+                     wait_seconds: 600, tat_seconds: 1210, waiting_share: 0.495868}
+  Notify:           {stage: Delivery, cases: 4, runs: 4, events: 4, active_seconds: 230, hours_share: 0.102450,
+                     hours_per_case: 0.015972, median_active_run_s: 50,
+                     rework_cases: 0, rework_runs: 0, rework_seconds: 0, quick_cases: 0, quick_runs: 0,
+                     wait_seconds: 0, tat_seconds: 230, waiting_share: 0.0}
+
+stages:
+  Intake:   {active_seconds: 1405, cases: 6}
+  Delivery: {active_seconds: 840, cases: 5}
+
+applications:
+  Workday: {active_seconds: 1375, events: 13, cases: 6}
+  Excel:   {active_seconds: 640, events: 7, cases: 3}
+  Outlook: {active_seconds: 230, events: 4, cases: 4}
+
+# Step x application, active seconds (row and column totals equal the step and application tables).
+matrix:
+  Receive Request: {Workday: 505, Excel: 150, Outlook: 0}
+  Check Request:   {Workday: 260, Excel: 490, Outlook: 0}
+  Approve:         {Workday: 610, Excel: 0, Outlook: 0}
+  Notify:          {Workday: 0, Excel: 0, Outlook: 230}
+
+# Waits between consecutive runs (start of next run - end of previous run), in hours.
+transitions:
+  total: 17                    # sum over cases of (runs - 1)
+  pairs:
+    - {from: Receive Request, to: Check Request, count: 5, cases: 4, median_h: 0.083333, p90_h: 0.353333, total_h: 0.783333}
+    - {from: Check Request, to: Approve, count: 3, cases: 3, median_h: 0.9, total_h: 2.733333}
+    - {from: Approve, to: Notify, count: 3, cases: 3, median_h: 0.25, total_h: 0.75}
+    - {from: Check Request, to: Receive Request, count: 2, cases: 2, median_h: 0.975, total_h: 1.95}
+    - {from: Receive Request, to: Approve, count: 2, cases: 2, median_h: 2.0, total_h: 4.0}
+    - {from: Approve, to: Check Request, count: 1, cases: 1, median_h: 3.0, total_h: 3.0}
+    - {from: Check Request, to: Notify, count: 1, cases: 1, median_h: 3.0, total_h: 3.0}
+
+# Rework = back at a step >= 30 min after its previous run ended; quick switch = back within 30 min.
+rework:
+  rework_runs: 1               # C2: Receive Request again at 12:00, 2 h after its run ended at 10:00
+  quick_runs: 2                # C3: Receive Request after 4 min, Check Request after 4 min
+  back_and_forth: [{a: Receive Request, b: Check Request, count: 1, cases: 1}]
+
+# Application switches: same case and user, different known applications, <= 30 min apart, before merging.
+switching:
+  total: 4                     # C1 u1 Workday->Excel (2 min); C1 u2, C2 u2, C4 u2 Workday->Outlook
+  cases_with_switch: 3
+  per_case_median: 0.5         # 2, 1, 0, 1, 0, 0
+  per_case_mean: 0.666667
+  pairs: [{from: Workday, to: Outlook, count: 3, cases: 3}, {from: Workday, to: Excel, count: 1, cases: 1}]
+  by_step: {Notify: {switches: 3, runs: 4}, Receive Request: {switches: 1, runs: 8}}
+
+variants:
+  count: 5
+  top10_share: 1.0
+  top:                         # paths with 2+ steps; ties by path text
+    - {path: [Receive Request, Check Request, Approve, Notify], cases: 2, share: 0.333333}
+    - {path: [Receive Request, Approve, Check Request, Notify], cases: 1, share: 0.166667}
+    - {path: [Receive Request, Check Request, Receive Request, Approve, Notify], cases: 1, share: 0.166667}
+    - {path: [Receive Request, Check Request, Receive Request, Check Request, Approve], cases: 1, share: 0.166667}
+
+# Order A, B, C, D on first occurrences (time, then row order: in C4 Check Request is above Approve at 09:30).
+conformance:
+  ordered_cases: 5             # C6 has one ordered step only
+  in_order_cases: 4            # C5 does Approve before Check Request
+  in_order_share: 0.8
+  pairs: 27
+  pairs_ok: 26
+  pair_order_share: 0.962963
+  earlier: [{step: Approve, before: Check Request, cases: 1}]
+  reached: {Receive Request: 6, Check Request: 5, Approve: 5, Notify: 4}
+  reach_last_share: 0.666667
+
+# Participants masked by active hours: u1 875 s -> P01, u3 700 s -> P02, u2 670 s -> P03.
+people:
+  - {participant: P01, cases: 3, runs: 6, steps: 2, active_seconds: 875}
+  - {participant: P02, cases: 2, runs: 9, steps: 4, active_seconds: 700}
+  - {participant: P03, cases: 3, runs: 8, steps: 4, active_seconds: 670}
+handovers: [{from: P01, to: P03, count: 2, cases: 2}]
+total_handovers: 2
+
+trend:                         # one ISO week, partial (data starts Monday 09:00 and ends Friday)
+  - {week: 2026-W10, cases_started: 6, active_seconds: 2245, median_case_h: 1.666667, partial: true}
+
+# Level 4 for Receive Request with the taxonomy "Open the request" (click Open Request) and
+# "Copy and paste data" (clicks Copy / Paste): 9 events, 655 active seconds.
+level4:
+  step: Receive Request
+  taxonomy:
+    - {label: Open the request, click_regex: "^Open Request$"}
+    - {label: Copy and paste data, click_regex: "^(Copy|Paste)$"}
+  shares:
+    Open the request:    {events_share: 0.666667, active_share: 0.786260}   # 6 events, 515 s
+    Copy and paste data: {events_share: 0.333333, active_share: 0.213740}   # 3 events, 140 s
+
+quality:
+  rows: 24                     # events.parquet: rows kept on Import data
+  clean_rows: 24
+  cases: 6
+
+# Names injected into the window titles: none may appear in any report, Excel file or job JSON.
+names: [Ayakha, Ningiza, Razumovs, Priya, Sharma]

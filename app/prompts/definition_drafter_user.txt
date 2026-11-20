@@ -1,0 +1,21 @@
+Activity names in the event log (use only these in mapped_activities):
+{activities}
+
+Stage names in the event log (may be empty):
+{stages}
+
+Application names in the event log (may be empty):
+{applications}
+
+The document:
+"""
+{document}
+"""
+
+Return exactly this JSON shape:
+{"name": "...", "description": "...", "start_trigger": "...", "end_result": "...",
+ "stages": [{"id": "ST01", "name": "...", "owner_role": "..."}],
+ "steps": [{"id": "S01", "name": "...", "stage_id": "ST01", "position": 1, "owner_role": "...", "system": "...",
+            "description": "...", "inputs": "...", "outputs": "...", "mandatory": true, "sla_hours": null,
+            "business_rules": "...", "mapped_activities": ["..."], "source_quote": "..."}],
+ "flows": [{"from_step": "S01", "to_step": "S02", "kind": "next", "condition": "", "source_quote": "..."}]}

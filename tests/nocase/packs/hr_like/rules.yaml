@@ -1,0 +1,2 @@
+rules:
+  - {id: R1, step: Offer Processing, stage: Offer and pay, match: {app: Excel, screen: "offers"}, status: rule, version: 1}

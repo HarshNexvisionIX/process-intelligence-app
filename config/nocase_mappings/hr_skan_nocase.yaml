@@ -1,0 +1,21 @@
+# The HR desktop export (Skan) without a case ID: clickstream mapping.
+#   python scripts/nocase.py run --input "<path>\events_data_all_dates_with_app_names_6_1.parquet" \
+#       --mapping config/nocase_mappings/hr_skan_nocase.yaml
+# case_id in the file is the true case: kept ONLY to measure accuracy (eval), never used to build anything.
+columns:
+  ts: date_time
+  actor: participant_id
+  app: Application_name
+  screen: simplified_title
+  action: activity_alias_name
+  text: title
+  l2: level2_process_name
+  l3: level3_process_name
+  active_s: active_time
+  wait_s: wait_time
+  run_id: abstraction_instance_id
+keep_rows_where:
+  is_process: ["1"]
+eval:
+  case_id: case_id
+dataset_class: client

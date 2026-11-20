@@ -1,0 +1,14 @@
+# BPI Challenge 2016, Clicks (logged in / not logged in): a web clickstream with sessions. Large: sampled.
+# Download from the 4TU data repository into this folder, list the real columns and fill in `mapping`
+# (expected roles: timestamp, customer as actor, page name as text). Session / customer IDs are TRUTH ONLY.
+name: bpi2016_clicks
+source_url: https://data.4tu.nl/ (search "BPI Challenge 2016 Clicks")
+licence: 4TU.ResearchData licence (see the page)
+dataset_class: public
+files: TODO
+mapping: TODO
+truth: TODO                         # session ID (episodes are compared with sessions)
+sample: {rows: 500000}
+expected:
+  mode: no_case                     # or session-level only
+  later: "episodes match sessions (N2)"

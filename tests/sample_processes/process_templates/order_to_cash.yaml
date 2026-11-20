@@ -1,0 +1,22 @@
+# Order to cash: from a customer order to the payment received.
+name: Order to cash
+stages:
+  - name: Order
+    steps:
+      - {name: Create sales order, mandatory: true,
+         synonyms: [sales order, order entry, receive order, customer order, create order]}
+      - {name: Credit check, mandatory: false, synonyms: [check credit, credit approval, credit limit check]}
+      - {name: Confirm order, mandatory: false, synonyms: [order confirmation, approve order]}
+  - name: Fulfilment
+    steps:
+      - {name: Pick goods, mandatory: false, synonyms: [picking, pick order, warehouse picking]}
+      - {name: Pack goods, mandatory: false, synonyms: [packing, pack order]}
+      - {name: Ship goods, mandatory: true,
+         synonyms: [shipment, ship order, goods issue, dispatch, delivery, deliver goods]}
+  - name: Billing
+    steps:
+      - {name: Create invoice, mandatory: true,
+         synonyms: [billing, issue invoice, send invoice, customer invoice, bill customer]}
+      - {name: Send reminder, mandatory: false, synonyms: [dunning, payment reminder, reminder]}
+      - {name: Receive payment, mandatory: true,
+         synonyms: [payment received, cash receipt, incoming payment, clear payment, payment]}

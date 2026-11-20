@@ -1,0 +1,15 @@
+# Leno et al., RPA UI logs (copy-paste between a spreadsheet and a web form; interleaved tasks).
+# Download from figshare (doi 10.6084/m9.figshare.12543587) into this folder, then open the files, list their real
+# columns and fill in `mapping` (expected roles: a timestamp, the target app, the UI action / event type,
+# the element or window label, the user if present) and `truth` (routine / segment labels where provided).
+name: ui_logs_leno
+source_url: https://doi.org/10.6084/m9.figshare.12543587
+licence: see the figshare page (CC BY 4.0 at the time of writing; check)
+dataset_class: public
+files: TODO                         # e.g. [{path: <file>.csv, format: csv}]
+mapping: TODO
+truth: TODO                         # routine / segment label columns, evaluation only
+sample: {rows: 200000}
+expected:
+  mode: no_case
+  later: "episodes / segments found; step assignment by AI + rules (N2, N3)"

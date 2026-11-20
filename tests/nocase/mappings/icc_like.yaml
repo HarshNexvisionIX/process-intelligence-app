@@ -1,0 +1,14 @@
+# The icc_like fixture: the global counter "seq" is mapped as case_id (the profile must reject it).
+columns:
+  ts: time
+  actor: user
+  app: application
+  text: window
+  action: click
+  case_id: seq
+ts_format: "%d/%m/%Y %H:%M:%S"
+timezone: Asia/Kolkata
+eval:
+  l3: truth_l3
+  case_id: truth_case
+dataset_class: client

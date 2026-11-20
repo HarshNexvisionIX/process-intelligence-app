@@ -1,0 +1,9 @@
+columns:
+  ts: timestamp
+  actor: user
+  app: app
+  text: title
+  action: action
+eval:
+  case_id: invoice_truth
+dataset_class: public

@@ -1,0 +1,27 @@
+# HR onboarding: stages and steps in business order (HR onboarding process deck). Step names are the exact
+# level-3 labels of the Skan export, so source labels and the pack line up. Copied to
+# <data_dir>/library/hr_onboarding/ on first use (python scripts/nocase.py ... --process hr_onboarding).
+name: HR onboarding
+# The step order and stages below are a TEST PACK, not confirmed by the business: they may be shown only as
+# "Documented (test pack, not confirmed)", only for this process, and are never evidence of order.
+provenance: {source: "test pack", status: documented, confirmed: false}
+stages:
+  - name: Requisition and Candidate Identification
+    steps:
+      - {name: Requisition Creation, description: "The hiring manager's request for a position is created."}
+      - {name: Candidate Identification and ID Creation, description: "The candidate is identified and gets an ID."}
+  - name: Candidate Intake and Offer Processing
+    steps:
+      - {name: Case Assignment, description: "The onboarding case is assigned to an HR colleague."}
+      - {name: Offer Processing, description: "The offer is prepared, approved and sent."}
+      - {name: Case Tracking, description: "The case is followed up until it moves on."}
+  - name: Vetting and Background Checks
+    steps:
+      - {name: Background Checks Initiation, description: "Background checks are started."}
+      - {name: Vetting Status Monitoring, description: "The vetting status is checked until it is complete."}
+  - name: Hire Completion and Payroll Activation
+    steps:
+      - {name: Hire Processing, description: "The hire is processed in the HR system."}
+      - {name: Employee Profile Creation, description: "The employee's profile is created."}
+      - {name: Onboarding Task, description: "Onboarding tasks for the new employee are completed."}
+      - {name: Payroll Activation, description: "The employee is added to payroll."}

@@ -1,0 +1,2205 @@
+{
+ "checks.json": {
+  "checks": [
+   {
+    "check": "Rows in file = left out by filter + without case + without activity + without time + in scope",
+    "kind": "count",
+    "number": 1,
+    "passed": true,
+    "recomputed": 29,
+    "report": 29
+   },
+   {
+    "check": "Active hours in file = the same split, in hours",
+    "kind": "hours",
+    "number": 1,
+    "passed": true,
+    "recomputed": 0.6527777777777778,
+    "report": 0.6527777777777778
+   },
+   {
+    "check": "Rows in scope (scope.json) = events analysed (sum of merged events)",
+    "kind": "count",
+    "number": 1,
+    "passed": true,
+    "recomputed": 24,
+    "report": 24
+   },
+   {
+    "check": "Active hours in scope (scope.json) = report total",
+    "kind": "hours",
+    "number": 1,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Events in scope",
+    "kind": "count",
+    "number": 2,
+    "passed": true,
+    "recomputed": 24,
+    "report": 24
+   },
+   {
+    "check": "Events: sum over steps = total",
+    "kind": "count",
+    "number": 2,
+    "passed": true,
+    "recomputed": 24,
+    "report": 24
+   },
+   {
+    "check": "Events: sum over applications = total",
+    "kind": "count",
+    "number": 2,
+    "passed": true,
+    "recomputed": 24,
+    "report": 24
+   },
+   {
+    "check": "Active hours in scope",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Hours: sum over steps = total",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Hours: sum over applications = total",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Hours: step \u00d7 application grand total = total",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Matrix row totals = step hours",
+    "kind": "exact",
+    "number": 3,
+    "passed": true,
+    "recomputed": true,
+    "report": true
+   },
+   {
+    "check": "Matrix column totals = application hours",
+    "kind": "exact",
+    "number": 3,
+    "passed": true,
+    "recomputed": true,
+    "report": true
+   },
+   {
+    "check": "Hours: sum over stages = total",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.6236111111111111,
+    "report": 0.6236111111111111
+   },
+   {
+    "check": "Applications: the same names in the input rows and in the report",
+    "kind": "exact",
+    "number": 3,
+    "passed": true,
+    "recomputed": [
+     "Excel",
+     "Outlook",
+     "Workday"
+    ],
+    "report": [
+     "Excel",
+     "Outlook",
+     "Workday"
+    ]
+   },
+   {
+    "check": "Excel: active hours (input rows)",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.17777777777777778,
+    "report": 0.17777777777777778
+   },
+   {
+    "check": "Excel: events (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 7,
+    "report": 7
+   },
+   {
+    "check": "Excel: cases (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 3,
+    "report": 3
+   },
+   {
+    "check": "Outlook: active hours (input rows)",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.06388888888888888,
+    "report": 0.06388888888888888
+   },
+   {
+    "check": "Outlook: events (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 4,
+    "report": 4
+   },
+   {
+    "check": "Outlook: cases (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 4,
+    "report": 4
+   },
+   {
+    "check": "Workday: active hours (input rows)",
+    "kind": "hours",
+    "number": 3,
+    "passed": true,
+    "recomputed": 0.3819444444444444,
+    "report": 0.3819444444444444
+   },
+   {
+    "check": "Workday: events (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 13,
+    "report": 13
+   },
+   {
+    "check": "Workday: cases (input rows)",
+    "kind": "count",
+    "number": 3,
+    "passed": true,
+    "recomputed": 6,
+    "report": 6
+   },
+   {
+    "check": "Participants in the input rows = in the report",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 3,
+    "report": 3
+   },
+   {
+    "check": "P01: active hours (input rows)",
+    "kind": "hours",
+    "number": 14,
+    "passed": true,
+    "recomputed": 0.24305555555555555,
+    "report": 0.24305555555555555
+   },
+   {
+    "check": "P01: events (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 7,
+    "report": 7
+   },
+   {
+    "check": "P01: cases (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 3,
+    "report": 3
+   },
+   {
+    "check": "P02: active hours (input rows)",
+    "kind": "hours",
+    "number": 14,
+    "passed": true,
+    "recomputed": 0.19444444444444445,
+    "report": 0.19444444444444445
+   },
+   {
+    "check": "P02: events (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 9,
+    "report": 9
+   },
+   {
+    "check": "P02: cases (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 2,
+    "report": 2
+   },
+   {
+    "check": "P03: active hours (input rows)",
+    "kind": "hours",
+    "number": 14,
+    "passed": true,
+    "recomputed": 0.18611111111111112,
+    "report": 0.18611111111111112
+   },
+   {
+    "check": "P03: events (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 8,
+    "report": 8
+   },
+   {
+    "check": "P03: cases (input rows)",
+    "kind": "count",
+    "number": 14,
+    "passed": true,
+    "recomputed": 3,
+    "report": 3
+   },
+   {
+    "check": "Step runs",
+    "kind": "count",
+    "number": 4,
+    "passed": true,
+    "recomputed": 23,
+    "report": 23
+   },
+   {
+    "check": "Runs: sum over steps = total",
+    "kind": "count",
+    "number": 4,
+    "passed": true,
+    "recomputed": 23,
+    "report": 23
+   },
+   {
+    "check": "Cases",
+    "kind": "count",
+    "number": 5,
+    "passed": true,
+    "recomputed": 6,
+    "report": 6
+   },
+   {
+    "check": "Cases reached per step",
+    "kind": "exact",
+    "number": 5,
+    "passed": true,
+    "recomputed": {
+     "Approve": 5,
+     "Check Request": 5,
+     "Notify": 4,
+     "Receive Request": 6
+    },
+    "report": {
+     "Approve": 5,
+     "Check Request": 5,
+     "Notify": 4,
+     "Receive Request": 6
+    }
+   },
+   {
+    "check": "Share of cases reaching each step",
+    "kind": "exact",
+    "number": 5,
+    "passed": true,
+    "recomputed": true,
+    "report": true
+   },
+   {
+    "check": "Median case duration (h)",
+    "kind": "hours",
+    "number": 6,
+    "passed": true,
+    "recomputed": 1.6666666666666667,
+    "report": 1.6666666666666667
+   },
+   {
+    "check": "90% of cases finish within (h)",
+    "kind": "hours",
+    "number": 6,
+    "passed": true,
+    "recomputed": 6.083333333333334,
+    "report": 6.083333333333333
+   },
+   {
+    "check": "Mean case duration (h)",
+    "kind": "hours",
+    "number": 6,
+    "passed": true,
+    "recomputed": 2.7083333333333335,
+    "report": 2.7083333333333335
+   },
+   {
+    "check": "Transitions = sum over cases of (runs \u2212 1)",
+    "kind": "count",
+    "number": 7,
+    "passed": true,
+    "recomputed": 17,
+    "report": 17
+   },
+   {
+    "check": "Rework runs in Receive Request",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 1,
+    "report": 1
+   },
+   {
+    "check": "Quick switches in Receive Request",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 1,
+    "report": 1
+   },
+   {
+    "check": "Rework runs in Check Request",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 0,
+    "report": 0
+   },
+   {
+    "check": "Quick switches in Check Request",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 1,
+    "report": 1
+   },
+   {
+    "check": "Rework runs in total",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 1,
+    "report": 1
+   },
+   {
+    "check": "Quick switches in total",
+    "kind": "count",
+    "number": 8,
+    "passed": true,
+    "recomputed": 2,
+    "report": 2
+   },
+   {
+    "check": "Application switches",
+    "kind": "count",
+    "number": 9,
+    "passed": true,
+    "recomputed": 4,
+    "report": 4
+   },
+   {
+    "check": "Top switch pairs",
+    "kind": "exact",
+    "number": 9,
+    "passed": true,
+    "recomputed": [
+     [
+      "Workday",
+      "Outlook",
+      3
+     ],
+     [
+      "Workday",
+      "Excel",
+      1
+     ]
+    ],
+    "report": [
+     [
+      "Workday",
+      "Outlook",
+      3
+     ],
+     [
+      "Workday",
+      "Excel",
+      1
+     ]
+    ]
+   },
+   {
+    "check": "Variants",
+    "kind": "count",
+    "number": 10,
+    "passed": true,
+    "recomputed": 5,
+    "report": 5
+   },
+   {
+    "check": "Share of cases in the 10 most common paths",
+    "kind": "share",
+    "number": 10,
+    "passed": true,
+    "recomputed": 1.0,
+    "report": 1.0
+   },
+   {
+    "check": "Share of path Receive Request \u2192 Check Request \u2192 Approve \u2192 Notify",
+    "kind": "share",
+    "number": 10,
+    "passed": true,
+    "recomputed": 0.3333333333333333,
+    "report": 0.3333333333333333
+   },
+   {
+    "check": "Share of path Receive Request \u2192 Approve \u2192 Check Request \u2192 Notify",
+    "kind": "share",
+    "number": 10,
+    "passed": true,
+    "recomputed": 0.16666666666666666,
+    "report": 0.16666666666666666
+   },
+   {
+    "check": "Share of path Receive Request \u2192 Check Request \u2192 Receive Request \u2192 Approve \u2192 Notify",
+    "kind": "share",
+    "number": 10,
+    "passed": true,
+    "recomputed": 0.16666666666666666,
+    "report": 0.16666666666666666
+   },
+   {
+    "check": "Share of path Receive Request \u2192 Check Request \u2192 Receive Request \u2192 Check Request \u2192 Approve",
+    "kind": "share",
+    "number": 10,
+    "passed": true,
+    "recomputed": 0.16666666666666666,
+    "report": 0.16666666666666666
+   },
+   {
+    "check": "Every number in the summary text is a fact in the fact store",
+    "kind": "exact",
+    "number": 12,
+    "passed": true,
+    "recomputed": [],
+    "report": []
+   }
+  ],
+  "failed": 0,
+  "passed": 58,
+  "total": 58
+ },
+ "facts.json": [
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F001",
+   "label": "Feasibility score",
+   "meta": {},
+   "section": "data",
+   "source": "quality gate, 13 checks",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "feasibility_score",
+   "unit": "score",
+   "value": 39
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F002",
+   "label": "Quality band",
+   "meta": {},
+   "section": "data",
+   "source": "band of the feasibility score",
+   "stability": null,
+   "support": 6,
+   "text": "Not feasible",
+   "type": "quality_band",
+   "unit": "score",
+   "value": 39
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F003",
+   "label": "Events in scope",
+   "meta": {},
+   "section": "data",
+   "source": "rows with case, activity and a usable time after the page-1 filters (metrics.py)",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "events",
+   "unit": "events",
+   "value": 24
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F004",
+   "label": "Cases",
+   "meta": {},
+   "section": "data",
+   "source": "distinct case IDs among analysable events",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "cases",
+   "unit": "cases",
+   "value": 6
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F005",
+   "label": "Rows left out on Import data",
+   "meta": {},
+   "section": "data",
+   "source": "filters chosen on Import data, of 29 rows in the file",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "rows_left_out",
+   "unit": "count",
+   "value": 5
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F006",
+   "label": "Step runs (consecutive events of one step merged)",
+   "meta": {},
+   "section": "data",
+   "source": "runs of the same activity in a case, in time order",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_runs_total",
+   "unit": "count",
+   "value": 23
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F007",
+   "label": "Participants",
+   "meta": {},
+   "section": "data",
+   "source": "distinct users (shown masked)",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "participants",
+   "unit": "count",
+   "value": 3
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F008",
+   "label": "Applications",
+   "meta": {},
+   "section": "data",
+   "source": "distinct applications",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "applications",
+   "unit": "count",
+   "value": 3
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F009",
+   "label": "Active hours in scope",
+   "meta": {},
+   "section": "data",
+   "source": "sum of the active-time column over the events in scope",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "active_hours_total",
+   "unit": "work_hours",
+   "value": 0.6236111111111111
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F010",
+   "label": "Cases that reach Receive Request",
+   "meta": {
+    "activity": "Receive Request",
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "6 of 6 cases",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_cases",
+   "unit": "share",
+   "value": 1.0
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F011",
+   "label": "Active hours in Receive Request",
+   "meta": {
+    "activity": "Receive Request",
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "sum of active time over the step's events",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_hours",
+   "unit": "work_hours",
+   "value": 0.18194444444444444
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F012",
+   "label": "Receive Request: share of active hours",
+   "meta": {
+    "activity": "Receive Request",
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "step hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_hours_share",
+   "unit": "share",
+   "value": 0.29175946547884185
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F013",
+   "label": "Receive Request: cases with rework",
+   "meta": {
+    "activity": "Receive Request",
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "1 of 6 cases reaching the step return to it after 30 minutes or more",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_rework_share",
+   "unit": "share",
+   "value": 0.16666666666666666
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F014",
+   "label": "Receive Request: waiting share",
+   "meta": {
+    "activity": "Receive Request",
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "wait time \u00f7 turnaround time of the step's events",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "step_waiting_share",
+   "unit": "share",
+   "value": 0.10273972602739725
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F015",
+   "label": "Cases that reach Approve",
+   "meta": {
+    "activity": "Approve",
+    "rank": 2,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "5 of 6 cases",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_cases",
+   "unit": "share",
+   "value": 0.8333333333333334
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F016",
+   "label": "Active hours in Approve",
+   "meta": {
+    "activity": "Approve",
+    "rank": 2,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "sum of active time over the step's events",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_hours",
+   "unit": "work_hours",
+   "value": 0.16944444444444445
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F017",
+   "label": "Approve: share of active hours",
+   "meta": {
+    "activity": "Approve",
+    "rank": 2,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "step hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_hours_share",
+   "unit": "share",
+   "value": 0.2717149220489978
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F018",
+   "label": "Approve: waiting share",
+   "meta": {
+    "activity": "Approve",
+    "rank": 2,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "wait time \u00f7 turnaround time of the step's events",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_waiting_share",
+   "unit": "share",
+   "value": 0.49586776859504134
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F019",
+   "label": "Cases that reach Check Request",
+   "meta": {
+    "activity": "Check Request",
+    "rank": 3,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "5 of 6 cases",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_cases",
+   "unit": "share",
+   "value": 0.8333333333333334
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F020",
+   "label": "Active hours in Check Request",
+   "meta": {
+    "activity": "Check Request",
+    "rank": 3,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "sum of active time over the step's events",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_hours",
+   "unit": "work_hours",
+   "value": 0.20833333333333334
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F021",
+   "label": "Check Request: share of active hours",
+   "meta": {
+    "activity": "Check Request",
+    "rank": 3,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "step hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_hours_share",
+   "unit": "share",
+   "value": 0.33407572383073497
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F022",
+   "label": "Check Request: waiting share",
+   "meta": {
+    "activity": "Check Request",
+    "rank": 3,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "wait time \u00f7 turnaround time of the step's events",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "step_waiting_share",
+   "unit": "share",
+   "value": 0.13793103448275862
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F023",
+   "label": "Cases that reach Notify",
+   "meta": {
+    "activity": "Notify",
+    "rank": 4,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "4 of 6 cases",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "step_cases",
+   "unit": "share",
+   "value": 0.6666666666666666
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F024",
+   "label": "Active hours in Notify",
+   "meta": {
+    "activity": "Notify",
+    "rank": 4,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "sum of active time over the step's events",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "step_hours",
+   "unit": "work_hours",
+   "value": 0.06388888888888888
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F025",
+   "label": "Notify: share of active hours",
+   "meta": {
+    "activity": "Notify",
+    "rank": 4,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "step hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "step_hours_share",
+   "unit": "share",
+   "value": 0.10244988864142539
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F026",
+   "label": "Notify: waiting share",
+   "meta": {
+    "activity": "Notify",
+    "rank": 4,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "wait time \u00f7 turnaround time of the step's events",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "step_waiting_share",
+   "unit": "share",
+   "value": 0.0
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F027",
+   "label": "Active hours in Workday",
+   "meta": {
+    "application": "Workday",
+    "rank": 1
+   },
+   "section": "hours",
+   "source": "sum of active time",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "app_hours",
+   "unit": "work_hours",
+   "value": 0.3819444444444444
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F028",
+   "label": "Workday: share of active hours",
+   "meta": {
+    "application": "Workday",
+    "rank": 1
+   },
+   "section": "hours",
+   "source": "application hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "app_hours_share",
+   "unit": "share",
+   "value": 0.6124721603563474
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F029",
+   "label": "Active hours in Excel",
+   "meta": {
+    "application": "Excel",
+    "rank": 2
+   },
+   "section": "hours",
+   "source": "sum of active time",
+   "stability": null,
+   "support": 3,
+   "text": null,
+   "type": "app_hours",
+   "unit": "work_hours",
+   "value": 0.17777777777777778
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F030",
+   "label": "Excel: share of active hours",
+   "meta": {
+    "application": "Excel",
+    "rank": 2
+   },
+   "section": "hours",
+   "source": "application hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 3,
+   "text": null,
+   "type": "app_hours_share",
+   "unit": "share",
+   "value": 0.28507795100222716
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F031",
+   "label": "Active hours in Outlook",
+   "meta": {
+    "application": "Outlook",
+    "rank": 3
+   },
+   "section": "hours",
+   "source": "sum of active time",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "app_hours",
+   "unit": "work_hours",
+   "value": 0.06388888888888888
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F032",
+   "label": "Outlook: share of active hours",
+   "meta": {
+    "application": "Outlook",
+    "rank": 3
+   },
+   "section": "hours",
+   "source": "application hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 4,
+   "text": null,
+   "type": "app_hours_share",
+   "unit": "share",
+   "value": 0.10244988864142539
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F033",
+   "label": "Stage Intake: share of active hours",
+   "meta": {
+    "rank": 1,
+    "stage": "Intake"
+   },
+   "section": "hours",
+   "source": "stage hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 6,
+   "text": null,
+   "type": "stage_hours_share",
+   "unit": "share",
+   "value": 0.6258351893095768
+  },
+  {
+   "badge": "Exploratory",
+   "ci_high": null,
+   "ci_low": null,
+   "id": "F034",
+   "label": "Stage Delivery: share of active hours",
+   "meta": {
+    "rank": 2,
+    "stage": "Delivery"
+   },
+   "section": "hours",
+   "source": "stage hours \u00f7 hours in scope",
+   "stability": null,
+   "support": 5,
+   "text": null,
+   "type": "stage_hours_share",
+   "unit": "share",
+   "value": 0.3741648106904232
+  }
+ ],
+ "job": {
+  "band": "Not feasible",
+  "capabilities": [
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Process map",
+    "icon": "\u2705",
+    "needs": "case, activity, timestamp",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Variants (paths)",
+    "icon": "\u2705",
+    "needs": "case, activity, timestamp",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Waiting times and bottlenecks",
+    "icon": "\u2705",
+    "needs": "case, timestamp",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Rework",
+    "icon": "\u2705",
+    "needs": "case, activity",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Resources and handovers",
+    "icon": "\u2705",
+    "needs": "user / resource column",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Applications",
+    "icon": "\u2705",
+    "needs": "application column",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Application switches",
+    "icon": "\u2705",
+    "needs": "application column (+ user column)",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Stages on the map",
+    "icon": "\u2705",
+    "needs": "stage / group column",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "Only one level (the stage column) is known.",
+    "feature": "Sub-process hierarchy",
+    "icon": "\u26a0\ufe0f",
+    "needs": "process level columns (level 1-3)",
+    "status": "fallback"
+   },
+   {
+    "available": true,
+    "fallback": "Completion actions are mapped; frequency and user thresholds apply.",
+    "feature": "Milestones",
+    "icon": "\u2705",
+    "needs": "an action / completion column (e.g. submitted, approved)",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "No step-run ID \u2192 a run of a step is consecutive events of that step in a case.",
+    "feature": "Step runs",
+    "icon": "\u26a0\ufe0f",
+    "needs": "a step-run ID column",
+    "status": "fallback"
+   },
+   {
+    "available": true,
+    "fallback": "Effort comes from the active-time column (active_time), with waiting from the wait / turnaround columns.",
+    "feature": "Active time and effort",
+    "icon": "\u2705",
+    "needs": "an active-time (or end time) column",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "",
+    "feature": "Trends",
+    "icon": "\u2705",
+    "needs": "timestamp",
+    "status": "available"
+   },
+   {
+    "available": true,
+    "fallback": "Until a business definition is approved, the order comes from the business, your documents, the AI or the data (page 3).",
+    "feature": "Business definition check",
+    "icon": "\u26a0\ufe0f",
+    "needs": "an approved business definition of the process",
+    "status": "fallback"
+   },
+   {
+    "available": true,
+    "fallback": "The summary is written from fixed templates.",
+    "feature": "AI summary",
+    "icon": "\u26a0\ufe0f",
+    "needs": "AI switched on and allowed (.env)",
+    "status": "fallback"
+   }
+  ],
+  "case_source": {
+   "column": "case_id",
+   "kind": "column",
+   "label": "Case = column case_id"
+  },
+  "dataset_class": "client",
+  "feasibility": 39,
+  "flow_band": null,
+  "format": "csv",
+  "rows": 29,
+  "status": "reported",
+  "summary": {
+   "activities": 4,
+   "app_switches_total": 4,
+   "cases": 6,
+   "columns_left_out": [],
+   "events": 24,
+   "events_before_merge": 24,
+   "first_event": "2026-03-02 09:00:00",
+   "last_event": "2026-03-06 09:00:00",
+   "milestones": {
+    "actions": 0,
+    "cases": 0,
+    "events": 0
+   },
+   "rows_in_file": 29,
+   "rows_left_out": 5,
+   "scope": {
+    "active_seconds_in_file": 2350.0,
+    "filter": {
+     "column": "is_process",
+     "values": [
+      "1"
+     ]
+    },
+    "has_active_time": true,
+    "in_scope": {
+     "active_seconds": 2245.0,
+     "rows": 24
+    },
+    "left_out_by_filter": {
+     "active_seconds": 60.0,
+     "rows": 2
+    },
+    "rows_in_file": 29,
+    "without_activity": {
+     "active_seconds": 15.0,
+     "rows": 1
+    },
+    "without_case": {
+     "active_seconds": 30.0,
+     "rows": 2
+    },
+    "without_time": {
+     "active_seconds": 0.0,
+     "rows": 0
+    }
+   },
+   "size_mb": 0.0,
+   "step_actions": {
+    "actions": 6,
+    "rows": 24,
+    "runs": 23
+   },
+   "unparsed_timestamps": 0
+  },
+  "warnings": []
+ },
+ "mapping.json": {
+  "action": "action",
+  "active_time": "active_time",
+  "activity": "activity",
+  "activity_renames": {},
+  "application": "application",
+  "case_id": "case_id",
+  "end_timestamp": null,
+  "end_timestamp_format": null,
+  "exclude_columns": [],
+  "level1": null,
+  "level3": null,
+  "merge_repeats": false,
+  "resource": "user",
+  "scope": {
+   "drop_missing_activity": true,
+   "drop_missing_case": true,
+   "filter_column": "is_process",
+   "filter_values": [
+    "1"
+   ]
+  },
+  "stage": "stage",
+  "step_run": null,
+  "tat_time": "tat_time",
+  "timestamp": "timestamp",
+  "timestamp_format": "%Y-%m-%d %H:%M:%S",
+  "timezone": "UTC",
+  "wait_time": "wait_time",
+  "window_title": "window_title"
+ },
+ "metrics.json": {
+  "applications": [
+   {
+    "active_hours": 0.3819444444444444,
+    "application": "Workday",
+    "cases": 6,
+    "events": 13,
+    "hours_share": 0.6124721603563474
+   },
+   {
+    "active_hours": 0.17777777777777778,
+    "application": "Excel",
+    "cases": 3,
+    "events": 7,
+    "hours_share": 0.28507795100222716
+   },
+   {
+    "active_hours": 0.06388888888888888,
+    "application": "Outlook",
+    "cases": 4,
+    "events": 4,
+    "hours_share": 0.10244988864142539
+   }
+  ],
+  "conformance": null,
+  "handovers": [
+   {
+    "cases": 2,
+    "count": 2,
+    "from": "P01",
+    "to": "P03"
+   }
+  ],
+  "has": {
+   "active": true,
+   "application": true,
+   "resource": true,
+   "tat": true,
+   "wait": true
+  },
+  "matrix": {
+   "apps": [
+    "Workday",
+    "Excel",
+    "Outlook"
+   ],
+   "column_totals": [
+    0.3819444444444444,
+    0.17777777777777776,
+    0.06388888888888888
+   ],
+   "grand_total": 0.6236111111111111,
+   "measure": "active_hours",
+   "rows": [
+    {
+     "step": "Receive Request",
+     "total": 0.18194444444444444,
+     "values": [
+      0.14027777777777778,
+      0.041666666666666664,
+      0
+     ]
+    },
+    {
+     "step": "Approve",
+     "total": 0.16944444444444445,
+     "values": [
+      0.16944444444444445,
+      0,
+      0
+     ]
+    },
+    {
+     "step": "Check Request",
+     "total": 0.20833333333333331,
+     "values": [
+      0.07222222222222222,
+      0.1361111111111111,
+      0
+     ]
+    },
+    {
+     "step": "Notify",
+     "total": 0.06388888888888888,
+     "values": [
+      0,
+      0,
+      0.06388888888888888
+     ]
+    }
+   ]
+  },
+  "order": {
+   "badge": "No step order",
+   "source": "none",
+   "trusted": false
+  },
+  "people": [
+   {
+    "active_hours": 0.24305555555555555,
+    "cases": 3,
+    "events": 7,
+    "participant": "P01",
+    "runs": 6,
+    "steps": 2
+   },
+   {
+    "active_hours": 0.19444444444444445,
+    "cases": 2,
+    "events": 9,
+    "participant": "P02",
+    "runs": 9,
+    "steps": 4
+   },
+   {
+    "active_hours": 0.18611111111111112,
+    "cases": 3,
+    "events": 8,
+    "participant": "P03",
+    "runs": 8,
+    "steps": 4
+   }
+  ],
+  "rework": {
+   "back_and_forth": [
+    {
+     "a": "Receive Request",
+     "b": "Check Request",
+     "cases": 1,
+     "count": 1
+    }
+   ],
+   "gap_minutes": 30,
+   "quick_runs": 2,
+   "rework_runs": 1,
+   "rows": [
+    {
+     "cases": 6,
+     "quick_cases": 1,
+     "quick_runs": 1,
+     "rework_cases": 1,
+     "rework_hours": 0.013888888888888888,
+     "rework_runs": 1,
+     "rework_share": 0.16666666666666666,
+     "step": "Receive Request"
+    },
+    {
+     "cases": 5,
+     "quick_cases": 1,
+     "quick_runs": 1,
+     "rework_cases": 0,
+     "rework_hours": 0.0,
+     "rework_runs": 0,
+     "rework_share": 0.0,
+     "step": "Check Request"
+    }
+   ]
+  },
+  "scope": {
+   "active_seconds_in_file": 2350.0,
+   "filter": {
+    "column": "is_process",
+    "values": [
+     "1"
+    ]
+   },
+   "has_active_time": true,
+   "in_scope": {
+    "active_seconds": 2245.0,
+    "rows": 24
+   },
+   "left_out_by_filter": {
+    "active_seconds": 60.0,
+    "rows": 2
+   },
+   "rows_in_file": 29,
+   "without_activity": {
+    "active_seconds": 15.0,
+    "rows": 1
+   },
+   "without_case": {
+    "active_seconds": 30.0,
+    "rows": 2
+   },
+   "without_time": {
+    "active_seconds": 0.0,
+    "rows": 0
+   }
+  },
+  "settings": {
+   "min_cases": 30,
+   "min_wait_minutes": 60,
+   "rework_gap_minutes": 30,
+   "top_n": 10
+  },
+  "staged": true,
+  "stages": [
+   {
+    "active_hours": 0.3902777777777778,
+    "cases": 6,
+    "events": 15,
+    "hours_share": 0.6258351893095768,
+    "runs": 14,
+    "stage": "Intake",
+    "steps": [
+     "Receive Request",
+     "Check Request"
+    ]
+   },
+   {
+    "active_hours": 0.23333333333333334,
+    "cases": 5,
+    "events": 9,
+    "hours_share": 0.3741648106904232,
+    "runs": 9,
+    "stage": "Delivery",
+    "steps": [
+     "Approve",
+     "Notify"
+    ]
+   }
+  ],
+  "steps": [
+   {
+    "active_hours": 0.18194444444444444,
+    "cases": 6,
+    "cases_share": 1.0,
+    "events": 9,
+    "hours_per_case": 0.030324074074074073,
+    "hours_share": 0.29175946547884185,
+    "median_active_run_s": 75.0,
+    "quick_cases": 1,
+    "quick_runs": 1,
+    "rework_cases": 1,
+    "rework_hours": 0.013888888888888888,
+    "rework_runs": 1,
+    "rework_share": 0.16666666666666666,
+    "runs": 8,
+    "stage": "Intake",
+    "step": "Receive Request",
+    "top_apps": [
+     {
+      "application": "Workday",
+      "events": 6,
+      "hours": 0.14027777777777778
+     },
+     {
+      "application": "Excel",
+      "events": 3,
+      "hours": 0.041666666666666664
+     }
+    ],
+    "waiting_hours": 0.020833333333333332,
+    "waiting_share": 0.10273972602739725
+   },
+   {
+    "active_hours": 0.16944444444444445,
+    "cases": 5,
+    "cases_share": 0.8333333333333334,
+    "events": 5,
+    "hours_per_case": 0.03388888888888889,
+    "hours_share": 0.2717149220489978,
+    "median_active_run_s": 120.0,
+    "quick_cases": 0,
+    "quick_runs": 0,
+    "rework_cases": 0,
+    "rework_hours": 0.0,
+    "rework_runs": 0,
+    "rework_share": 0.0,
+    "runs": 5,
+    "stage": "Delivery",
+    "step": "Approve",
+    "top_apps": [
+     {
+      "application": "Workday",
+      "events": 5,
+      "hours": 0.16944444444444445
+     }
+    ],
+    "waiting_hours": 0.16666666666666666,
+    "waiting_share": 0.49586776859504134
+   },
+   {
+    "active_hours": 0.20833333333333334,
+    "cases": 5,
+    "cases_share": 0.8333333333333334,
+    "events": 6,
+    "hours_per_case": 0.04166666666666667,
+    "hours_share": 0.33407572383073497,
+    "median_active_run_s": 80.0,
+    "quick_cases": 1,
+    "quick_runs": 1,
+    "rework_cases": 0,
+    "rework_hours": 0.0,
+    "rework_runs": 0,
+    "rework_share": 0.0,
+    "runs": 6,
+    "stage": "Intake",
+    "step": "Check Request",
+    "top_apps": [
+     {
+      "application": "Excel",
+      "events": 4,
+      "hours": 0.1361111111111111
+     },
+     {
+      "application": "Workday",
+      "events": 2,
+      "hours": 0.07222222222222222
+     }
+    ],
+    "waiting_hours": 0.03333333333333333,
+    "waiting_share": 0.13793103448275862
+   },
+   {
+    "active_hours": 0.06388888888888888,
+    "cases": 4,
+    "cases_share": 0.6666666666666666,
+    "events": 4,
+    "hours_per_case": 0.01597222222222222,
+    "hours_share": 0.10244988864142539,
+    "median_active_run_s": 50.0,
+    "quick_cases": 0,
+    "quick_runs": 0,
+    "rework_cases": 0,
+    "rework_hours": 0.0,
+    "rework_runs": 0,
+    "rework_share": 0.0,
+    "runs": 4,
+    "stage": "Delivery",
+    "step": "Notify",
+    "top_apps": [
+     {
+      "application": "Outlook",
+      "events": 4,
+      "hours": 0.06388888888888888
+     }
+    ],
+    "waiting_hours": 0.0,
+    "waiting_share": 0.0
+   }
+  ],
+  "switching": {
+   "available": true,
+   "by_step": [
+    {
+     "per_run": 0.75,
+     "runs": 4,
+     "step": "Notify",
+     "switches": 3
+    },
+    {
+     "per_run": 0.125,
+     "runs": 8,
+     "step": "Receive Request",
+     "switches": 1
+    }
+   ],
+   "cases_with_switch": 3,
+   "gap_minutes": 30,
+   "pairs": [
+    {
+     "cases": 3,
+     "count": 3,
+     "from": "Workday",
+     "to": "Outlook"
+    },
+    {
+     "cases": 1,
+     "count": 1,
+     "from": "Workday",
+     "to": "Excel"
+    }
+   ],
+   "per_case_mean": 0.6666666666666666,
+   "per_case_median": 0.5,
+   "total": 4
+  },
+  "total_handovers": 2,
+  "totals": {
+   "active_hours": 0.6236111111111111,
+   "activities": 4,
+   "applications": 3,
+   "cases": 6,
+   "events": 24,
+   "first_event": "2026-03-02T09:00:00",
+   "last_event": "2026-03-06T09:00:00",
+   "mean_case_h": 2.7083333333333335,
+   "median_case_h": 1.6666666666666667,
+   "one_event_cases": 1,
+   "p90_case_h": 6.083333333333333,
+   "participants": 3,
+   "rows": 24,
+   "runs": 23
+  },
+  "transitions": [
+   {
+    "cases": 2,
+    "count": 2,
+    "from": "Receive Request",
+    "median_wait_h": 2.0,
+    "p90_wait_h": 2.8000000000000003,
+    "to": "Approve",
+    "total_wait_h": 4.0
+   },
+   {
+    "cases": 1,
+    "count": 1,
+    "from": "Approve",
+    "median_wait_h": 3.0,
+    "p90_wait_h": 3.0,
+    "to": "Check Request",
+    "total_wait_h": 3.0
+   },
+   {
+    "cases": 1,
+    "count": 1,
+    "from": "Check Request",
+    "median_wait_h": 3.0,
+    "p90_wait_h": 3.0,
+    "to": "Notify",
+    "total_wait_h": 3.0
+   },
+   {
+    "cases": 3,
+    "count": 3,
+    "from": "Check Request",
+    "median_wait_h": 0.9,
+    "p90_wait_h": 1.6466666666666667,
+    "to": "Approve",
+    "total_wait_h": 2.7333333333333334
+   },
+   {
+    "cases": 2,
+    "count": 2,
+    "from": "Check Request",
+    "median_wait_h": 0.9750000000000001,
+    "p90_wait_h": 1.7283333333333335,
+    "to": "Receive Request",
+    "total_wait_h": 1.9500000000000002
+   },
+   {
+    "cases": 4,
+    "count": 5,
+    "from": "Receive Request",
+    "median_wait_h": 0.08333333333333333,
+    "p90_wait_h": 0.3533333333333334,
+    "to": "Check Request",
+    "total_wait_h": 0.7833333333333333
+   },
+   {
+    "cases": 3,
+    "count": 3,
+    "from": "Approve",
+    "median_wait_h": 0.25,
+    "p90_wait_h": 0.31666666666666665,
+    "to": "Notify",
+    "total_wait_h": 0.75
+   }
+  ],
+  "trend": [
+   {
+    "active_hours": 0.6236111111111111,
+    "cases_started": 6,
+    "median_case_h": 1.6666666666666667,
+    "partial": true,
+    "week": "2026-W10",
+    "week_start": "2026-03-02"
+   }
+  ],
+  "variants": {
+   "count": 5,
+   "top": [
+    {
+     "cases": 2,
+     "median_case_h": 1.5416666666666667,
+     "share": 0.3333333333333333
+    },
+    {
+     "cases": 1,
+     "median_case_h": 9.0,
+     "share": 0.16666666666666666
+    },
+    {
+     "cases": 1,
+     "median_case_h": 3.1666666666666665,
+     "share": 0.16666666666666666
+    },
+    {
+     "cases": 1,
+     "median_case_h": 1.0,
+     "share": 0.16666666666666666
+    }
+   ],
+   "top10_cases": 6,
+   "top10_share": 1.0
+  },
+  "version": 1,
+  "waiting": {
+   "left_out_low_support": 7,
+   "left_out_short": 0,
+   "rows": [],
+   "transitions": 17
+  }
+ },
+ "mining.json": {
+  "app_switching": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "applications": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "band": "Not feasible",
+  "band_label": "No analysis: the data did not pass the quality gate.",
+  "bottlenecks": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "counts": {
+   "rows_in_file": 24
+  },
+  "flow_confidence": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "inside": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "kpis": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "level4": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "map": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "process_model": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "resources": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "rework": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "subprocess": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "trends": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  },
+  "variants": {
+   "available": false,
+   "data": null,
+   "reason": "Not available: data quality is Not feasible."
+  }
+ },
+ "narrative.json": {
+  "attempts": 0,
+  "errors": [],
+  "facts_sent": 0,
+  "feedback": [],
+  "findings": [],
+  "model": null,
+  "prompt_version": null,
+  "provider": null,
+  "reason": "switched off for this run",
+  "recommendations": [],
+  "scores": {},
+  "source": "template",
+  "summary": [
+   {
+    "facts": [
+     "F001"
+    ],
+    "text": "The data quality is Not feasible (score 39 / 100 [Exploratory]), so the results are not reliable enough for a process analysis. Fix the issues listed under Data confidence first."
+   }
+  ]
+ },
+ "quality.json": {
+  "band": "Not feasible",
+  "capped": true,
+  "checks": [
+   {
+    "examples": [],
+    "explanation": "Rows without a case ID, activity or timestamp cannot be placed in the process.",
+    "fix": null,
+    "key": "required_fields",
+    "score": 100,
+    "shown": "0.0% of rows (0)",
+    "status": "pass",
+    "title": "1. Required fields present",
+    "value": 0.0
+   },
+   {
+    "examples": [],
+    "explanation": "Placeholder dates (before 1990, e.g. 1970-01-01) and future dates are system defaults or errors; they break event order and durations.",
+    "fix": null,
+    "key": "timestamp_validity",
+    "score": 100,
+    "shown": "0.0% invalid (0 unreadable, 0 placeholder, 0 future)",
+    "status": "pass",
+    "title": "2. Timestamps readable and realistic",
+    "value": 0.0
+   },
+   {
+    "examples": [],
+    "explanation": "When only the date is recorded, the order of steps on the same day is a guess, and waiting times under a day cannot be measured.",
+    "fix": null,
+    "key": "timestamp_granularity",
+    "score": 100,
+    "shown": "0.0% of times are exactly 00:00:00",
+    "status": "pass",
+    "title": "3. Time of day recorded",
+    "value": 0.0
+   },
+   {
+    "examples": [],
+    "explanation": "If two steps have the same time, nobody can tell which came first, so arrows on the map may point the wrong way.",
+    "fix": null,
+    "key": "ordering_ties",
+    "score": 100,
+    "shown": "8.3% of events share their time with another event in the same case",
+    "status": "pass",
+    "title": "4. Event order is clear",
+    "value": 0.08333333333333333
+   },
+   {
+    "examples": [],
+    "explanation": "Copies inflate counts and create fake loops (a step that seems to repeat). They are removed automatically before analysis.",
+    "fix": null,
+    "key": "duplicates",
+    "score": 100,
+    "shown": "0.0% of rows (0) are exact copies",
+    "status": "pass",
+    "title": "5. No duplicate events",
+    "value": 0.0
+   },
+   {
+    "examples": [],
+    "explanation": "The same step written two ways (capitals, spaces, typos) appears as two boxes on the map and splits its counts.",
+    "fix": null,
+    "key": "label_hygiene",
+    "score": 100,
+    "shown": "4 activities, 0 group(s) of near-identical names",
+    "status": "pass",
+    "title": "6. Activity names are consistent",
+    "value": 0.0
+   },
+   {
+    "examples": [
+     "Usual starts: Receive Request",
+     "Usual ends: Notify, Approve, Receive Request"
+    ],
+    "explanation": "Cases cut off by the extract window (started before it or still running) look shorter than they really are and add fake paths.",
+    "fix": null,
+    "key": "case_completeness",
+    "score": 100,
+    "shown": "0.0% of cases (0) start or end unusually",
+    "status": "pass",
+    "title": "7. Cases have a normal start and end",
+    "value": 0.0
+   },
+   {
+    "examples": [],
+    "explanation": "One-event cases have no path to analyse. Very long cases often mean a case ID was reused for many different items.",
+    "fix": null,
+    "key": "case_size",
+    "score": 100,
+    "shown": "16.7% of cases have one event; longest case 5 events (99.9% have \u2264 5)",
+    "status": "pass",
+    "title": "8. Cases have more than one event",
+    "value": 0.16666666666666666
+   },
+   {
+    "examples": [],
+    "explanation": "With few cases, a pattern can appear by chance. Results become reliable from about 1,000 cases.",
+    "fix": "Extract a longer period or more business units.",
+    "key": "volume",
+    "score": 20,
+    "shown": "6 analysable cases",
+    "status": "fail",
+    "title": "9. Enough cases",
+    "value": 6.0
+   },
+   {
+    "examples": [
+     "Path entropy: 2.25 bits (lower = more standardised)"
+    ],
+    "explanation": "If almost every case takes its own path, there is no main process to show, and the map becomes 'spaghetti'.",
+    "fix": "Analyse one sub-process, region or case type at a time, or merge fine-grained steps.",
+    "key": "pattern_strength",
+    "score": 58,
+    "shown": "5 unique paths of events for 6 cases (ratio 0.83; the report counts paths of step runs, with repeated events merged, so it finds fewer); top 10 paths cover 100.0%",
+    "status": "warn",
+    "title": "10. A dominant process exists",
+    "value": 0.8333333333333334
+   },
+   {
+    "examples": [],
+    "explanation": "Built again from different halves of the data, a trustworthy map shows the same main arrows. If it changes, the map is driven by chance.",
+    "fix": "Add more cases, or reduce variety first (merge labels, focus on one case type).",
+    "key": "model_stability",
+    "score": 20,
+    "shown": "0.64 average similarity of the top 8 arrows across 20 half-samples (worst 0.00)",
+    "status": "fail",
+    "title": "11. The process map is stable",
+    "value": 0.64375
+   },
+   {
+    "examples": [
+     "resource: 100.0% filled",
+     "idle_time: 100.0% filled",
+     "is_process: 100.0% filled",
+     "ingest_file: 100.0% filled"
+    ],
+    "explanation": "Only well-filled columns can be used to explain slow or unusual cases.",
+    "fix": null,
+    "key": "attribute_coverage",
+    "score": null,
+    "shown": "4 of 4 extra columns are at least 80% filled",
+    "status": "info",
+    "title": "16. Extra columns are filled",
+    "value": 1.0
+   },
+   {
+    "examples": [],
+    "explanation": "Common in desktop, clickstream and status data: the same step is recorded many times in a row. Each repeat becomes a loop on the map and hides the real flow.",
+    "fix": null,
+    "key": "repeated_steps",
+    "score": null,
+    "shown": "5.6% of steps repeat the step before them",
+    "status": "info",
+    "title": "17. Repeated steps in a row",
+    "value": 0.05555555555555555
+   }
+  ],
+  "dimensions": {
+   "completeness": 100,
+   "ordering": 100,
+   "pattern": 79,
+   "stability": 20,
+   "timestamps": 100,
+   "volume": 60
+  },
+  "feasibility": 39,
+  "fixes": [
+   {
+    "check": "11. The process map is stable",
+    "fix": "Add more cases, or reduce variety first (merge labels, focus on one case type).",
+    "points": 16.0,
+    "problem": "0.64 average similarity of the top 8 arrows across 20 half-samples (worst 0.00)",
+    "status": "fail"
+   },
+   {
+    "check": "9. Enough cases",
+    "fix": "Extract a longer period or more business units.",
+    "points": 6.0,
+    "problem": "6 analysable cases",
+    "status": "fail"
+   },
+   {
+    "check": "10. A dominant process exists",
+    "fix": "Analyse one sub-process, region or case type at a time, or merge fine-grained steps.",
+    "points": 3.1,
+    "problem": "5 unique paths of events for 6 cases (ratio 0.83; the report counts paths of step runs, with repeated events merged, so it finds fewer); top 10 paths cover 100.0%",
+    "status": "warn"
+   }
+  ],
+  "stats": {
+   "cases": 6,
+   "clean_rows": 24,
+   "rows": 24
+  }
+ },
+ "scope.json": {
+  "active_seconds_in_file": 2350.0,
+  "filter": {
+   "column": "is_process",
+   "values": [
+    "1"
+   ]
+  },
+  "has_active_time": true,
+  "in_scope": {
+   "active_seconds": 2245.0,
+   "rows": 24
+  },
+  "left_out_by_filter": {
+   "active_seconds": 60.0,
+   "rows": 2
+  },
+  "rows_in_file": 29,
+  "without_activity": {
+   "active_seconds": 15.0,
+   "rows": 1
+  },
+  "without_case": {
+   "active_seconds": 30.0,
+   "rows": 2
+  },
+  "without_time": {
+   "active_seconds": 0.0,
+   "rows": 0
+  }
+ }
+}
